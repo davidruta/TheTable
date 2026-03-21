@@ -97,7 +97,10 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .gbadge{font-size:.6rem;background:var(--sage-pale);color:var(--sage);border:1px solid var(--sage-l);border-radius:10px;padding:1px 5px;margin-left:3px}
 .gdel{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.76rem;padding:1px 4px;border-radius:3px;opacity:0;transition:opacity .15s}
 .gitem:hover .gdel{opacity:1}
-.gdel:hover{color:var(--terra);background:var(--terra-pale)}
+.gdel:hover{color:var(--terra);background:var(--terra-pale)} 
+.gadd{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.76rem;padding:1px 4px;border-radius:3px;opacity:0;transition:opacity .15s} 
+.gitem:hover .gadd{opacity:1} 
+.gadd:hover{color:var(--gold);background:var(--gold-pale)}
 
 /* RECIPES */
 .itabs{display:flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;width:fit-content;margin-bottom:18px}
@@ -721,6 +724,7 @@ function renderGrocery(){
         <input type="checkbox" ${item.checked?'checked':''} onclick="event.stopPropagation();toggleGI(${item._i})">
         <span class="gilbl">${item.name}${item.isStaple?'<span class="gbadge">staple</span>':''}${item.manual?'<span class="mbadge">manual</span>':''}</span>
         ${q?`<span class="gqty">${q}</span>`:''}
+        <button class="gadd" onclick="event.stopPropagation();addToStaples(${item._i})" title="Add to staples">⭐</button>
         <button class="gdel" onclick="event.stopPropagation();delGI(${item._i})">✕</button>
       </div>`;
     });
@@ -951,6 +955,7 @@ function renderStaples(){
   list.innerHTML=S.staples.map((s,i)=>`<div class="stitem"><span>${s}</span><button onclick="removeStaple(${i})">✕</button></div>`).join('');
 }
 function clearBought(){S.groceryList=S.groceryList.filter(i=>!i.checked);save();renderGrocery();showToast('Bought items removed');}
+function addToStaples(i){const name=S.groceryList[i].name;if(S.staples.includes(name)){showToast('Already a staple!');return;}S.staples.push(name);save();renderStaples();showToast(`"${name}" added to staples`);}
 function addStaple(){const inp=document.getElementById('stinput'),v=inp.value.trim();if(!v)return;if(S.staples.includes(v)){showToast('Already on list!');return;}S.staples.push(v);inp.value='';save();renderStaples();}
 function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
 
