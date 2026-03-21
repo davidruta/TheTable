@@ -776,7 +776,7 @@ function printGrocery(){
 //  RECIPES
 // ═══════════════════════════════════════════════════
 function switchTab(tab){
-  document.querySelectorAll('.rit').forEach((b,i)=>b.classList.toggle('active',['photo','url','json','describe'][i]===tab));
+  document.querySelectorAll('.rit').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes(`'${tab}'`)));
   document.querySelectorAll('.ipanel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
 }
