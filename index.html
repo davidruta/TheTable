@@ -114,6 +114,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .gitem:hover{background:rgba(0,0,0,.025)}
 .gitem input[type=checkbox]{width:14px;height:14px;accent-color:var(--sage);cursor:pointer;flex-shrink:0}
 .gilbl{font-size:.8rem;flex:1}
+.gisrc{font-size:.68rem;color:var(--ink3);font-style:italic;margin-top:1px}
 .gitem.checked .gilbl{text-decoration:line-through;color:var(--ink3)}
 .gqty{font-size:.7rem;color:var(--ink3);font-weight:500}
 .mbadge{font-size:.6rem;background:var(--gold-pale);color:var(--gold);border:1px solid #e0c870;border-radius:10px;padding:1px 5px;margin-left:3px}
@@ -925,7 +926,7 @@ function checkCustomMeals(manualKeep){
     return `<div class="cm-day">
       <div class="cm-day-label">${dayName} ${dateStr}</div>
       <div class="cm-day-meal">${cd.type==='custom'?cd.text:cd.recipeName+' + '+cd.text}</div>
-      <textarea id="cming${i}" placeholder="e.g.\nchicken breast\nrice\nbroccoli"></textarea>
+      <textarea id="cming${i}" data-source="${(cd.type==='custom'?cd.text:cd.text).replace(/"/g,'&quot;')}" placeholder="e.g.\nchicken breast\nrice\nbroccoli"></textarea>
     </div>`;
   }).join('');
   document.getElementById('custommod').classList.add('open');
@@ -939,11 +940,12 @@ function confirmCustomMeals(){
   document.getElementById('custommod').classList.remove('open');
   const items=[];
   document.querySelectorAll('#cmlist textarea').forEach(ta=>{
+    const source=ta.getAttribute('data-source')||'';
     const lines=ta.value.split(/[\n,]/).map(l=>l.trim()).filter(Boolean);
     lines.forEach(line=>{
       if(line.toLowerCase()==='water')return;
       const cat=guessCat(line);
-      items.push({name:line,qty:null,unit:'',category:cat,checked:false,manual:false,isStaple:false,fromCustom:true});
+      items.push({name:line,qty:null,unit:'',category:cat,checked:false,manual:false,isStaple:false,fromCustom:true,source});
     });
   });
   pendingCustomIngredients=items;
@@ -1032,30 +1034,27 @@ function buildGrocery(manualKeep,selStaples){
 
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
-    // Skip custom meal days — their ingredients come from pendingCustomIngredients
     if(day.recipeId==='custom')return;
     let rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
     if(!rec)return;
     const base=rec.serves||4;const scale=(day.servings!=null?day.servings:base)/base;
     rec.ingredients.forEach(ing=>{
-      // Skip water — never needs to be on a grocery list
       if(ing.name.toLowerCase()==='water')return;
       const isPantry=ing.pantry||S.pantryList.some(p=>p.toLowerCase()===ing.name.toLowerCase());
       if(isPantry&&!outOfStock.includes(ing.name))return;
       const mk=`${ing.name.toLowerCase()}|${ing.unit}|${ing.category}`;
-      if(map[mk])map[mk].qty+=ing.quantity*scale;
-      else map[mk]={name:ing.name,qty:ing.quantity*scale,unit:ing.unit,category:ing.category,checked:false,manual:false,isStaple:false};
+      if(map[mk]){map[mk].qty+=ing.quantity*scale;if(!map[mk].sources.includes(rec.name))map[mk].sources.push(rec.name);}
+      else map[mk]={name:ing.name,qty:ing.quantity*scale,unit:ing.unit,category:ing.category,checked:false,manual:false,isStaple:false,sources:[rec.name]};
     });
   });
   let items=Object.values(map);
-  // Add custom meal ingredients
   (pendingCustomIngredients||[]).forEach(ci=>{
-    const mk=`${ci.name.toLowerCase()}||${ci.category}`;
     const existing=items.find(i=>i.name.toLowerCase()===ci.name.toLowerCase());
-    if(!existing)items.push({...ci});
+    if(existing){if(ci.source&&!existing.sources.includes(ci.source))existing.sources.push(ci.source);}
+    else items.push({...ci,sources:ci.source?[ci.source]:[]});
   });
-  manualKeep.forEach(m=>items.push({...m}));
-  selStaples.forEach(s=>items.push({name:s,qty:null,unit:'',category:'Other',checked:false,manual:false,isStaple:true}));
+  manualKeep.forEach(m=>{if(!m.sources)m.sources=[];items.push({...m});});
+  selStaples.forEach(s=>items.push({name:s,qty:null,unit:'',category:'Other',checked:false,manual:false,isStaple:true,sources:[]}));
   items.forEach(item=>{
     const prev=S.groceryList.find(g=>g.name.toLowerCase()===item.name.toLowerCase()&&g.category===item.category&&!g.manual&&!g.isStaple);
     if(prev&&!item.manual&&!item.isStaple)item.checked=prev.checked;
@@ -1078,9 +1077,10 @@ function renderGrocery(){
     html+=`<div class="ccard ${CCLS[cat]}"><div class="chdr">${CICONS[cat]} ${cat}</div><div class="gitems">`;
     grp[cat].forEach(item=>{
       const q=item.qty!=null?`${fq(item.qty)} ${item.unit}`.trim():'';
+      const src=(item.sources&&item.sources.length)?`<div class="gisrc">← ${item.sources.join(', ')}</div>`:'';
       html+=`<div class="gitem ${item.checked?'checked':''}" onclick="toggleGI(${item._i})">
         <input type="checkbox" ${item.checked?'checked':''} onclick="event.stopPropagation();toggleGI(${item._i})">
-        <span class="gilbl">${item.name}${item.isStaple?'<span class="gbadge">staple</span>':''}${item.manual?'<span class="mbadge">manual</span>':''}</span>
+        <div class="gilbl">${item.name}${item.isStaple?'<span class="gbadge">staple</span>':''}${item.manual?'<span class="mbadge">manual</span>':''}${src}</div>
         ${q?`<span class="gqty">${q}</span>`:''}
         ${item.isStaple?'':'<button class="gadd" onclick="event.stopPropagation();addToStaples('+item._i+')" title="Add to staples">⭐</button>'}
         <button class="gdel" onclick="event.stopPropagation();delGI(${item._i})">✕</button>
