@@ -304,6 +304,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     <div class="itabs">
       <button class="rit active" onclick="switchTab('photo')">📷 Photo</button>
       <button class="rit" onclick="switchTab('url')">🔗 URL</button>
+      <button class="rit" onclick="switchTab('describe')">✏️ Describe</button>
       <button class="rit" onclick="switchTab('json')">{ } JSON</button>
     </div>
 
@@ -381,6 +382,18 @@ sourceUrl: include the original URL</pre>
       </div>
     </div>
 
+    <div class="ipanel" id="tab-describe">
+      <h3>Describe a Recipe</h3>
+      <div class="hint">Type a loose description of the recipe below — ingredients, rough steps, anything you know. Then copy the prompt and run it in Claude. Paste the JSON output in the JSON tab.</div>
+      <textarea id="rdescribe" placeholder="e.g. Mum's roast chicken — whole chicken rubbed with butter and herbs, roasted with potatoes and carrots. Make a gravy from the pan juices. Serves 6." style="min-height:120px"></textarea>
+      <div class="pbox" id="describe-prompt-box" style="display:none">
+        <h4>✏️ Generated Prompt — copy and use in Claude</h4>
+        <pre id="describe-prompt"></pre>
+        <button class="cpbtn" onclick="copyPrompt('describe-prompt')">Copy Prompt</button>
+      </div>
+      <button class="btn btn-primary" onclick="generateDescribePrompt()">Generate Prompt</button>
+    </div>
+   
     <div class="ipanel" id="tab-json">
       <h3>Paste Recipe JSON</h3>
       <div class="hint">Paste Claude's JSON output here and click Add Recipe.</div>
@@ -763,7 +776,7 @@ function printGrocery(){
 //  RECIPES
 // ═══════════════════════════════════════════════════
 function switchTab(tab){
-  document.querySelectorAll('.rit').forEach((b,i)=>b.classList.toggle('active',['photo','url','json'][i]===tab));
+  document.querySelectorAll('.rit').forEach((b,i)=>b.classList.toggle('active',['photo','url','json','describe'][i]===tab));
   document.querySelectorAll('.ipanel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
 }
@@ -958,7 +971,45 @@ function renderStaples(){
 function clearBought(){S.groceryList=S.groceryList.filter(i=>!i.checked);save();renderGrocery();showToast('Bought items removed');}
 function addToStaples(i){const name=S.groceryList[i].name;if(S.staples.includes(name)){showToast('Already a staple!');return;}S.staples.push(name);save();renderStaples();showToast(`"${name}" added to staples`);}
 const CAT_HINTS={Produce:['apple','apples','banana','bananas','lemon','lemons','lime','limes','orange','oranges','strawberr','blueberr','raspberry','raspberries','grape','grapes','mango','avocado','tomato','tomatoes','spinach','kale','lettuce','rocket','cabbage','broccoli','cauliflower','carrot','carrots','zucchini','courgette','cucumber','capsicum','pepper','peppers','mushroom','mushrooms','potato','potatoes','sweet potato','pumpkin','corn','asparagus','celery','leek','leeks','spring onion','chilli','chillies','parsley','basil','coriander','cilantro','mint','thyme','rosemary','sage','dill','ginger','garlic'],Bakery:['bread','sourdough','baguette','roll','rolls','wrap','wraps','pita','pitta','naan','croissant','croissants','bagel','bagels','brioche','focaccia','pizza base','pizza dough','pastry','puff pastry','shortcrust'],Deli:['salami','prosciutto','pancetta','ham','smoked salmon','smoked trout','hummus','tzatziki','baba ganoush','pesto','deli','pastrami','chorizo','mortadella'],Butcher:['chicken','beef','lamb','pork','turkey','duck','fish','salmon','tuna','prawn','prawns','shrimp','mince','steak','sausage','sausages','bacon','ribs','fillet','thigh','thighs','breast','breasts','chop','chops','roast','seafood','scallop','scallops','crab','lobster'],Dairy:['milk','cream','butter','cheese','cheddar','mozzarella','parmesan','feta','brie','camembert','ricotta','mascarpone','yogurt','yoghurt','sour cream','creme fraiche','egg','eggs','ghee','whipping cream','heavy cream','double cream','cream cheese'],Frozen:['frozen','ice cream','gelato','sorbet']};
-function suggestCat(){const val=document.getElementById('miinput').value.toLowerCase().trim();if(!val){return;}const sel=document.getElementById('micat');for(const[cat,words]of Object.entries(CAT_HINTS)){if(words.some(w=>val.includes(w)||w.includes(val))){sel.value=cat;return;}}sel.value='Other';}
+function generateDescribePrompt(){
+  const desc=document.getElementById('rdescribe').value.trim();
+  if(!desc){showToast('Please describe the recipe first');return;}
+  const prompt=`Please create a full recipe based on this description and return ONLY a JSON object (no markdown, no extra text):
+
+Description: "${desc}"
+
+Return this exact format:
+{
+  "name": "Recipe Name",
+  "serves": 4,
+  "sourceUrl": "",
+  "tags": [],
+  "ingredients": [
+    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+  ],
+  "steps": [
+    { "text": "Step description.", "timerSeconds": 0 }
+  ]
+}
+
+Category MUST be exactly one of these seven:
+- Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
+- Bakery: bread, wraps, raw pastry/dough — e.g. sourdough, pita, croissants, pizza base
+- Deli: cured/smoked meats, prepared dips — e.g. salami, smoked salmon, hummus
+- Butcher: raw meat, raw poultry, raw seafood — e.g. chicken breast, ground beef, salmon
+- Dairy: milk, cheese, yogurt, cream, butter, eggs — e.g. cheddar, Greek yogurt, butter
+- Frozen: anything purchased frozen — e.g. frozen peas, ice cream
+- Other: pantry, canned goods, condiments, dry goods — e.g. pasta, olive oil, tinned tomatoes
+
+pantry: true for items like salt, pepper, olive oil, flour, sugar, butter, soy sauce, spices — things most households always have. false for everything else.
+unit: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items
+timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
+tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
+Infer reasonable quantities and steps from the description. Fill in anything that's missing sensibly.`;
+  document.getElementById('describe-prompt').textContent=prompt;
+  document.getElementById('describe-prompt-box').style.display='block';
+}
+  function suggestCat(){const val=document.getElementById('miinput').value.toLowerCase().trim();if(!val){return;}const sel=document.getElementById('micat');for(const[cat,words]of Object.entries(CAT_HINTS)){if(words.some(w=>val.includes(w)||w.includes(val))){sel.value=cat;return;}}sel.value='Other';}
 function addStaple(){const inp=document.getElementById('stinput'),v=inp.value.trim();if(!v)return;if(S.staples.includes(v)){showToast('Already on list!');return;}S.staples.push(v);inp.value='';save();renderStaples();}
 function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
 
