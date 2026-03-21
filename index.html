@@ -72,7 +72,8 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .svrow input{width:40px;padding:2px 5px;border:1px solid var(--border);border-radius:5px;font-family:'Jost',sans-serif;font-size:.73rem;text-align:center;background:#fff}
 .whoout{display:flex;flex-wrap:wrap;gap:3px}
 .pchip{font-size:.66rem;padding:2px 7px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;color:var(--ink3);font-weight:500}
-.pchip.out{background:var(--terra-pale);border-color:var(--terra-l);color:var(--terra)} .dayoff{font-size:.72rem;color:var(--ink3);text-align:center;padding:3px 0;font-style:italic;}
+.pchip.out{background:var(--terra-pale);border-color:var(--terra-l);color:var(--terra)}
+.dayoff{font-size:.72rem;color:var(--ink3);text-align:center;padding:3px 0;font-style:italic;}
 .pact{display:flex;gap:9px;flex-wrap:wrap}
 
 /* GROCERY */
@@ -95,11 +96,12 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .gqty{font-size:.7rem;color:var(--ink3);font-weight:500}
 .mbadge{font-size:.6rem;background:var(--gold-pale);color:var(--gold);border:1px solid #e0c870;border-radius:10px;padding:1px 5px;margin-left:3px}
 .gbadge{font-size:.6rem;background:var(--sage-pale);color:var(--sage);border:1px solid var(--sage-l);border-radius:10px;padding:1px 5px;margin-left:3px}
+.pbadge{font-size:.6rem;background:var(--terra-pale);color:var(--terra);border:1px solid var(--terra-l);border-radius:10px;padding:1px 5px;margin-left:3px}
 .gdel{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.76rem;padding:1px 4px;border-radius:3px;opacity:0;transition:opacity .15s}
 .gitem:hover .gdel{opacity:1}
-.gdel:hover{color:var(--terra);background:var(--terra-pale)} 
-.gadd{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.76rem;padding:1px 4px;border-radius:3px;opacity:0;transition:opacity .15s} 
-.gitem:hover .gadd{opacity:1} 
+.gdel:hover{color:var(--terra);background:var(--terra-pale)}
+.gadd{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.76rem;padding:1px 4px;border-radius:3px;opacity:0;transition:opacity .15s}
+.gitem:hover .gadd{opacity:1}
 .gadd:hover{color:var(--gold);background:var(--gold-pale)}
 
 /* RECIPES */
@@ -154,6 +156,8 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .ingqty{color:var(--ink3);font-size:.75rem}
 .catbadge{font-size:.6rem;padding:1px 6px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--ink3);cursor:pointer;transition:all .15s;flex-shrink:0}
 .catbadge:hover{border-color:var(--sage);color:var(--sage)}
+.pantrybadge{font-size:.6rem;padding:1px 6px;border-radius:10px;border:1px solid var(--terra-l);background:var(--terra-pale);color:var(--terra);cursor:pointer;transition:all .15s;flex-shrink:0}
+.pantrybadge:hover{opacity:.7}
 .svctl{display:flex;align-items:center;gap:9px;margin-bottom:12px;font-size:.8rem;color:var(--ink3)}
 .svctl button{background:var(--surface2);border:1px solid var(--border);width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .svctl button:hover{background:var(--border)}
@@ -172,7 +176,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .urlinput{width:100%;font-family:'Jost',sans-serif;font-size:.8rem;padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);margin-top:6px}
 .urlinput:focus{outline:none;border-color:var(--sage)}
 
-/* STAPLES */
+/* STAPLES & PANTRY pages */
 .stbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;max-width:460px;margin-bottom:20px}
 .stbox h3{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:13px}
 .stlist{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
@@ -308,6 +312,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
       <button class="rit" onclick="switchTab('json')">{ } JSON</button>
     </div>
 
+    <!-- PHOTO TAB -->
     <div class="ipanel active" id="tab-photo">
       <h3>Import from a Photo</h3>
       <div class="hint">Take a photo of any recipe, open Claude, and use this prompt. Then paste the JSON in the JSON tab.</div>
@@ -320,7 +325,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
   "sourceUrl": "",
   "tags": [],
   "ingredients": [
-    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce" }
+    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
     { "text": "Step description.", "timerSeconds": 0 }
@@ -339,14 +344,17 @@ Category MUST be exactly one of these seven — use the definitions to decide:
 Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items (e.g. 2 eggs → unit "")
 timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
 tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
-sourceUrl: leave as ""</pre>
-        <button class="cpbtn" onclick="copyPrompt('photo-prompt')">Copy Prompt</button>
+sourceUrl: leave as ""
+PANTRY_LINE_PLACEHOLDER</pre>
+        <button class="cpbtn" onclick="copyPromptLive('photo-prompt')">Copy Prompt</button>
       </div>
     </div>
 
+    <!-- URL TAB -->
     <div class="ipanel" id="tab-url">
       <h3>Import from a URL</h3>
-      <div class="hint">Copy a recipe URL, open Claude, and use this prompt (replace the placeholder). Paste the JSON in the JSON tab.</div>
+      <div class="hint">Paste the recipe URL below, then copy the generated prompt and run it in Claude. Paste the JSON in the JSON tab.</div>
+      <input type="text" id="url-input" placeholder="https://…" oninput="updateUrlInPrompt()">
       <div class="pbox"><h4>🔗 URL Prompt</h4>
         <pre id="url-prompt">Please fetch and extract the recipe from this URL: [PASTE URL HERE]
 
@@ -358,7 +366,7 @@ Return ONLY a JSON object (no markdown, no extra text):
   "sourceUrl": "the URL you fetched",
   "tags": [],
   "ingredients": [
-    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce" }
+    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
     { "text": "Step description.", "timerSeconds": 0 }
@@ -377,11 +385,13 @@ Category MUST be exactly one of these seven:
 Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items
 timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
 tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
-sourceUrl: include the original URL</pre>
-        <button class="cpbtn" onclick="copyPrompt('url-prompt')">Copy Prompt</button>
+sourceUrl: include the original URL
+PANTRY_LINE_PLACEHOLDER</pre>
+        <button class="cpbtn" onclick="copyPromptLive('url-prompt')">Copy Prompt</button>
       </div>
     </div>
 
+    <!-- DESCRIBE TAB -->
     <div class="ipanel" id="tab-describe">
       <h3>Describe a Recipe</h3>
       <div class="hint">Type a loose description of the recipe below — ingredients, rough steps, anything you know. Then copy the prompt and run it in Claude. Paste the JSON output in the JSON tab.</div>
@@ -393,7 +403,8 @@ sourceUrl: include the original URL</pre>
       </div>
       <button class="btn btn-primary" onclick="generateDescribePrompt()">Generate Prompt</button>
     </div>
-   
+
+    <!-- JSON TAB -->
     <div class="ipanel" id="tab-json">
       <h3>Paste Recipe JSON</h3>
       <div class="hint">Paste Claude's JSON output here and click Add Recipe.</div>
@@ -416,13 +427,36 @@ sourceUrl: include the original URL</pre>
 
 <!-- STAPLES -->
 <div class="page" id="page-staples">
-  <div class="ph"><div><div class="pt">Staples</div><div class="ps">Household items to check before each shop.</div></div></div>
+  <div class="ph"><div><div class="pt">Staples & Pantry</div><div class="ps">Manage household staples and pantry items.</div></div></div>
   <div class="stbox">
     <h3>Your Staples</h3>
+    <div class="hint">Items you might need to restock — shown as a checklist when generating your grocery list.</div>
     <div class="stlist" id="stlist"></div>
     <div class="addrow">
       <input type="text" id="stinput" placeholder="Add a staple…" onkeydown="if(event.key==='Enter')addStaple()">
       <button class="btn btn-sage btn-sm" onclick="addStaple()">Add</button>
+    </div>
+  </div>
+  <div class="stbox">
+    <h3>Your Pantry List</h3>
+    <div class="hint">Items assumed to always be in stock — excluded from your grocery list unless you mark them as out. Also embedded in your Claude prompts automatically.</div>
+    <div class="stlist" id="pantrylist"></div>
+    <div class="addrow">
+      <input type="text" id="pantryinput" placeholder="Add a pantry item…" onkeydown="if(event.key==='Enter')addPantryItem()">
+      <button class="btn btn-terra btn-sm" onclick="addPantryItem()" style="background:var(--terra);color:#fff;padding:6px 12px;font-size:.76rem">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- PANTRY MODAL -->
+<div class="overlay" id="pantrymod">
+  <div class="modal">
+    <h2>🧂 Pantry Check</h2>
+    <p>These ingredients are in your pantry list. Untick any you've run out of — they'll be added to your grocery list.</p>
+    <div class="smlist" id="pantry-modal-list"></div>
+    <div class="mact">
+      <button class="btn btn-ghost btn-sm" onclick="skipPantry()">Skip</button>
+      <button class="btn btn-sage" onclick="confirmPantry()">Continue →</button>
     </div>
   </div>
 </div>
@@ -469,7 +503,7 @@ sourceUrl: include the original URL</pre>
 
 <script>
 // ═══════════════════════════════════════════════════
-//  FIREBASE CONFIG — replace all YOUR_* values
+//  FIREBASE CONFIG
 // ═══════════════════════════════════════════════════
 const FB_CFG = {
   apiKey: "AIzaSyABv_J9hYPiGDTLGj_I8Rh_3eovBQWc_Nk",
@@ -491,6 +525,7 @@ const CICONS = {Produce:'🥦',Bakery:'🍞',Deli:'🧀',Butcher:'🥩',Dairy:'�
 const CCLS = {Produce:'cp',Bakery:'cb',Deli:'cd',Butcher:'cbt',Dairy:'cy',Frozen:'cf',Other:'co'};
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const ALL_TAGS = ['Quick','Vegetarian','Vegan','Gluten-Free','Weekend','Kids Favourite','Comfort Food','Light','Batch Cook','Fish','Pasta','Soup','Salad'];
+const DEFAULT_PANTRY = ['Olive oil','Vegetable oil','Coconut oil','Butter','Salt','Black pepper','Garlic powder','Onion powder','Paprika','Cumin','Oregano','Chilli flakes','Cinnamon','Turmeric','Soy sauce','Worcestershire sauce','Dijon mustard','Plain flour','Sugar','Brown sugar','Baking powder','Baking soda','Cornstarch','Breadcrumbs','Dried pasta','Rice','Garlic (fresh)'];
 
 // ═══════════════════════════════════════════════════
 //  STATE
@@ -498,10 +533,12 @@ const ALL_TAGS = ['Quick','Vegetarian','Vegan','Gluten-Free','Weekend','Kids Fav
 let S = {
   startDay:6, weekOffset:0,
   recipes:[], plan:{}, groceryList:[],
-  staples:['Coffee','Milk','Butter','Eggs','Bread','Olive oil','Salt','Pepper','Garlic']
+  staples:['Coffee','Milk','Eggs','Bread'],
+  pantryList:[...DEFAULT_PANTRY]
 };
 let db=null, fbReady=false;
 let pendingSM={manual:[],staples:new Set()};
+let pendingPantry={manualKeep:[],outOfStock:[]};
 let activeTag='';
 let curDetailId=null, detailSv=4;
 let catMS={rid:null,idx:null,cat:null};
@@ -527,7 +564,12 @@ function initFB(){
         fbReady=true;
         dot('ok','Synced');
         db.collection(FB_COL).doc(FB_DOC).onSnapshot(snap=>{
-          if(snap.exists){S={...S,...snap.data()};}
+          if(snap.exists){
+            const data=snap.data();
+            // Ensure pantryList always exists
+            if(!data.pantryList)data.pantryList=[...DEFAULT_PANTRY];
+            S={...S,...data};
+          }
           renderAll();dot('ok','Synced');
         },()=>{dot('err','Sync error');loadLocal();});
       }catch(e){dot('err','Firebase error');loadLocal();}
@@ -549,7 +591,7 @@ async function save(){
 
 function saveLocal(){try{localStorage.setItem('theTable',JSON.stringify(S));}catch(e){}}
 function loadLocal(){
-  try{const r=localStorage.getItem('theTable');if(r)S={...S,...JSON.parse(r)};}catch(e){}
+  try{const r=localStorage.getItem('theTable');if(r){const d=JSON.parse(r);if(!d.pantryList)d.pantryList=[...DEFAULT_PANTRY];S={...S,...d};}}catch(e){}
   renderAll();
 }
 
@@ -557,8 +599,9 @@ function loadLocal(){
 //  RENDER ALL
 // ═══════════════════════════════════════════════════
 function renderAll(){
-  renderPlanner();renderGrocery();renderRecipes();renderStaples();
+  renderPlanner();renderGrocery();renderRecipes();renderStaples();renderPantryList();
   document.getElementById('sdsel').value=S.startDay;
+  updateUrlInPrompt();
 }
 
 // ═══════════════════════════════════════════════════
@@ -650,13 +693,15 @@ function randomiseUnlocked(){
 
 // ═══════════════════════════════════════════════════
 //  GROCERY GENERATION FLOW
+//  Order: Regen review → Pantry check → Staples check → Build
 // ═══════════════════════════════════════════════════
 function startGroceryGen(){
   const manual=S.groceryList.filter(i=>i.manual);
   if(manual.length)openRegenMod(manual);
-  else openStaplesMod([]);
+  else openPantryMod([]);
 }
 
+// Step 1: Regen review (if manual items exist)
 function openRegenMod(manual){
   document.getElementById('rlist').innerHTML=manual.map((item,i)=>`
     <div class="ritem">
@@ -672,9 +717,54 @@ function regenAct(action){
   let keep=[];
   if(action==='keep-all')keep=manual;
   else if(action==='keep-sel')manual.forEach((item,i)=>{if(document.getElementById(`ri${i}`)?.checked)keep.push(item);});
-  openStaplesMod(keep);
+  openPantryMod(keep);
 }
 
+// Step 2: Pantry check
+function openPantryMod(manualKeep){
+  pendingPantry={manualKeep,outOfStock:[]};
+  // Collect all pantry-flagged ingredients from this week's plan
+  const dates=getWeekDates();
+  const pantryItems=new Set();
+  dates.forEach(d=>{
+    const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
+    const rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
+    if(!rec)return;
+    rec.ingredients.filter(i=>i.pantry).forEach(i=>pantryItems.add(i.name));
+  });
+  // Also include any pantry list items that match ingredients (for older recipes without pantry flag)
+  dates.forEach(d=>{
+    const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
+    const rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
+    if(!rec)return;
+    rec.ingredients.forEach(i=>{
+      if(S.pantryList.some(p=>p.toLowerCase()===i.name.toLowerCase()))pantryItems.add(i.name);
+    });
+  });
+  if(!pantryItems.size){openStaplesMod(manualKeep);return;}
+  const list=document.getElementById('pantry-modal-list');
+  list.innerHTML=[...pantryItems].map((name,i)=>`
+    <div class="smitem sel" id="pmi${i}" onclick="togglePMI(${i})">
+      <input type="checkbox" id="pmc${i}" checked onclick="event.stopPropagation();togglePMI(${i})">
+      <label for="pmc${i}">${name}</label>
+    </div>`).join('');
+  document.getElementById('pantrymod').classList.add('open');
+}
+function togglePMI(i){
+  const el=document.getElementById(`pmi${i}`),cb=document.getElementById(`pmc${i}`);
+  if(cb.checked){cb.checked=false;el.classList.remove('sel');}
+  else{cb.checked=true;el.classList.add('sel');}
+}
+function skipPantry(){document.getElementById('pantrymod').classList.remove('open');openStaplesMod(pendingPantry.manualKeep);}
+function confirmPantry(){
+  document.getElementById('pantrymod').classList.remove('open');
+  // Items that are UNCHECKED = out of stock = need to go on the list
+  const unchecked=[...document.querySelectorAll('#pantry-modal-list input[type=checkbox]')].filter(cb=>!cb.checked).map(cb=>cb.nextElementSibling.textContent.trim());
+  pendingPantry.outOfStock=unchecked;
+  openStaplesMod(pendingPantry.manualKeep);
+}
+
+// Step 3: Staples check
 function openStaplesMod(manualKeep){
   pendingSM={manual:manualKeep,staples:new Set()};
   const list=document.getElementById('smlist');
@@ -697,7 +787,9 @@ function confirmStaples(){
   buildGrocery(pendingSM.manual,[...pendingSM.staples].map(i=>S.staples[i]));
 }
 
+// Step 4: Build the list
 function buildGrocery(manualKeep,selStaples){
+  const outOfStock=pendingPantry.outOfStock||[];
   const dates=getWeekDates();const map={};
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
@@ -705,6 +797,9 @@ function buildGrocery(manualKeep,selStaples){
     if(!rec)return;
     const base=rec.serves||4;const scale=(day.servings!=null?day.servings:base)/base;
     rec.ingredients.forEach(ing=>{
+      // Skip pantry items unless user said they're out of stock
+      const isPantry=ing.pantry||S.pantryList.some(p=>p.toLowerCase()===ing.name.toLowerCase());
+      if(isPantry&&!outOfStock.includes(ing.name))return;
       const mk=`${ing.name.toLowerCase()}|${ing.unit}|${ing.category}`;
       if(map[mk])map[mk].qty+=ing.quantity*scale;
       else map[mk]={name:ing.name,qty:ing.quantity*scale,unit:ing.unit,category:ing.category,checked:false,manual:false,isStaple:false};
@@ -751,12 +846,18 @@ function fq(q){if(!q&&q!==0)return'';return q%1===0?q:parseFloat(q.toFixed(2));}
 function toggleGI(i){S.groceryList[i].checked=!S.groceryList[i].checked;save();renderGrocery();}
 function delGI(i){S.groceryList.splice(i,1);save();renderGrocery();}
 function uncheckAll(){S.groceryList.forEach(i=>i.checked=false);save();renderGrocery();}
+function clearBought(){S.groceryList=S.groceryList.filter(i=>!i.checked);save();renderGrocery();showToast('Bought items removed');}
 function clearGrocery(){if(!confirm('Clear grocery list?'))return;S.groceryList=[];save();renderGrocery();}
 function addManual(){
   const inp=document.getElementById('miinput'),cat=document.getElementById('micat').value;
   const name=inp.value.trim();if(!name)return;
   S.groceryList.push({name,qty:null,unit:'',category:cat,checked:false,manual:true,isStaple:false});
   inp.value='';save();renderGrocery();showToast(`"${name}" added`);
+}
+function addToStaples(i){
+  const name=S.groceryList[i].name;
+  if(S.staples.includes(name)){showToast('Already a staple!');return;}
+  S.staples.push(name);save();renderStaples();showToast(`"${name}" added to staples`);
 }
 function printGrocery(){
   let txt='GROCERY LIST\n'+new Date().toLocaleDateString('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'\n\n';
@@ -770,6 +871,34 @@ function printGrocery(){
   });
   if(navigator.share)navigator.share({title:'Grocery List',text:txt}).catch(()=>window.print());
   else window.print();
+}
+
+// ═══════════════════════════════════════════════════
+//  PROMPTS — dynamic, always reflect current pantry list
+// ═══════════════════════════════════════════════════
+function getPantryLine(){
+  return `pantry: true ONLY for these exact items (or close matches): ${(S.pantryList||DEFAULT_PANTRY).join(', ')}. false for everything else.`;
+}
+
+function copyPromptLive(id){
+  // Build a fresh copy of the prompt with current pantry list injected
+  const el=document.getElementById(id);
+  if(!el)return;
+  let text=el.textContent.replace('PANTRY_LINE_PLACEHOLDER',getPantryLine());
+  // For URL prompt, also inject the current URL value
+  if(id==='url-prompt'){
+    const urlVal=(document.getElementById('url-input')?.value||'').trim()||'[PASTE URL HERE]';
+    text=text.replace(/Please fetch and extract the recipe from this URL: .+/,`Please fetch and extract the recipe from this URL: ${urlVal}`);
+  }
+  navigator.clipboard.writeText(text).then(()=>showToast('Prompt copied!')).catch(()=>showToast('Copy failed'));
+}
+
+function updateUrlInPrompt(){
+  // Live-update the visible URL in the prompt box as the user types
+  const urlVal=(document.getElementById('url-input')?.value||'').trim()||'[PASTE URL HERE]';
+  const el=document.getElementById('url-prompt');
+  if(!el)return;
+  el.textContent=el.textContent.replace(/Please fetch and extract the recipe from this URL: .+/,`Please fetch and extract the recipe from this URL: ${urlVal}`);
 }
 
 // ═══════════════════════════════════════════════════
@@ -789,7 +918,7 @@ function addRecipeJSON(){
     S.recipes.push({
       id:'r'+Date.now(),name:d.name,serves:d.serves||4,sourceUrl:d.sourceUrl||'',
       tags:Array.isArray(d.tags)?d.tags:[],photo:'',notes:'',
-      ingredients:d.ingredients.map(i=>({name:i.name,quantity:parseFloat(i.quantity)||0,unit:i.unit||'',category:CATS.includes(i.category)?i.category:'Other'})),
+      ingredients:d.ingredients.map(i=>({name:i.name,quantity:parseFloat(i.quantity)||0,unit:i.unit||'',category:CATS.includes(i.category)?i.category:'Other',pantry:i.pantry||false})),
       steps:Array.isArray(d.steps)?d.steps.map(s=>({text:s.text||String(s),timerSeconds:s.timerSeconds||0})):[],
     });
     document.getElementById('rjson').value='';save();renderRecipes();showToast(`"${d.name}" added!`);
@@ -880,9 +1009,11 @@ function renderDetail(r){
         <ul class="inglist">
           ${r.ingredients.map((ing,i)=>{
             const sq=ing.quantity*scale;const qs=sq?`${fq(sq)} ${ing.unit}`.trim():'';
+            const isPantry=ing.pantry||(S.pantryList||[]).some(p=>p.toLowerCase()===ing.name.toLowerCase());
             return `<li class="ingitem">
               <span class="ingname">${ing.name}</span>
               ${qs?`<span class="ingqty">${qs}</span>`:''}
+              ${isPantry?`<span class="pantrybadge" title="Pantry item">🧂 pantry</span>`:''}
               <button class="catbadge" onclick="openCatMod('${r.id}',${i},'${ing.category}')">${CICONS[ing.category]||'?'} ${ing.category}</button>
             </li>`;
           }).join('')}
@@ -968,9 +1099,33 @@ function renderStaples(){
   if(!S.staples.length){list.innerHTML='<p style="font-size:.8rem;color:var(--ink3);padding:6px 0">No staples yet.</p>';return;}
   list.innerHTML=S.staples.map((s,i)=>`<div class="stitem"><span>${s}</span><button onclick="removeStaple(${i})">✕</button></div>`).join('');
 }
-function clearBought(){S.groceryList=S.groceryList.filter(i=>!i.checked);save();renderGrocery();showToast('Bought items removed');}
-function addToStaples(i){const name=S.groceryList[i].name;if(S.staples.includes(name)){showToast('Already a staple!');return;}S.staples.push(name);save();renderStaples();showToast(`"${name}" added to staples`);}
-const CAT_HINTS={Produce:['apple','apples','banana','bananas','lemon','lemons','lime','limes','orange','oranges','strawberr','blueberr','raspberry','raspberries','grape','grapes','mango','avocado','tomato','tomatoes','spinach','kale','lettuce','rocket','cabbage','broccoli','cauliflower','carrot','carrots','zucchini','courgette','cucumber','capsicum','pepper','peppers','mushroom','mushrooms','potato','potatoes','sweet potato','pumpkin','corn','asparagus','celery','leek','leeks','spring onion','chilli','chillies','parsley','basil','coriander','cilantro','mint','thyme','rosemary','sage','dill','ginger','garlic'],Bakery:['bread','sourdough','baguette','roll','rolls','wrap','wraps','pita','pitta','naan','croissant','croissants','bagel','bagels','brioche','focaccia','pizza base','pizza dough','pastry','puff pastry','shortcrust'],Deli:['salami','prosciutto','pancetta','ham','smoked salmon','smoked trout','hummus','tzatziki','baba ganoush','pesto','deli','pastrami','chorizo','mortadella'],Butcher:['chicken','beef','lamb','pork','turkey','duck','fish','salmon','tuna','prawn','prawns','shrimp','mince','steak','sausage','sausages','bacon','ribs','fillet','thigh','thighs','breast','breasts','chop','chops','roast','seafood','scallop','scallops','crab','lobster'],Dairy:['milk','cream','butter','cheese','cheddar','mozzarella','parmesan','feta','brie','camembert','ricotta','mascarpone','yogurt','yoghurt','sour cream','creme fraiche','egg','eggs','ghee','whipping cream','heavy cream','double cream','cream cheese'],Frozen:['frozen','ice cream','gelato','sorbet']};
+function addStaple(){
+  const inp=document.getElementById('stinput'),v=inp.value.trim();if(!v)return;
+  if(S.staples.includes(v)){showToast('Already on list!');return;}
+  S.staples.push(v);inp.value='';save();renderStaples();
+}
+function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
+
+// ═══════════════════════════════════════════════════
+//  PANTRY LIST PAGE
+// ═══════════════════════════════════════════════════
+function renderPantryList(){
+  const list=document.getElementById('pantrylist');
+  if(!list)return;
+  if(!S.pantryList||!S.pantryList.length){list.innerHTML='<p style="font-size:.8rem;color:var(--ink3);padding:6px 0">No pantry items yet.</p>';return;}
+  list.innerHTML=S.pantryList.map((s,i)=>`<div class="stitem"><span>${s}</span><button onclick="removePantryItem(${i})">✕</button></div>`).join('');
+}
+function addPantryItem(){
+  const inp=document.getElementById('pantryinput'),v=inp.value.trim();if(!v)return;
+  if(!S.pantryList)S.pantryList=[];
+  if(S.pantryList.includes(v)){showToast('Already on pantry list!');return;}
+  S.pantryList.push(v);inp.value='';save();renderPantryList();showToast(`"${v}" added to pantry`);
+}
+function removePantryItem(i){S.pantryList.splice(i,1);save();renderPantryList();}
+
+// ═══════════════════════════════════════════════════
+//  DESCRIBE PROMPT
+// ═══════════════════════════════════════════════════
 function generateDescribePrompt(){
   const desc=document.getElementById('rdescribe').value.trim();
   if(!desc){showToast('Please describe the recipe first');return;}
@@ -1001,17 +1156,25 @@ Category MUST be exactly one of these seven:
 - Frozen: anything purchased frozen — e.g. frozen peas, ice cream
 - Other: pantry, canned goods, condiments, dry goods — e.g. pasta, olive oil, tinned tomatoes
 
-pantry: true for items like salt, pepper, olive oil, flour, sugar, butter, soy sauce, spices — things most households always have. false for everything else.
+${getPantryLine()}
 unit: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items
 timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
 tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
-Infer reasonable quantities and steps from the description. Fill in anything that's missing sensibly.`;
+Infer reasonable quantities and steps from the description. Fill in anything missing sensibly.`;
   document.getElementById('describe-prompt').textContent=prompt;
   document.getElementById('describe-prompt-box').style.display='block';
 }
-  function suggestCat(){const val=document.getElementById('miinput').value.toLowerCase().trim();if(!val){return;}const sel=document.getElementById('micat');for(const[cat,words]of Object.entries(CAT_HINTS)){if(words.some(w=>val.includes(w)||w.includes(val))){sel.value=cat;return;}}sel.value='Other';}
-function addStaple(){const inp=document.getElementById('stinput'),v=inp.value.trim();if(!v)return;if(S.staples.includes(v)){showToast('Already on list!');return;}S.staples.push(v);inp.value='';save();renderStaples();}
-function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
+
+// ═══════════════════════════════════════════════════
+//  CATEGORY HINTS (manual grocery add)
+// ═══════════════════════════════════════════════════
+const CAT_HINTS={Produce:['apple','apples','banana','bananas','lemon','lemons','lime','limes','orange','oranges','strawberr','blueberr','raspberry','raspberries','grape','grapes','mango','avocado','tomato','tomatoes','spinach','kale','lettuce','rocket','cabbage','broccoli','cauliflower','carrot','carrots','zucchini','courgette','cucumber','capsicum','pepper','peppers','mushroom','mushrooms','potato','potatoes','sweet potato','pumpkin','corn','asparagus','celery','leek','leeks','spring onion','chilli','chillies','parsley','basil','coriander','cilantro','mint','thyme','rosemary','sage','dill','ginger','garlic'],Bakery:['bread','sourdough','baguette','roll','rolls','wrap','wraps','pita','pitta','naan','croissant','croissants','bagel','bagels','brioche','focaccia','pizza base','pizza dough','pastry','puff pastry','shortcrust'],Deli:['salami','prosciutto','pancetta','ham','smoked salmon','smoked trout','hummus','tzatziki','baba ganoush','pesto','deli','pastrami','chorizo','mortadella'],Butcher:['chicken','beef','lamb','pork','turkey','duck','fish','salmon','tuna','prawn','prawns','shrimp','mince','steak','sausage','sausages','bacon','ribs','fillet','thigh','thighs','breast','breasts','chop','chops','roast','seafood','scallop','scallops','crab','lobster'],Dairy:['milk','cream','butter','cheese','cheddar','mozzarella','parmesan','feta','brie','camembert','ricotta','mascarpone','yogurt','yoghurt','sour cream','creme fraiche','egg','eggs','ghee','whipping cream','heavy cream','double cream','cream cheese'],Frozen:['frozen','ice cream','gelato','sorbet']};
+function suggestCat(){
+  const val=document.getElementById('miinput').value.toLowerCase().trim();if(!val)return;
+  const sel=document.getElementById('micat');
+  for(const[cat,words]of Object.entries(CAT_HINTS)){if(words.some(w=>val.includes(w)||w.includes(val))){sel.value=cat;return;}}
+  sel.value='Other';
+}
 
 // ═══════════════════════════════════════════════════
 //  UTILS
