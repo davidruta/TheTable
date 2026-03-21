@@ -72,7 +72,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .svrow input{width:40px;padding:2px 5px;border:1px solid var(--border);border-radius:5px;font-family:'Jost',sans-serif;font-size:.73rem;text-align:center;background:#fff}
 .whoout{display:flex;flex-wrap:wrap;gap:3px}
 .pchip{font-size:.66rem;padding:2px 7px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;color:var(--ink3);font-weight:500}
-.pchip.out{background:var(--terra-pale);border-color:var(--terra-l);color:var(--terra)}
+.pchip.out{background:var(--terra-pale);border-color:var(--terra-l);color:var(--terra)} .dayoff{font-size:.72rem;color:var(--ink3);text-align:center;padding:3px 0;font-style:italic;}
 .pact{display:flex;gap:9px;flex-wrap:wrap}
 
 /* GROCERY */
@@ -600,6 +600,7 @@ function renderPlanner(){
         <option value="random" ${day.recipeId==='random'?'selected':''}>🎲 Random</option>
         ${S.recipes.map(r=>`<option value="${r.id}" ${day.recipeId===r.id?'selected':''}>${r.name}</option>`).join('')}
       </select>
+      ${!day.recipeId?'<div class="dayoff">Day off 🍽</div>':''}
       <div class="svrow"><span>Serves:</span>
         <input type="number" min="1" max="30" value="${sv}" onchange="setSv('${key}',this.value)">
       </div>
