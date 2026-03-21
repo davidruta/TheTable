@@ -1082,8 +1082,8 @@ function renderGrocery(){
         <input type="checkbox" ${item.checked?'checked':''} onclick="event.stopPropagation();toggleGI(${item._i})">
         <span class="gilbl">${item.name}${item.isStaple?'<span class="gbadge">staple</span>':''}${item.manual?'<span class="mbadge">manual</span>':''}</span>
         ${q?`<span class="gqty">${q}</span>`:''}
-        ${item.istaple? '' : <button class="gadd" onclick="event.stopPropagation();addToStaples(${item._i})" title="Add to staples">⭐</button>
-        <button class="gdel" onclick="event.stopPropagation();delGI(${item._i})">✕</button>'}
+        ${item.isStaple?'':'<button class="gadd" onclick="event.stopPropagation();addToStaples('+item._i+')" title="Add to staples">⭐</button>'}
+        <button class="gdel" onclick="event.stopPropagation();delGI(${item._i})">✕</button>
       </div>`;
     });
     html+=`</div></div>`;
