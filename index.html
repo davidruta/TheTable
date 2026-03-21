@@ -272,6 +272,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     <div class="ph-actions">
       <button class="btn btn-ghost btn-sm" onclick="printGrocery()">🖨 Print / Share</button>
       <button class="btn btn-ghost btn-sm" onclick="uncheckAll()">↩ Uncheck all</button>
+      <button class="btn btn-ghost btn-sm" onclick="clearBought()">✅ Clear bought</button>
       <button class="btn btn-danger btn-sm" onclick="clearGrocery()">🗑 Clear</button>
     </div>
   </div>
@@ -949,6 +950,7 @@ function renderStaples(){
   if(!S.staples.length){list.innerHTML='<p style="font-size:.8rem;color:var(--ink3);padding:6px 0">No staples yet.</p>';return;}
   list.innerHTML=S.staples.map((s,i)=>`<div class="stitem"><span>${s}</span><button onclick="removeStaple(${i})">✕</button></div>`).join('');
 }
+function clearBought(){S.groceryList=S.groceryList.filter(i=>!i.checked);save();renderGrocery();showToast('Bought items removed');}
 function addStaple(){const inp=document.getElementById('stinput'),v=inp.value.trim();if(!v)return;if(S.staples.includes(v)){showToast('Already on list!');return;}S.staples.push(v);inp.value='';save();renderStaples();}
 function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
 
