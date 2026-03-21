@@ -82,6 +82,22 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .dayoff-add{font-size:.74rem;color:var(--sage);cursor:pointer;text-align:center;padding:2px 0;text-decoration:underline;background:none;border:none;font-family:'Jost',sans-serif}
 .dayoff-add:hover{color:#4a7050}
 
+/* CUSTOM MEAL & EXTRAS */
+.custom-input{width:100%;font-family:'Jost',sans-serif;font-size:.73rem;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--ink);resize:none;min-height:32px}
+.custom-input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 2px rgba(107,143,113,.12)}
+.custom-input::placeholder{color:var(--ink3);font-style:italic}
+.extras-input{width:100%;font-family:'Jost',sans-serif;font-size:.68rem;padding:3px 7px;border:1px solid transparent;border-bottom:1px dashed var(--border);border-radius:0;background:transparent;color:var(--ink2)}
+.extras-input:focus{outline:none;border-bottom-color:var(--sage)}
+.extras-input::placeholder{color:var(--ink3);font-style:italic;font-size:.68rem}
+.dc.locked .custom-input,.dc.locked .extras-input{background:var(--sage-pale);border-color:var(--sage-l)}
+
+/* CUSTOM MEALS MODAL */
+.cm-day{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px;margin-bottom:10px}
+.cm-day-label{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:600;margin-bottom:2px}
+.cm-day-meal{font-size:.78rem;color:var(--ink2);margin-bottom:8px;font-style:italic}
+.cm-day textarea{width:100%;font-family:'Jost',sans-serif;font-size:.78rem;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--ink);min-height:50px;resize:vertical}
+.cm-day textarea:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 2px rgba(107,143,113,.12)}
+
 /* GROCERY */
 .gbar{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
 .marow{display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap}
@@ -506,6 +522,19 @@ PANTRY_LINE_PLACEHOLDER</pre>
   </div>
 </div>
 
+<!-- CUSTOM MEALS INGREDIENT MODAL -->
+<div class="overlay" id="custommod">
+  <div class="modal wide">
+    <h2>📝 Custom Meal Ingredients</h2>
+    <p>You have custom meals or extras this week. Enter the ingredients you'll need (one per line).</p>
+    <div id="cmlist"></div>
+    <div class="mact">
+      <button class="btn btn-ghost btn-sm" onclick="skipCustomMeals()">Skip</button>
+      <button class="btn btn-sage" onclick="confirmCustomMeals()">Add to list →</button>
+    </div>
+  </div>
+</div>
+
 <!-- PANTRY MODAL -->
 <div class="overlay" id="pantrymod">
   <div class="modal">
@@ -598,6 +627,7 @@ let db=null, fbReady=false;
 let pendingSM={manual:[],staples:new Set()};
 let pendingPantry={manualKeep:[],outOfStock:[]};
 let pendingExist={};
+let pendingCustomIngredients=[];
 let activeTag='';
 let curDetailId=null, detailSv=4;
 let editingRecipeId=null;
@@ -698,14 +728,18 @@ function renderPlanner(){
   const grid=document.getElementById('dgrid');grid.innerHTML='';
   dates.forEach(date=>{
     const key=dk(date);
-    if(!S.plan[key])S.plan[key]={recipeId:null,locked:false,absent:[],servings:null};
+    if(!S.plan[key])S.plan[key]={recipeId:null,locked:false,absent:[],servings:null,notes:''};
+    if(S.plan[key].notes===undefined)S.plan[key].notes='';
     const day=S.plan[key];
-    const rec=day.recipeId&&day.recipeId!=='random'?S.recipes.find(r=>r.id===day.recipeId):null;
+    const isCustom=day.recipeId==='custom';
+    const rec=day.recipeId&&day.recipeId!=='random'&&!isCustom?S.recipes.find(r=>r.id===day.recipeId):null;
     const defSv=rec?rec.serves:4;
     const sv=day.servings!=null?day.servings:defSv;
     const isDayOff=!day.recipeId;
     const card=document.createElement('div');
     card.className='dc'+(day.locked?' locked':'')+(isToday(date)?' today':'')+(isDayOff?' dayoff-card':'');
+
+    const escNotes=(day.notes||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
     if(isDayOff){
       card.innerHTML=`
@@ -716,6 +750,20 @@ function renderPlanner(){
         <div class="dayoff-label">Day off 🍽</div>
         <button class="dayoff-add" onclick="activateDay('${key}')">+ Add meal</button>
         <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
+    } else if(isCustom){
+      card.innerHTML=`
+        <div class="dh">
+          <div><div class="dn">${DAYS[date.getDay()]}</div><div class="dd">${date.toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</div></div>
+          <button class="lbtn" onclick="toggleLock('${key}')">${day.locked?'🔒':'🔓'}</button>
+        </div>
+        <select class="msel" onchange="selectMeal('${key}',this.value)" ${day.locked?'disabled':''}>
+          <option value="">— none —</option>
+          <option value="custom" selected>✏️ Custom meal</option>
+          <option value="random">🎲 Random</option>
+          ${S.recipes.map(r=>`<option value="${r.id}">${r.name}</option>`).join('')}
+        </select>
+        <textarea class="custom-input" placeholder="Describe the meal…" ${day.locked?'disabled':''} onchange="setNotes('${key}',this.value)" onblur="setNotes('${key}',this.value)">${day.notes||''}</textarea>
+        <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
     } else {
       card.innerHTML=`
         <div class="dh">
@@ -724,12 +772,14 @@ function renderPlanner(){
         </div>
         <select class="msel" onchange="selectMeal('${key}',this.value)" ${day.locked?'disabled':''}>
           <option value="">— none —</option>
+          <option value="custom">✏️ Custom meal</option>
           <option value="random" ${day.recipeId==='random'?'selected':''}>🎲 Random</option>
           ${S.recipes.map(r=>`<option value="${r.id}" ${day.recipeId===r.id?'selected':''}>${r.name}</option>`).join('')}
         </select>
         <div class="svrow"><span>Serves:</span>
           <input type="number" min="1" max="30" value="${sv}" onchange="setSv('${key}',this.value)">
         </div>
+        <input type="text" class="extras-input" placeholder="+ sides or extras…" value="${escNotes}" ${day.locked?'disabled':''} onchange="setNotes('${key}',this.value)" onblur="setNotes('${key}',this.value)">
         <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
     }
     grid.appendChild(card);
@@ -737,41 +787,49 @@ function renderPlanner(){
 }
 
 function activateDay(k){
-  // Show the dropdown by setting to first recipe if available, or just render with dropdown
   if(S.recipes.length){S.plan[k].recipeId=S.recipes[0].id;}
-  else{S.plan[k].recipeId='random';}
+  else{S.plan[k].recipeId='custom';}
   save();renderPlanner();
 }
 
 function toggleLock(k){S.plan[k].locked=!S.plan[k].locked;save();renderPlanner();}
-function selectMeal(k,v){S.plan[k].recipeId=v||null;save();renderPlanner();}
+function selectMeal(k,v){
+  S.plan[k].recipeId=v||null;
+  // Clear notes when switching away from custom, keep them when switching to custom
+  if(v!=='custom'&&S.plan[k].recipeId!=='custom'){
+    // Keep notes for extras on recipe days, only clear if going to "none"
+    if(!v)S.plan[k].notes='';
+  }
+  save();renderPlanner();
+}
+function setNotes(k,v){S.plan[k].notes=v;save();}
 function setSv(k,v){S.plan[k].servings=Math.max(1,parseInt(v)||1);save();}
 function toggleAbsent(k,p){const a=S.plan[k].absent;const i=a.indexOf(p);if(i>=0)a.splice(i,1);else a.push(p);save();renderPlanner();}
 function shiftWeek(d){S.weekOffset+=d;save();renderPlanner();}
 function changeStartDay(){S.startDay=parseInt(document.getElementById('sdsel').value);save();renderPlanner();}
 function clearWeek(){
   if(!confirm('Clear all meals for this week?'))return;
-  getWeekDates().forEach(d=>{const k=dk(d);if(S.plan[k]){S.plan[k].recipeId=null;S.plan[k].locked=false;S.plan[k].servings=null;}});
+  getWeekDates().forEach(d=>{const k=dk(d);if(S.plan[k]){S.plan[k].recipeId=null;S.plan[k].locked=false;S.plan[k].servings=null;S.plan[k].notes='';}});
   save();renderPlanner();
 }
 function randomiseUnlocked(){
   if(!S.recipes.length){showToast('No recipes yet!');return;}
   const dates=getWeekDates();const used=new Set();
-  dates.forEach(d=>{const k=dk(d);if(S.plan[k]?.locked&&S.plan[k].recipeId&&S.plan[k].recipeId!=='random')used.add(S.plan[k].recipeId);});
+  dates.forEach(d=>{const k=dk(d);if(S.plan[k]?.locked&&S.plan[k].recipeId&&S.plan[k].recipeId!=='random'&&S.plan[k].recipeId!=='custom')used.add(S.plan[k].recipeId);});
   dates.forEach(d=>{
-    const k=dk(d);if(!S.plan[k])S.plan[k]={recipeId:null,locked:false,absent:[],servings:null};
+    const k=dk(d);if(!S.plan[k])S.plan[k]={recipeId:null,locked:false,absent:[],servings:null,notes:''};
     if(!S.plan[k].locked){
       const pool=S.recipes.filter(r=>!used.has(r.id));
       const p=(pool.length?pool:S.recipes)[Math.floor(Math.random()*(pool.length?pool:S.recipes).length)];
-      S.plan[k].recipeId=p.id;used.add(p.id);
+      S.plan[k].recipeId=p.id;S.plan[k].notes='';used.add(p.id);
     }
   });
   save();renderPlanner();
 }
 
 // ═══════════════════════════════════════════════════
-//  GROCERY GENERATION FLOW — #6 with existing items check
-//  Order: Existing check → Regen review → Pantry check → Staples check → Build
+//  GROCERY GENERATION FLOW — with existing items & custom meals
+//  Order: Existing check → Regen review → Custom meals → Pantry check → Staples check → Build
 // ═══════════════════════════════════════════════════
 function startGroceryGen(){
   const planItems=S.groceryList.filter(i=>!i.manual&&!i.isStaple);
@@ -794,7 +852,7 @@ function startGroceryGen(){
   } else if(manual.length){
     openRegenMod(manual);
   } else {
-    openPantryMod([]);
+    checkCustomMeals([]);
   }
 }
 
@@ -803,16 +861,16 @@ function existAct(action){
   document.getElementById('existmod').classList.remove('open');
   if(action==='clear-all'){
     S.groceryList=[];
-    openPantryMod([]);
+    checkCustomMeals([]);
   } else if(action==='clear-plan'){
     S.groceryList=S.groceryList.filter(i=>i.manual||i.isStaple);
     const manual=S.groceryList.filter(i=>i.manual);
     if(manual.length) openRegenMod(manual);
-    else openPantryMod([]);
+    else checkCustomMeals([]);
   } else if(action==='merge'){
     const manual=S.groceryList.filter(i=>i.manual);
     if(manual.length) openRegenMod(manual);
-    else openPantryMod([]);
+    else checkCustomMeals([]);
   }
 }
 
@@ -832,7 +890,69 @@ function regenAct(action){
   let keep=[];
   if(action==='keep-all')keep=manual;
   else if(action==='keep-sel')manual.forEach((item,i)=>{if(document.getElementById(`ri${i}`)?.checked)keep.push(item);});
-  openPantryMod(keep);
+  checkCustomMeals(keep);
+}
+
+// Step 1.5: Custom meals ingredients
+let pendingManualKeep=[];
+function checkCustomMeals(manualKeep){
+  pendingManualKeep=manualKeep;
+  const dates=getWeekDates();
+  const customDays=[];
+  dates.forEach(d=>{
+    const k=dk(d);const day=S.plan[k];if(!day)return;
+    const isCustom=day.recipeId==='custom';
+    const hasExtras=day.notes&&day.notes.trim()&&day.recipeId&&day.recipeId!=='custom';
+    if(isCustom&&day.notes&&day.notes.trim()){
+      customDays.push({key:k,date:d,type:'custom',text:day.notes.trim()});
+    }
+    if(hasExtras){
+      const rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
+      const recipeName=rec?rec.name:'Random';
+      customDays.push({key:k,date:d,type:'extras',text:day.notes.trim(),recipeName});
+    }
+  });
+  if(!customDays.length){openPantryMod(manualKeep);return;}
+
+  const list=document.getElementById('cmlist');
+  list.innerHTML=customDays.map((cd,i)=>{
+    const dayName=DAYS[cd.date.getDay()];
+    const dateStr=cd.date.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+    const label=cd.type==='custom'
+      ?`${dayName} ${dateStr} — <em>${cd.text}</em>`
+      :`${dayName} ${dateStr} — ${cd.recipeName} + <em>${cd.text}</em>`;
+    return `<div class="cm-day">
+      <div class="cm-day-label">${dayName} ${dateStr}</div>
+      <div class="cm-day-meal">${cd.type==='custom'?cd.text:cd.recipeName+' + '+cd.text}</div>
+      <textarea id="cming${i}" placeholder="e.g.\nchicken breast\nrice\nbroccoli"></textarea>
+    </div>`;
+  }).join('');
+  document.getElementById('custommod').classList.add('open');
+}
+function skipCustomMeals(){
+  document.getElementById('custommod').classList.remove('open');
+  pendingCustomIngredients=[];
+  openPantryMod(pendingManualKeep);
+}
+function confirmCustomMeals(){
+  document.getElementById('custommod').classList.remove('open');
+  const items=[];
+  document.querySelectorAll('#cmlist textarea').forEach(ta=>{
+    const lines=ta.value.split(/[\n,]/).map(l=>l.trim()).filter(Boolean);
+    lines.forEach(line=>{
+      const cat=guessCat(line);
+      items.push({name:line,qty:null,unit:'',category:cat,checked:false,manual:false,isStaple:false,fromCustom:true});
+    });
+  });
+  pendingCustomIngredients=items;
+  openPantryMod(pendingManualKeep);
+}
+function guessCat(name){
+  const val=name.toLowerCase();
+  for(const[cat,words]of Object.entries(CAT_HINTS)){
+    if(words.some(w=>val.includes(w)||w.includes(val)))return cat;
+  }
+  return 'Other';
 }
 
 // Step 2: Pantry check — #1 bug fix applied (no double-fire)
@@ -909,6 +1029,8 @@ function buildGrocery(manualKeep,selStaples){
 
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
+    // Skip custom meal days — their ingredients come from pendingCustomIngredients
+    if(day.recipeId==='custom')return;
     let rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
     if(!rec)return;
     const base=rec.serves||4;const scale=(day.servings!=null?day.servings:base)/base;
@@ -921,12 +1043,19 @@ function buildGrocery(manualKeep,selStaples){
     });
   });
   let items=Object.values(map);
+  // Add custom meal ingredients
+  (pendingCustomIngredients||[]).forEach(ci=>{
+    const mk=`${ci.name.toLowerCase()}||${ci.category}`;
+    const existing=items.find(i=>i.name.toLowerCase()===ci.name.toLowerCase());
+    if(!existing)items.push({...ci});
+  });
   manualKeep.forEach(m=>items.push({...m}));
   selStaples.forEach(s=>items.push({name:s,qty:null,unit:'',category:'Other',checked:false,manual:false,isStaple:true}));
   items.forEach(item=>{
     const prev=S.groceryList.find(g=>g.name.toLowerCase()===item.name.toLowerCase()&&g.category===item.category&&!g.manual&&!g.isStaple);
     if(prev&&!item.manual&&!item.isStaple)item.checked=prev.checked;
   });
+  pendingCustomIngredients=[];
   S.groceryList=items;save();showPage('grocery');
 }
 
