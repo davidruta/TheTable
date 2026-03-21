@@ -73,8 +73,14 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .whoout{display:flex;flex-wrap:wrap;gap:3px}
 .pchip{font-size:.66rem;padding:2px 7px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;color:var(--ink3);font-weight:500}
 .pchip.out{background:var(--terra-pale);border-color:var(--terra-l);color:var(--terra)}
-.dayoff{font-size:.72rem;color:var(--ink3);text-align:center;padding:3px 0;font-style:italic;}
 .pact{display:flex;gap:9px;flex-wrap:wrap}
+
+/* DAY OFF CARD */
+.dc.dayoff-card{background:var(--surface2);border-color:var(--border);opacity:.7}
+.dc.dayoff-card:hover{opacity:.85}
+.dayoff-label{text-align:center;padding:10px 0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink3);font-style:italic}
+.dayoff-add{font-size:.74rem;color:var(--sage);cursor:pointer;text-align:center;padding:2px 0;text-decoration:underline;background:none;border:none;font-family:'Jost',sans-serif}
+.dayoff-add:hover{color:#4a7050}
 
 /* GROCERY */
 .gbar{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
@@ -304,7 +310,58 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 <!-- RECIPES -->
 <div class="page" id="page-recipes">
   <div id="rlview">
-    <div class="ph"><div><div class="pt">Recipe Library</div><div class="ps">Your family's cookbook.</div></div></div>
+    <div class="ph">
+      <div><div class="pt">Recipe Library</div><div class="ps">Your family's cookbook.</div></div>
+      <div class="ph-actions">
+        <button class="btn btn-primary" onclick="openImportModal()">+ Add Recipe</button>
+      </div>
+    </div>
+
+    <div class="tfilter" id="tfilter">
+      <span style="font-size:.75rem;color:var(--ink3);font-weight:500">Filter:</span>
+      <span class="tpill active" onclick="filterTag('')" data-tag="">All</span>
+    </div>
+    <div class="rgrid" id="rgrid"></div>
+  </div>
+
+  <div class="rdview" id="rdview">
+    <button class="btn btn-ghost btn-sm" style="margin-bottom:18px" onclick="closeDetail()">← Back to Library</button>
+    <div id="rdcontent"></div>
+  </div>
+</div>
+
+<!-- STAPLES -->
+<div class="page" id="page-staples">
+  <div class="ph"><div><div class="pt">Staples & Pantry</div><div class="ps">Manage household staples and pantry items.</div></div></div>
+  <div class="stbox">
+    <h3>Your Staples</h3>
+    <div class="hint">Items you might need to restock — shown as a checklist when generating your grocery list.</div>
+    <div class="stlist" id="stlist"></div>
+    <div class="addrow">
+      <input type="text" id="stinput" placeholder="Add a staple…" onkeydown="if(event.key==='Enter')addStaple()">
+      <button class="btn btn-sage btn-sm" onclick="addStaple()">Add</button>
+    </div>
+  </div>
+  <div class="stbox">
+    <h3>Your Pantry List</h3>
+    <div class="hint">Items assumed to always be in stock — excluded from your grocery list unless you mark them as out. Also embedded in your Claude prompts automatically.</div>
+    <div class="stlist" id="pantrylist"></div>
+    <div class="addrow">
+      <input type="text" id="pantryinput" placeholder="Add a pantry item…" onkeydown="if(event.key==='Enter')addPantryItem()">
+      <button class="btn btn-terra btn-sm" onclick="addPantryItem()" style="background:var(--terra);color:#fff;padding:6px 12px;font-size:.76rem">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MODALS ═══════════ -->
+
+<!-- IMPORT RECIPE MODAL (#3 — import tabs behind modal) -->
+<div class="overlay" id="importmod">
+  <div class="modal wide">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h2>Add a Recipe</h2>
+      <button class="btn btn-ghost btn-xs" onclick="closeImportModal()">✕ Close</button>
+    </div>
     <div class="itabs">
       <button class="rit active" onclick="switchTab('photo')">📷 Photo</button>
       <button class="rit" onclick="switchTab('url')">🔗 URL</button>
@@ -391,17 +448,17 @@ PANTRY_LINE_PLACEHOLDER</pre>
       </div>
     </div>
 
-    <!-- DESCRIBE TAB -->
+    <!-- DESCRIBE TAB (#2 — button moved before prompt box) -->
     <div class="ipanel" id="tab-describe">
       <h3>Describe a Recipe</h3>
       <div class="hint">Type a loose description of the recipe below — ingredients, rough steps, anything you know. Then copy the prompt and run it in Claude. Paste the JSON output in the JSON tab.</div>
       <textarea id="rdescribe" placeholder="e.g. Mum's roast chicken — whole chicken rubbed with butter and herbs, roasted with potatoes and carrots. Make a gravy from the pan juices. Serves 6." style="min-height:120px"></textarea>
-      <div class="pbox" id="describe-prompt-box" style="display:none">
+      <button class="btn btn-primary" onclick="generateDescribePrompt()">Generate Prompt</button>
+      <div class="pbox" id="describe-prompt-box" style="display:none;margin-top:12px">
         <h4>✏️ Generated Prompt — copy and use in Claude</h4>
         <pre id="describe-prompt"></pre>
         <button class="cpbtn" onclick="copyPrompt('describe-prompt')">Copy Prompt</button>
       </div>
-      <button class="btn btn-primary" onclick="generateDescribePrompt()">Generate Prompt</button>
     </div>
 
     <!-- JSON TAB -->
@@ -411,39 +468,40 @@ PANTRY_LINE_PLACEHOLDER</pre>
       <textarea id="rjson" placeholder='{"name":"...","serves":4,"ingredients":[...],"steps":[]}'></textarea>
       <button class="btn btn-primary" onclick="addRecipeJSON()">Add Recipe</button>
     </div>
-
-    <div class="tfilter" id="tfilter">
-      <span style="font-size:.75rem;color:var(--ink3);font-weight:500">Filter:</span>
-      <span class="tpill active" onclick="filterTag('')" data-tag="">All</span>
-    </div>
-    <div class="rgrid" id="rgrid"></div>
-  </div>
-
-  <div class="rdview" id="rdview">
-    <button class="btn btn-ghost btn-sm" style="margin-bottom:18px" onclick="closeDetail()">← Back to Library</button>
-    <div id="rdcontent"></div>
   </div>
 </div>
 
-<!-- STAPLES -->
-<div class="page" id="page-staples">
-  <div class="ph"><div><div class="pt">Staples & Pantry</div><div class="ps">Manage household staples and pantry items.</div></div></div>
-  <div class="stbox">
-    <h3>Your Staples</h3>
-    <div class="hint">Items you might need to restock — shown as a checklist when generating your grocery list.</div>
-    <div class="stlist" id="stlist"></div>
-    <div class="addrow">
-      <input type="text" id="stinput" placeholder="Add a staple…" onkeydown="if(event.key==='Enter')addStaple()">
-      <button class="btn btn-sage btn-sm" onclick="addStaple()">Add</button>
+<!-- EDIT RECIPE MODAL (#4 — Claude-assisted editing) -->
+<div class="overlay" id="editmod">
+  <div class="modal wide">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h2>✏️ Edit Recipe</h2>
+      <button class="btn btn-ghost btn-xs" onclick="closeEditModal()">✕ Close</button>
     </div>
+    <div id="edit-recipe-summary" style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:13px 16px;margin-bottom:14px;font-size:.8rem;color:var(--ink2);max-height:150px;overflow-y:auto"></div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:8px">Describe your changes</h3>
+    <textarea id="edit-describe" placeholder="e.g. Swap chicken for tofu, add a step for marinating, reduce servings to 2…" style="width:100%;font-family:'Jost',sans-serif;font-size:.8rem;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);min-height:80px;resize:vertical;margin-bottom:10px"></textarea>
+    <button class="btn btn-primary" onclick="generateEditPrompt()">Generate Edit Prompt</button>
+    <div class="pbox" id="edit-prompt-box" style="display:none;margin-top:12px">
+      <h4>✏️ Edit Prompt — copy and use in Claude</h4>
+      <pre id="edit-prompt"></pre>
+      <button class="cpbtn" onclick="copyPrompt('edit-prompt')">Copy Prompt</button>
+    </div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;margin:18px 0 8px">Paste updated JSON</h3>
+    <textarea id="edit-json" placeholder='Paste the updated JSON from Claude here…' style="width:100%;font-family:'Jost',sans-serif;font-size:.8rem;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);min-height:80px;resize:vertical;margin-bottom:10px"></textarea>
+    <button class="btn btn-sage" onclick="applyRecipeEdit()">Update Recipe</button>
   </div>
-  <div class="stbox">
-    <h3>Your Pantry List</h3>
-    <div class="hint">Items assumed to always be in stock — excluded from your grocery list unless you mark them as out. Also embedded in your Claude prompts automatically.</div>
-    <div class="stlist" id="pantrylist"></div>
-    <div class="addrow">
-      <input type="text" id="pantryinput" placeholder="Add a pantry item…" onkeydown="if(event.key==='Enter')addPantryItem()">
-      <button class="btn btn-terra btn-sm" onclick="addPantryItem()" style="background:var(--terra);color:#fff;padding:6px 12px;font-size:.76rem">Add</button>
+</div>
+
+<!-- EXISTING ITEMS MODAL (#6 — clear vs merge prompt) -->
+<div class="overlay" id="existmod">
+  <div class="modal">
+    <h2>🛒 Existing Grocery Items</h2>
+    <p id="existmod-msg"></p>
+    <div class="mact" style="flex-direction:column;align-items:stretch;gap:9px">
+      <button class="btn btn-danger" onclick="existAct('clear-all')" style="justify-content:center">🗑 Clear everything &amp; start fresh</button>
+      <button class="btn btn-ghost" onclick="existAct('clear-plan')" style="justify-content:center">↻ Clear meal plan items only <span style="font-size:.68rem;color:var(--ink3);margin-left:6px">(keeps manual &amp; staples)</span></button>
+      <button class="btn btn-sage" onclick="existAct('merge')" style="justify-content:center">🔀 Merge — keep everything &amp; add new</button>
     </div>
   </div>
 </div>
@@ -474,7 +532,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
   </div>
 </div>
 
-<!-- REGEN MODAL -->
+<!-- REGEN MODAL (manual items) -->
 <div class="overlay" id="rgmod">
   <div class="modal">
     <h2>🔄 Existing Manual Items</h2>
@@ -539,8 +597,10 @@ let S = {
 let db=null, fbReady=false;
 let pendingSM={manual:[],staples:new Set()};
 let pendingPantry={manualKeep:[],outOfStock:[]};
+let pendingExist={};
 let activeTag='';
 let curDetailId=null, detailSv=4;
+let editingRecipeId=null;
 let catMS={rid:null,idx:null,cat:null};
 let timers={};
 
@@ -566,7 +626,6 @@ function initFB(){
         db.collection(FB_COL).doc(FB_DOC).onSnapshot(snap=>{
           if(snap.exists){
             const data=snap.data();
-            // Ensure pantryList always exists
             if(!data.pantryList)data.pantryList=[...DEFAULT_PANTRY];
             S={...S,...data};
           }
@@ -631,7 +690,7 @@ function fmtRange(ds){const f=d=>d.toLocaleDateString('en-CA',{month:'short',day
 function isToday(d){const t=new Date();t.setHours(0,0,0,0);return d.getTime()===t.getTime();}
 
 // ═══════════════════════════════════════════════════
-//  PLANNER
+//  PLANNER — #5 Day Off redesign
 // ═══════════════════════════════════════════════════
 function renderPlanner(){
   const dates=getWeekDates();
@@ -644,25 +703,44 @@ function renderPlanner(){
     const rec=day.recipeId&&day.recipeId!=='random'?S.recipes.find(r=>r.id===day.recipeId):null;
     const defSv=rec?rec.serves:4;
     const sv=day.servings!=null?day.servings:defSv;
+    const isDayOff=!day.recipeId;
     const card=document.createElement('div');
-    card.className='dc'+(day.locked?' locked':'')+(isToday(date)?' today':'');
-    card.innerHTML=`
-      <div class="dh">
-        <div><div class="dn">${DAYS[date.getDay()]}</div><div class="dd">${date.toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</div></div>
-        <button class="lbtn" onclick="toggleLock('${key}')">${day.locked?'🔒':'🔓'}</button>
-      </div>
-      <select class="msel" onchange="selectMeal('${key}',this.value)" ${day.locked?'disabled':''}>
-        <option value="">— none —</option>
-        <option value="random" ${day.recipeId==='random'?'selected':''}>🎲 Random</option>
-        ${S.recipes.map(r=>`<option value="${r.id}" ${day.recipeId===r.id?'selected':''}>${r.name}</option>`).join('')}
-      </select>
-      ${!day.recipeId?'<div class="dayoff">Day off 🍽</div>':''}
-      <div class="svrow"><span>Serves:</span>
-        <input type="number" min="1" max="30" value="${sv}" onchange="setSv('${key}',this.value)">
-      </div>
-      <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
+    card.className='dc'+(day.locked?' locked':'')+(isToday(date)?' today':'')+(isDayOff?' dayoff-card':'');
+
+    if(isDayOff){
+      card.innerHTML=`
+        <div class="dh">
+          <div><div class="dn">${DAYS[date.getDay()]}</div><div class="dd">${date.toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</div></div>
+          <button class="lbtn" onclick="toggleLock('${key}')">${day.locked?'🔒':'🔓'}</button>
+        </div>
+        <div class="dayoff-label">Day off 🍽</div>
+        <button class="dayoff-add" onclick="activateDay('${key}')">+ Add meal</button>
+        <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
+    } else {
+      card.innerHTML=`
+        <div class="dh">
+          <div><div class="dn">${DAYS[date.getDay()]}</div><div class="dd">${date.toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</div></div>
+          <button class="lbtn" onclick="toggleLock('${key}')">${day.locked?'🔒':'🔓'}</button>
+        </div>
+        <select class="msel" onchange="selectMeal('${key}',this.value)" ${day.locked?'disabled':''}>
+          <option value="">— none —</option>
+          <option value="random" ${day.recipeId==='random'?'selected':''}>🎲 Random</option>
+          ${S.recipes.map(r=>`<option value="${r.id}" ${day.recipeId===r.id?'selected':''}>${r.name}</option>`).join('')}
+        </select>
+        <div class="svrow"><span>Serves:</span>
+          <input type="number" min="1" max="30" value="${sv}" onchange="setSv('${key}',this.value)">
+        </div>
+        <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
+    }
     grid.appendChild(card);
   });
+}
+
+function activateDay(k){
+  // Show the dropdown by setting to first recipe if available, or just render with dropdown
+  if(S.recipes.length){S.plan[k].recipeId=S.recipes[0].id;}
+  else{S.plan[k].recipeId='random';}
+  save();renderPlanner();
 }
 
 function toggleLock(k){S.plan[k].locked=!S.plan[k].locked;save();renderPlanner();}
@@ -692,13 +770,50 @@ function randomiseUnlocked(){
 }
 
 // ═══════════════════════════════════════════════════
-//  GROCERY GENERATION FLOW
-//  Order: Regen review → Pantry check → Staples check → Build
+//  GROCERY GENERATION FLOW — #6 with existing items check
+//  Order: Existing check → Regen review → Pantry check → Staples check → Build
 // ═══════════════════════════════════════════════════
 function startGroceryGen(){
+  const planItems=S.groceryList.filter(i=>!i.manual&&!i.isStaple);
   const manual=S.groceryList.filter(i=>i.manual);
-  if(manual.length)openRegenMod(manual);
-  else openPantryMod([]);
+
+  if(planItems.length>0){
+    const n=planItems.length;
+    const manualN=manual.length;
+    const stapleN=S.groceryList.filter(i=>i.isStaple).length;
+    let msg=`Your grocery list already has ${n} item${n!==1?'s':''} from a previous meal plan`;
+    if(manualN>0||stapleN>0){
+      const extras=[];
+      if(manualN>0)extras.push(`${manualN} manual`);
+      if(stapleN>0)extras.push(`${stapleN} staple`);
+      msg+=`, plus ${extras.join(' and ')} item${(manualN+stapleN)!==1?'s':''}`;
+    }
+    msg+='. What would you like to do?';
+    document.getElementById('existmod-msg').textContent=msg;
+    document.getElementById('existmod').classList.add('open');
+  } else if(manual.length){
+    openRegenMod(manual);
+  } else {
+    openPantryMod([]);
+  }
+}
+
+// Step 0: Existing plan items check
+function existAct(action){
+  document.getElementById('existmod').classList.remove('open');
+  if(action==='clear-all'){
+    S.groceryList=[];
+    openPantryMod([]);
+  } else if(action==='clear-plan'){
+    S.groceryList=S.groceryList.filter(i=>i.manual||i.isStaple);
+    const manual=S.groceryList.filter(i=>i.manual);
+    if(manual.length) openRegenMod(manual);
+    else openPantryMod([]);
+  } else if(action==='merge'){
+    const manual=S.groceryList.filter(i=>i.manual);
+    if(manual.length) openRegenMod(manual);
+    else openPantryMod([]);
+  }
 }
 
 // Step 1: Regen review (if manual items exist)
@@ -720,10 +835,9 @@ function regenAct(action){
   openPantryMod(keep);
 }
 
-// Step 2: Pantry check
+// Step 2: Pantry check — #1 bug fix applied (no double-fire)
 function openPantryMod(manualKeep){
   pendingPantry={manualKeep,outOfStock:[]};
-  // Collect all pantry-flagged ingredients from this week's plan
   const dates=getWeekDates();
   const pantryItems=new Set();
   dates.forEach(d=>{
@@ -732,7 +846,6 @@ function openPantryMod(manualKeep){
     if(!rec)return;
     rec.ingredients.filter(i=>i.pantry).forEach(i=>pantryItems.add(i.name));
   });
-  // Also include any pantry list items that match ingredients (for older recipes without pantry flag)
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
     const rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
@@ -745,59 +858,61 @@ function openPantryMod(manualKeep){
   const list=document.getElementById('pantry-modal-list');
   list.innerHTML=[...pantryItems].map((name,i)=>`
     <div class="smitem sel" id="pmi${i}" onclick="togglePMI(${i})">
-      <input type="checkbox" id="pmc${i}" checked onclick="event.stopPropagation();togglePMI(${i})">
+      <input type="checkbox" id="pmc${i}" checked onclick="event.stopPropagation()">
       <label for="pmc${i}">${name}</label>
     </div>`).join('');
   document.getElementById('pantrymod').classList.add('open');
 }
 function togglePMI(i){
   const el=document.getElementById(`pmi${i}`),cb=document.getElementById(`pmc${i}`);
-  if(cb.checked){cb.checked=false;el.classList.remove('sel');}
-  else{cb.checked=true;el.classList.add('sel');}
+  cb.checked=!cb.checked;
+  if(cb.checked){el.classList.add('sel');}
+  else{el.classList.remove('sel');}
 }
 function skipPantry(){document.getElementById('pantrymod').classList.remove('open');openStaplesMod(pendingPantry.manualKeep);}
 function confirmPantry(){
   document.getElementById('pantrymod').classList.remove('open');
-  // Items that are UNCHECKED = out of stock = need to go on the list
   const unchecked=[...document.querySelectorAll('#pantry-modal-list input[type=checkbox]')].filter(cb=>!cb.checked).map(cb=>cb.nextElementSibling.textContent.trim());
   pendingPantry.outOfStock=unchecked;
   openStaplesMod(pendingPantry.manualKeep);
 }
 
-// Step 3: Staples check
+// Step 3: Staples check — #1 bug fix applied (no double-fire)
 function openStaplesMod(manualKeep){
   pendingSM={manual:manualKeep,staples:new Set()};
   const list=document.getElementById('smlist');
   if(!S.staples.length){list.innerHTML='<p style="font-size:.8rem;color:var(--ink3)">No staples yet — add in the Staples tab.</p>';}
   else list.innerHTML=S.staples.map((s,i)=>`
     <div class="smitem" id="smi${i}" onclick="toggleSMI(${i})">
-      <input type="checkbox" id="smc${i}" onclick="event.stopPropagation();toggleSMI(${i})">
+      <input type="checkbox" id="smc${i}" onclick="event.stopPropagation()">
       <label for="smc${i}">${s}</label>
     </div>`).join('');
   document.getElementById('stmod').classList.add('open');
 }
 function toggleSMI(i){
   const el=document.getElementById(`smi${i}`),cb=document.getElementById(`smc${i}`);
-  if(pendingSM.staples.has(i)){pendingSM.staples.delete(i);el.classList.remove('sel');cb.checked=false;}
-  else{pendingSM.staples.add(i);el.classList.add('sel');cb.checked=true;}
+  cb.checked=!cb.checked;
+  if(cb.checked){pendingSM.staples.add(i);el.classList.add('sel');}
+  else{pendingSM.staples.delete(i);el.classList.remove('sel');}
 }
 function skipStaples(){document.getElementById('stmod').classList.remove('open');buildGrocery(pendingSM.manual,[]);}
 function confirmStaples(){
   document.getElementById('stmod').classList.remove('open');
-  buildGrocery(pendingSM.manual,[...pendingSM.staples].map(i=>S.staples[i]));
+  const selected=[...document.querySelectorAll('#smlist input[type=checkbox]')].filter(cb=>cb.checked).map(cb=>cb.nextElementSibling.textContent.trim());
+  buildGrocery(pendingSM.manual, selected);
 }
 
 // Step 4: Build the list
 function buildGrocery(manualKeep,selStaples){
   const outOfStock=pendingPantry.outOfStock||[];
   const dates=getWeekDates();const map={};
+
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
     let rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
     if(!rec)return;
     const base=rec.serves||4;const scale=(day.servings!=null?day.servings:base)/base;
     rec.ingredients.forEach(ing=>{
-      // Skip pantry items unless user said they're out of stock
       const isPantry=ing.pantry||S.pantryList.some(p=>p.toLowerCase()===ing.name.toLowerCase());
       if(isPantry&&!outOfStock.includes(ing.name))return;
       const mk=`${ing.name.toLowerCase()}|${ing.unit}|${ing.category}`;
@@ -874,18 +989,16 @@ function printGrocery(){
 }
 
 // ═══════════════════════════════════════════════════
-//  PROMPTS — dynamic, always reflect current pantry list
+//  PROMPTS
 // ═══════════════════════════════════════════════════
 function getPantryLine(){
   return `pantry: true ONLY for these exact items (or close matches): ${(S.pantryList||DEFAULT_PANTRY).join(', ')}. false for everything else.`;
 }
 
 function copyPromptLive(id){
-  // Build a fresh copy of the prompt with current pantry list injected
   const el=document.getElementById(id);
   if(!el)return;
   let text=el.textContent.replace('PANTRY_LINE_PLACEHOLDER',getPantryLine());
-  // For URL prompt, also inject the current URL value
   if(id==='url-prompt'){
     const urlVal=(document.getElementById('url-input')?.value||'').trim()||'[PASTE URL HERE]';
     text=text.replace(/Please fetch and extract the recipe from this URL: .+/,`Please fetch and extract the recipe from this URL: ${urlVal}`);
@@ -894,12 +1007,17 @@ function copyPromptLive(id){
 }
 
 function updateUrlInPrompt(){
-  // Live-update the visible URL in the prompt box as the user types
   const urlVal=(document.getElementById('url-input')?.value||'').trim()||'[PASTE URL HERE]';
   const el=document.getElementById('url-prompt');
   if(!el)return;
   el.textContent=el.textContent.replace(/Please fetch and extract the recipe from this URL: .+/,`Please fetch and extract the recipe from this URL: ${urlVal}`);
 }
+
+// ═══════════════════════════════════════════════════
+//  RECIPE IMPORT MODAL — #3
+// ═══════════════════════════════════════════════════
+function openImportModal(){document.getElementById('importmod').classList.add('open');}
+function closeImportModal(){document.getElementById('importmod').classList.remove('open');}
 
 // ═══════════════════════════════════════════════════
 //  RECIPES
@@ -921,7 +1039,7 @@ function addRecipeJSON(){
       ingredients:d.ingredients.map(i=>({name:i.name,quantity:parseFloat(i.quantity)||0,unit:i.unit||'',category:CATS.includes(i.category)?i.category:'Other',pantry:i.pantry||false})),
       steps:Array.isArray(d.steps)?d.steps.map(s=>({text:s.text||String(s),timerSeconds:s.timerSeconds||0})):[],
     });
-    document.getElementById('rjson').value='';save();renderRecipes();showToast(`"${d.name}" added!`);
+    document.getElementById('rjson').value='';save();renderRecipes();closeImportModal();showToast(`"${d.name}" added!`);
   }catch(e){showToast('⚠ Invalid JSON');}
 }
 
@@ -950,7 +1068,7 @@ function renderRecipes(){
 function renderRCards(){
   const grid=document.getElementById('rgrid');
   const list=activeTag?S.recipes.filter(r=>(r.tags||[]).includes(activeTag)):S.recipes;
-  if(!list.length){grid.innerHTML='<div class="empty"><div class="ico">📖</div><h3>No recipes yet</h3><p>Import one using the tabs above.</p></div>';return;}
+  if(!list.length){grid.innerHTML='<div class="empty"><div class="ico">📖</div><h3>No recipes yet</h3><p>Click "+ Add Recipe" to get started.</p></div>';return;}
   grid.innerHTML=list.map(r=>`
     <div class="rc" onclick="openDetail('${r.id}')">
       <div class="rcimg">${r.photo?`<img src="${r.photo}" alt="${r.name}">`:'🍽'}</div>
@@ -959,6 +1077,7 @@ function renderRCards(){
         <div class="rcm"><span>Serves ${r.serves}</span>${r.sourceUrl?`<a href="${r.sourceUrl}" target="_blank" onclick="event.stopPropagation()">Source ↗</a>`:''}</div>
         <div class="rctags">${(r.tags||[]).map(t=>`<span class="rctag">${t}</span>`).join('')}</div>
         <div style="display:flex;gap:5px;margin-top:6px">
+          <button class="btn btn-ghost btn-xs" onclick="openEditModal('${r.id}',event)">✏️ Edit</button>
           <button class="btn btn-danger btn-xs" onclick="deleteRecipe('${r.id}',event)">🗑 Delete</button>
         </div>
       </div>
@@ -991,6 +1110,7 @@ function renderDetail(r){
         <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:7px">${(r.tags||[]).map(t=>`<span class="rctag">${t}</span>`).join('')}</div>
       </div>
       <div style="display:flex;gap:7px;flex-shrink:0;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="openEditModal('${r.id}')">✏️ Edit</button>
         <button class="btn btn-ghost btn-sm" onclick="triggerPhoto('${r.id}')">📷 ${r.photo?'Change':'Add'} Photo</button>
       </div>
     </div>
@@ -1092,6 +1212,83 @@ function saveCat(){
 }
 
 // ═══════════════════════════════════════════════════
+//  RECIPE EDIT — #4 Claude-assisted editing
+// ═══════════════════════════════════════════════════
+function openEditModal(id,e){
+  if(e)e.stopPropagation();
+  const r=S.recipes.find(r=>r.id===id);if(!r)return;
+  editingRecipeId=id;
+  const summary=`<strong>${r.name}</strong> — Serves ${r.serves}<br>
+    <em>Ingredients:</em> ${r.ingredients.map(i=>`${i.name}${i.quantity?' ('+fq(i.quantity)+' '+i.unit+')':''}`).join(', ')}<br>
+    <em>Steps:</em> ${r.steps.length} step${r.steps.length!==1?'s':''}<br>
+    <em>Tags:</em> ${(r.tags||[]).join(', ')||'none'}`;
+  document.getElementById('edit-recipe-summary').innerHTML=summary;
+  document.getElementById('edit-describe').value='';
+  document.getElementById('edit-json').value='';
+  document.getElementById('edit-prompt-box').style.display='none';
+  document.getElementById('editmod').classList.add('open');
+}
+function closeEditModal(){document.getElementById('editmod').classList.remove('open');editingRecipeId=null;}
+
+function generateEditPrompt(){
+  const desc=document.getElementById('edit-describe').value.trim();
+  if(!desc){showToast('Please describe the changes you want');return;}
+  const r=S.recipes.find(r=>r.id===editingRecipeId);if(!r)return;
+  const rClean={name:r.name,serves:r.serves,sourceUrl:r.sourceUrl,tags:r.tags,
+    ingredients:r.ingredients.map(i=>({name:i.name,quantity:i.quantity,unit:i.unit,category:i.category,pantry:i.pantry})),
+    steps:r.steps.map(s=>({text:s.text,timerSeconds:s.timerSeconds}))};
+  const prompt=`I have an existing recipe in JSON format. Please apply the requested changes and return ONLY the updated JSON object (no markdown, no extra text).
+
+CURRENT RECIPE:
+${JSON.stringify(rClean,null,2)}
+
+REQUESTED CHANGES: ${desc}
+
+Return the FULL updated recipe in this exact format:
+{
+  "name": "Recipe Name",
+  "serves": 4,
+  "sourceUrl": "",
+  "tags": [],
+  "ingredients": [
+    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+  ],
+  "steps": [
+    { "text": "Step description.", "timerSeconds": 0 }
+  ]
+}
+
+Category MUST be exactly one of: Produce, Bakery, Deli, Butcher, Dairy, Frozen, Other
+Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or ""
+timerSeconds: 0 if no waiting; otherwise total seconds
+tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
+${getPantryLine()}
+Return the COMPLETE recipe with ALL ingredients and steps (not just the changed ones).`;
+  document.getElementById('edit-prompt').textContent=prompt;
+  document.getElementById('edit-prompt-box').style.display='block';
+}
+
+function applyRecipeEdit(){
+  const raw=document.getElementById('edit-json').value.trim();
+  if(!raw){showToast('Paste the updated JSON first');return;}
+  try{
+    const d=JSON.parse(raw);
+    if(!d.name||!Array.isArray(d.ingredients))throw 0;
+    const r=S.recipes.find(r=>r.id===editingRecipeId);if(!r)return;
+    r.name=d.name;
+    r.serves=d.serves||4;
+    r.sourceUrl=d.sourceUrl||r.sourceUrl||'';
+    r.tags=Array.isArray(d.tags)?d.tags:r.tags||[];
+    r.ingredients=d.ingredients.map(i=>({name:i.name,quantity:parseFloat(i.quantity)||0,unit:i.unit||'',category:CATS.includes(i.category)?i.category:'Other',pantry:i.pantry||false}));
+    r.steps=Array.isArray(d.steps)?d.steps.map(s=>({text:s.text||String(s),timerSeconds:s.timerSeconds||0})):r.steps;
+    save();closeEditModal();
+    if(curDetailId===editingRecipeId)renderDetail(r);
+    renderRecipes();
+    showToast(`"${r.name}" updated!`);
+  }catch(e){showToast('⚠ Invalid JSON');}
+}
+
+// ═══════════════════════════════════════════════════
 //  STAPLES PAGE
 // ═══════════════════════════════════════════════════
 function renderStaples(){
@@ -1124,7 +1321,7 @@ function addPantryItem(){
 function removePantryItem(i){S.pantryList.splice(i,1);save();renderPantryList();}
 
 // ═══════════════════════════════════════════════════
-//  DESCRIBE PROMPT
+//  DESCRIBE PROMPT — #2 button position already fixed in HTML
 // ═══════════════════════════════════════════════════
 function generateDescribePrompt(){
   const desc=document.getElementById('rdescribe').value.trim();
@@ -1166,7 +1363,7 @@ Infer reasonable quantities and steps from the description. Fill in anything mis
 }
 
 // ═══════════════════════════════════════════════════
-//  CATEGORY HINTS (manual grocery add)
+//  CATEGORY HINTS
 // ═══════════════════════════════════════════════════
 const CAT_HINTS={Produce:['apple','apples','banana','bananas','lemon','lemons','lime','limes','orange','oranges','strawberr','blueberr','raspberry','raspberries','grape','grapes','mango','avocado','tomato','tomatoes','spinach','kale','lettuce','rocket','cabbage','broccoli','cauliflower','carrot','carrots','zucchini','courgette','cucumber','capsicum','pepper','peppers','mushroom','mushrooms','potato','potatoes','sweet potato','pumpkin','corn','asparagus','celery','leek','leeks','spring onion','chilli','chillies','parsley','basil','coriander','cilantro','mint','thyme','rosemary','sage','dill','ginger','garlic'],Bakery:['bread','sourdough','baguette','roll','rolls','wrap','wraps','pita','pitta','naan','croissant','croissants','bagel','bagels','brioche','focaccia','pizza base','pizza dough','pastry','puff pastry','shortcrust'],Deli:['salami','prosciutto','pancetta','ham','smoked salmon','smoked trout','hummus','tzatziki','baba ganoush','pesto','deli','pastrami','chorizo','mortadella'],Butcher:['chicken','beef','lamb','pork','turkey','duck','fish','salmon','tuna','prawn','prawns','shrimp','mince','steak','sausage','sausages','bacon','ribs','fillet','thigh','thighs','breast','breasts','chop','chops','roast','seafood','scallop','scallops','crab','lobster'],Dairy:['milk','cream','butter','cheese','cheddar','mozzarella','parmesan','feta','brie','camembert','ricotta','mascarpone','yogurt','yoghurt','sour cream','creme fraiche','egg','eggs','ghee','whipping cream','heavy cream','double cream','cream cheese'],Frozen:['frozen','ice cream','gelato','sorbet']};
 function suggestCat(){
