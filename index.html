@@ -280,7 +280,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     </div>
   </div>
   <div class="marow">
-    <input type="text" id="miinput" placeholder="Add item manually…" onkeydown="if(event.key==='Enter')addManual()">
+    <input type="text" id="miinput" placeholder="Add item manually…" onkeydown="if(event.key==='Enter')addManual()" oninput="suggestCat()">
     <select id="micat">
       <option value="Produce">🥦 Produce</option><option value="Bakery">🍞 Bakery</option>
       <option value="Deli">🧀 Deli</option><option value="Butcher">🥩 Butcher</option>
@@ -956,6 +956,8 @@ function renderStaples(){
 }
 function clearBought(){S.groceryList=S.groceryList.filter(i=>!i.checked);save();renderGrocery();showToast('Bought items removed');}
 function addToStaples(i){const name=S.groceryList[i].name;if(S.staples.includes(name)){showToast('Already a staple!');return;}S.staples.push(name);save();renderStaples();showToast(`"${name}" added to staples`);}
+const CAT_HINTS={Produce:['apple','apples','banana','bananas','lemon','lemons','lime','limes','orange','oranges','strawberr','blueberr','raspberry','raspberries','grape','grapes','mango','avocado','tomato','tomatoes','spinach','kale','lettuce','rocket','cabbage','broccoli','cauliflower','carrot','carrots','zucchini','courgette','cucumber','capsicum','pepper','peppers','mushroom','mushrooms','potato','potatoes','sweet potato','pumpkin','corn','asparagus','celery','leek','leeks','spring onion','chilli','chillies','parsley','basil','coriander','cilantro','mint','thyme','rosemary','sage','dill','ginger','garlic'],Bakery:['bread','sourdough','baguette','roll','rolls','wrap','wraps','pita','pitta','naan','croissant','croissants','bagel','bagels','brioche','focaccia','pizza base','pizza dough','pastry','puff pastry','shortcrust'],Deli:['salami','prosciutto','pancetta','ham','smoked salmon','smoked trout','hummus','tzatziki','baba ganoush','pesto','deli','pastrami','chorizo','mortadella'],Butcher:['chicken','beef','lamb','pork','turkey','duck','fish','salmon','tuna','prawn','prawns','shrimp','mince','steak','sausage','sausages','bacon','ribs','fillet','thigh','thighs','breast','breasts','chop','chops','roast','seafood','scallop','scallops','crab','lobster'],Dairy:['milk','cream','butter','cheese','cheddar','mozzarella','parmesan','feta','brie','camembert','ricotta','mascarpone','yogurt','yoghurt','sour cream','creme fraiche','egg','eggs','ghee','whipping cream','heavy cream','double cream','cream cheese'],Frozen:['frozen','ice cream','gelato','sorbet']};
+function suggestCat(){const val=document.getElementById('miinput').value.toLowerCase().trim();if(!val){return;}const sel=document.getElementById('micat');for(const[cat,words]of Object.entries(CAT_HINTS)){if(words.some(w=>val.includes(w)||w.includes(val))){sel.value=cat;return;}}sel.value='Other';}
 function addStaple(){const inp=document.getElementById('stinput'),v=inp.value.trim();if(!v)return;if(S.staples.includes(v)){showToast('Already on list!');return;}S.staples.push(v);inp.value='';save();renderStaples();}
 function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
 
