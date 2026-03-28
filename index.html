@@ -15,7 +15,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px}
-
+ 
 nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 16px;gap:2px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.3);overflow-x:auto;-webkit-overflow-scrolling:touch}
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#F7F3EE;margin-right:auto;letter-spacing:.06em;font-style:italic;flex-shrink:0}
 .logo em{color:var(--sage-l);font-style:normal}
@@ -26,15 +26,15 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .sync-dot.ok{background:var(--sage-l)}.sync-dot.err{background:var(--terra-l)}
 .sync-dot.spin{background:var(--gold);animation:p 1s infinite}
 @keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
-
+ 
 .page{display:none;max-width:1120px;margin:0 auto;padding:32px 24px}
 .page.active{display:block}
-
+ 
 .ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border);gap:14px;flex-wrap:wrap}
 .pt{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;line-height:1.1}
 .ps{font-size:.8rem;color:var(--ink3);margin-top:3px}
 .ph-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-
+ 
 .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:8px;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;cursor:pointer;border:none;transition:all .18s;white-space:nowrap;touch-action:manipulation}
 .btn-primary{background:var(--ink);color:#F7F3EE}.btn-primary:hover{background:var(--ink2)}
 .btn-sage{background:var(--sage);color:#fff}.btn-sage:hover{background:#5a7a60}
@@ -43,7 +43,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{background:#9a7a20}
 .btn-sm{padding:6px 12px;font-size:.76rem}.btn-xs{padding:4px 9px;font-size:.71rem}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-
+ 
 /* PLANNER */
 .pbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .wknav{display:flex;align-items:center;gap:7px}
@@ -52,11 +52,11 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .wklbl{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;min-width:200px;text-align:center}
 .sdpick{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--ink3)}
 .sdpick select,.fsel{font-family:'Jost',sans-serif;font-size:.78rem;padding:4px 9px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--ink);cursor:pointer}
-
+ 
 .dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;margin-bottom:22px}
 @media(max-width:860px){.dgrid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:520px){.dgrid{grid-template-columns:repeat(2,1fr)}}
-
+ 
 .dc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .2s}
 .dc:hover{box-shadow:var(--shadow)}
 .dc.locked{border-color:var(--sage);background:var(--sage-pale)}
@@ -74,14 +74,14 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .pchip{font-size:.66rem;padding:4px 9px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;color:var(--ink3);font-weight:500;touch-action:manipulation;min-height:28px;display:inline-flex;align-items:center}
 .pchip.out{background:var(--terra-pale);border-color:var(--terra-l);color:var(--terra)}
 .pact{display:flex;gap:9px;flex-wrap:wrap}
-
+ 
 /* DAY OFF CARD */
 .dc.dayoff-card{background:var(--surface2);border-color:var(--border);opacity:.7}
 .dc.dayoff-card:hover{opacity:.85}
 .dayoff-label{text-align:center;padding:10px 0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink3);font-style:italic}
 .dayoff-add{font-size:.74rem;color:var(--sage);cursor:pointer;text-align:center;padding:2px 0;text-decoration:underline;background:none;border:none;font-family:'Jost',sans-serif}
 .dayoff-add:hover{color:#4a7050}
-
+ 
 /* CUSTOM MEAL & EXTRAS */
 .custom-input{width:100%;font-family:'Jost',sans-serif;font-size:.73rem;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--ink);resize:none;min-height:32px}
 .custom-input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 2px rgba(107,143,113,.12)}
@@ -90,17 +90,17 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .extras-input:focus{outline:none;border-bottom-color:var(--sage)}
 .extras-input::placeholder{color:var(--ink3);font-style:italic;font-size:.68rem}
 .dc.locked .custom-input,.dc.locked .extras-input{background:var(--sage-pale);border-color:var(--sage-l)}
-
+ 
 /* CUSTOM MEALS MODAL */
 .cm-day{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px;margin-bottom:10px}
 .cm-day-label{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:600;margin-bottom:2px}
 .cm-day-meal{font-size:.78rem;color:var(--ink2);margin-bottom:8px;font-style:italic}
 .cm-day textarea{width:100%;font-family:'Jost',sans-serif;font-size:.78rem;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--ink);min-height:50px;resize:vertical}
 .cm-day textarea:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 2px rgba(107,143,113,.12)}
-
+ 
 /* GROCERY */
 .gbar{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.marow{display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap}
+.marow{display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
 .marow input,.marow select{font-family:'Jost',sans-serif;font-size:.8rem;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink)}
 .marow input{flex:1;min-width:130px}
 .marow input:focus,.marow select:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,143,113,.15)}
@@ -127,7 +127,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .gitem:hover .gadd{opacity:1}
 .gadd:hover{color:var(--gold);background:var(--gold-pale)}
 @media(hover:none){.gdel,.gadd{opacity:.6}}
-
+ 
 /* RECIPES */
 .itabs{display:flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;width:fit-content;margin-bottom:18px;flex-wrap:wrap}
 .rit{background:var(--surface);border:none;font-family:'Jost',sans-serif;font-size:.76rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .2s;color:var(--ink3);touch-action:manipulation}
@@ -145,12 +145,12 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .pbox pre{font-family:monospace;font-size:.69rem;white-space:pre-wrap;color:var(--ink2);line-height:1.5;max-height:180px;overflow-y:auto}
 .cpbtn{margin-top:8px;font-size:.73rem;padding:4px 11px;background:var(--gold);color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500}
 .cpbtn:hover{background:#9a7a20}
-
+ 
 .tfilter{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
 .tpill{font-size:.72rem;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--ink3);font-weight:500;touch-action:manipulation}
 .tpill:hover{border-color:var(--sage);color:var(--sage)}
 .tpill.active{background:var(--sage);border-color:var(--sage);color:#fff}
-
+ 
 .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .rc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;touch-action:manipulation}
 .rc:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
@@ -162,7 +162,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .rcm a{color:var(--sage);text-decoration:none}.rcm a:hover{text-decoration:underline}
 .rctags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
 .rctag{font-size:.65rem;padding:2px 7px;border-radius:20px;background:var(--sage-pale);border:1px solid var(--sage-l);color:var(--sage)}
-
+ 
 /* RECIPE DETAIL */
 .rdview{display:none}.rdview.active{display:block}
 .rdhero{width:100%;max-height:320px;min-height:160px;border-radius:var(--r);margin-bottom:24px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden;cursor:pointer}
@@ -199,7 +199,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .tagedit{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
 .urlinput{width:100%;font-family:'Jost',sans-serif;font-size:.8rem;padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);margin-top:6px}
 .urlinput:focus{outline:none;border-color:var(--sage)}
-
+ 
 /* STAPLES & PANTRY pages */
 .stbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;max-width:460px;margin-bottom:20px}
 .stbox h3{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:13px}
@@ -211,7 +211,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .addrow{display:flex;gap:7px}
 .addrow input{flex:1;font-family:'Jost',sans-serif;font-size:.8rem;padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink)}
 .addrow input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,143,113,.15)}
-
+ 
 /* MODALS */
 .overlay{display:none;position:fixed;inset:0;background:rgba(30,27,23,.52);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:18px}
 .overlay.open{display:flex}
@@ -221,33 +221,76 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .modal h2{font-family:'Cormorant Garamond',serif;font-size:1.45rem;margin-bottom:4px}
 .modal p{font-size:.8rem;color:var(--ink3);margin-bottom:16px}
 .mact{display:flex;gap:7px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
-
+ 
 .smlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-bottom:4px;max-height:320px;overflow-y:auto}
 .smitem{display:flex;align-items:center;gap:9px;padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;touch-action:manipulation}
 .smitem:hover{border-color:var(--sage)}
 .smitem.sel{background:var(--sage-pale);border-color:var(--sage)}
 .smitem input[type=checkbox]{accent-color:var(--sage);width:14px;height:14px;flex-shrink:0}
 .smitem label{font-size:.8rem;cursor:pointer}
-
+ 
 .rlist{display:flex;flex-direction:column;gap:5px;margin-bottom:5px;max-height:250px;overflow-y:auto}
 .ritem{display:flex;align-items:center;gap:9px;padding:7px 11px;background:#fff;border:1px solid var(--border);border-radius:7px}
 .ritem input[type=checkbox]{accent-color:var(--terra);width:14px;height:14px;flex-shrink:0}
 .ritem label{font-size:.8rem;flex:1}
 .rcat{font-size:.68rem;color:var(--ink3);padding:1px 6px;border-radius:10px;background:var(--surface2);border:1px solid var(--border)}
-
+ 
 .catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:7px;margin-bottom:5px}
 .catopt{padding:8px 10px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-size:.76rem;text-align:center;transition:all .15s;touch-action:manipulation}
 .catopt:hover{border-color:var(--sage)}
 .catopt.sel{border-color:var(--sage);background:var(--sage-pale);color:var(--sage);font-weight:600}
-
+ 
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#F7F3EE;padding:10px 20px;border-radius:30px;font-size:.8rem;font-weight:500;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
+ 
 .empty{text-align:center;padding:50px 20px;color:var(--ink3);grid-column:1/-1}
 .empty .ico{font-size:2.2rem;margin-bottom:9px}
 .empty h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ink2);margin-bottom:4px}
 .empty p{font-size:.8rem}
-
+ 
+/* HAVE GROCERIES TOGGLE */
+.have-groc{display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--ink3);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.have-groc input[type=checkbox]{width:13px;height:13px;accent-color:var(--sage);cursor:pointer}
+.have-groc.active{color:var(--sage);font-weight:500}
+ 
+/* RECIPE PREVIEW MODAL */
+.preview-overlay{display:none;position:fixed;inset:0;background:rgba(30,27,23,.52);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:18px}
+.preview-overlay.open{display:flex}
+.preview-modal{background:var(--surface);border-radius:16px;padding:26px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);animation:mi .22s ease;max-height:85vh;overflow-y:auto}
+.preview-hero{width:100%;height:180px;border-radius:var(--r);margin-bottom:16px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:2rem;overflow:hidden}
+.preview-hero img{width:100%;height:100%;object-fit:cover;border-radius:var(--r)}
+.preview-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:4px}
+.preview-meta{font-size:.78rem;color:var(--ink3);margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap}
+.preview-section{margin-bottom:14px}
+.preview-section h4{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.preview-ing{font-size:.78rem;padding:4px 0;color:var(--ink2)}
+.preview-step{font-size:.78rem;padding:5px 0;color:var(--ink2);line-height:1.5}
+.preview-step-num{font-weight:600;color:var(--ink3);font-size:.72rem}
+.recipe-link{font-size:.68rem;color:var(--sage);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'Jost',sans-serif;padding:0;touch-action:manipulation}
+.recipe-link:hover{color:#4a7050}
+ 
+/* GROCERY RECAT BUTTON */
+.grecat{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.68rem;padding:2px 5px;border-radius:3px;opacity:0;transition:opacity .15s;touch-action:manipulation}
+.gitem:hover .grecat{opacity:1}
+.grecat:hover{color:var(--sage);background:var(--sage-pale)}
+@media(hover:none){.grecat{opacity:.6}}
+ 
+/* TRACKER TAB */
+.tracker-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.tracker-item{display:flex;align-items:flex-start;gap:9px;padding:10px 13px;background:#fff;border:1px solid var(--border);border-radius:8px}
+.tracker-item.bug{border-left:3px solid var(--terra)}
+.tracker-item.feature{border-left:3px solid var(--sage)}
+.tracker-type{font-size:.65rem;padding:2px 7px;border-radius:10px;font-weight:600;flex-shrink:0;margin-top:1px}
+.tracker-type.bug{background:var(--terra-pale);color:var(--terra);border:1px solid var(--terra-l)}
+.tracker-type.feature{background:var(--sage-pale);color:var(--sage);border:1px solid var(--sage-l)}
+.tracker-text{flex:1;font-size:.8rem;color:var(--ink2)}
+.tracker-del{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.76rem;padding:4px 6px;border-radius:3px;transition:all .15s;touch-action:manipulation;flex-shrink:0}
+.tracker-del:hover{color:var(--terra);background:var(--terra-pale)}
+.tracker-add-row{display:flex;gap:7px;align-items:center}
+.tracker-add-row input{flex:1;font-family:'Jost',sans-serif;font-size:.8rem;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink)}
+.tracker-add-row input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,143,113,.15)}
+.tracker-add-row select{font-family:'Jost',sans-serif;font-size:.8rem;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+ 
 @media print{
   nav,.gbar,.marow,.gdel,.gitem input[type=checkbox]{display:none!important}
   body{background:#fff}
@@ -257,18 +300,19 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 </style>
 </head>
 <body>
-
+ 
 <nav>
   <div class="logo">The <em>Table</em></div>
   <button class="nb active" onclick="showPage('planner')">Planner</button>
   <button class="nb" onclick="showPage('grocery')">Grocery</button>
   <button class="nb" onclick="showPage('recipes')">Recipes</button>
   <button class="nb" onclick="showPage('staples')">Staples</button>
+  <button class="nb" onclick="showPage('tracker')">Tracker</button>
   <div class="sync-dot" id="sdot" title="Sync"></div>
 </nav>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <!-- PLANNER -->
 <div class="page active" id="page-planner">
   <div class="ph">
@@ -295,7 +339,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
   </div>
   <div class="dgrid" id="dgrid"></div>
 </div>
-
+ 
 <!-- GROCERY -->
 <div class="page" id="page-grocery">
   <div class="ph">
@@ -324,7 +368,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     <div class="empty"><div class="ico">🛒</div><h3>No list yet</h3><p>Go to Planner → Generate Grocery List.</p></div>
   </div>
 </div>
-
+ 
 <!-- RECIPES -->
 <div class="page" id="page-recipes">
   <div id="rlview">
@@ -334,20 +378,20 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
         <button class="btn btn-primary" onclick="openImportModal()">+ Add Recipe</button>
       </div>
     </div>
-
+ 
     <div class="tfilter" id="tfilter">
       <span style="font-size:.75rem;color:var(--ink3);font-weight:500">Filter:</span>
       <span class="tpill active" onclick="filterTag('')" data-tag="">All</span>
     </div>
     <div class="rgrid" id="rgrid"></div>
   </div>
-
+ 
   <div class="rdview" id="rdview">
     <button class="btn btn-ghost btn-sm" style="margin-bottom:18px" onclick="closeDetail()">← Back to Library</button>
     <div id="rdcontent"></div>
   </div>
 </div>
-
+ 
 <!-- STAPLES -->
 <div class="page" id="page-staples">
   <div class="ph"><div><div class="pt">Staples & Pantry</div><div class="ps">Manage household staples and pantry items.</div></div></div>
@@ -370,10 +414,45 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     </div>
   </div>
 </div>
-
+ 
+<!-- TRACKER -->
+<div class="page" id="page-tracker">
+  <div class="ph">
+    <div><div class="pt">Bug & Feature Tracker</div><div class="ps">Log issues and ideas, then generate a prompt for Claude.</div></div>
+    <div class="ph-actions">
+      <button class="btn btn-sage" onclick="generateTrackerPrompt()">📋 Generate Prompt</button>
+    </div>
+  </div>
+  <div class="stbox" style="max-width:640px">
+    <h3>Add Item</h3>
+    <div class="tracker-add-row">
+      <select id="tracker-type">
+        <option value="bug">🐛 Bug</option>
+        <option value="feature">✨ Feature</option>
+      </select>
+      <input type="text" id="tracker-input" placeholder="Describe the bug or feature…" onkeydown="if(event.key==='Enter')addTrackerItem()">
+      <button class="btn btn-primary btn-sm" onclick="addTrackerItem()">Add</button>
+    </div>
+  </div>
+  <div style="max-width:640px">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:12px">Open Items</h3>
+    <div id="tracker-list" class="tracker-list"></div>
+  </div>
+  <div class="pbox" id="tracker-prompt-box" style="display:none;max-width:640px;margin-top:20px">
+    <h4>📋 Generated Prompt — copy and paste into Claude</h4>
+    <pre id="tracker-prompt"></pre>
+    <button class="cpbtn" onclick="copyPrompt('tracker-prompt')">Copy Prompt</button>
+  </div>
+</div>
+ 
 <!-- ═══════════ MODALS ═══════════ -->
-
-<!-- IMPORT RECIPE MODAL (#3 — import tabs behind modal) -->
+ 
+<!-- RECIPE PREVIEW MODAL -->
+<div class="preview-overlay" id="previewmod" onclick="if(event.target===this)closePreview()">
+  <div class="preview-modal" id="preview-content"></div>
+</div>
+ 
+<!-- IMPORT RECIPE MODAL -->
 <div class="overlay" id="importmod">
   <div class="modal wide">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
@@ -386,27 +465,32 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
       <button class="rit" onclick="switchTab('describe')">✏️ Describe</button>
       <button class="rit" onclick="switchTab('json')">{ } JSON</button>
     </div>
-
+ 
     <!-- PHOTO TAB -->
     <div class="ipanel active" id="tab-photo">
       <h3>Import from a Photo</h3>
       <div class="hint">Take a photo of any recipe, open Claude, and use this prompt. Then paste the JSON in the JSON tab.</div>
       <div class="pbox"><h4>📷 Photo Prompt</h4>
         <pre id="photo-prompt">Please extract this recipe from the photo and return ONLY a JSON object (no markdown, no extra text):
-
+ 
 {
   "name": "Recipe Name",
   "serves": 4,
   "sourceUrl": "",
   "tags": [],
   "ingredients": [
-    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+    { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
     { "text": "Step description.", "timerSeconds": 0 }
   ]
 }
-
+ 
+IMPORTANT — Ingredient prep handling:
+- The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
+- If an ingredient has prep instructions (diced, minced, sliced, chopped, grated, julienned, etc.), collect ALL of them and create a FIRST step in the "steps" array titled "Prep" that lists every ingredient needing prep, e.g.: "Prep: Dice 1 yellow onion. Mince 3 cloves garlic. Slice 2 red peppers." timerSeconds for this step should be 0.
+- The remaining steps follow as normal after the prep step.
+ 
 Category MUST be exactly one of these seven — use the definitions to decide:
 - Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
 - Bakery: bread, wraps, raw pastry/dough — e.g. sourdough, pita, croissants, pizza base
@@ -415,7 +499,7 @@ Category MUST be exactly one of these seven — use the definitions to decide:
 - Dairy: milk, cheese, yogurt, cream, butter, eggs — e.g. cheddar, Greek yogurt, heavy cream, unsalted butter
 - Frozen: anything purchased in frozen state — e.g. frozen peas, ice cream, frozen pastry sheets
 - Other: pantry items, canned goods, condiments, dry goods, oils, sauces — e.g. pasta, olive oil, soy sauce, tinned tomatoes, flour, sugar
-
+ 
 Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items (e.g. 2 eggs → unit "")
 timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
 tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
@@ -424,7 +508,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
         <button class="cpbtn" onclick="copyPromptLive('photo-prompt')">Copy Prompt</button>
       </div>
     </div>
-
+ 
     <!-- URL TAB -->
     <div class="ipanel" id="tab-url">
       <h3>Import from a URL</h3>
@@ -432,22 +516,27 @@ PANTRY_LINE_PLACEHOLDER</pre>
       <input type="text" id="url-input" placeholder="https://…" oninput="updateUrlInPrompt()">
       <div class="pbox"><h4>🔗 URL Prompt</h4>
         <pre id="url-prompt">Please fetch and extract the recipe from this URL: [PASTE URL HERE]
-
+ 
 Return ONLY a JSON object (no markdown, no extra text):
-
+ 
 {
   "name": "Recipe Name",
   "serves": 4,
   "sourceUrl": "the URL you fetched",
   "tags": [],
   "ingredients": [
-    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+    { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
     { "text": "Step description.", "timerSeconds": 0 }
   ]
 }
-
+ 
+IMPORTANT — Ingredient prep handling:
+- The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
+- If an ingredient has prep instructions (diced, minced, sliced, chopped, grated, julienned, etc.), collect ALL of them and create a FIRST step in the "steps" array titled "Prep" that lists every ingredient needing prep, e.g.: "Prep: Dice 1 yellow onion. Mince 3 cloves garlic. Slice 2 red peppers." timerSeconds for this step should be 0.
+- The remaining steps follow as normal after the prep step.
+ 
 Category MUST be exactly one of these seven:
 - Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
 - Bakery: bread, wraps, raw pastry/dough — e.g. sourdough, pita, croissants, pizza base
@@ -456,7 +545,7 @@ Category MUST be exactly one of these seven:
 - Dairy: milk, cheese, yogurt, cream, butter, eggs — e.g. cheddar, Greek yogurt, heavy cream, unsalted butter
 - Frozen: anything purchased in frozen state — e.g. frozen peas, ice cream, frozen pastry sheets
 - Other: pantry items, canned goods, condiments, dry goods, oils, sauces — e.g. pasta, olive oil, soy sauce, tinned tomatoes, flour, sugar
-
+ 
 Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items
 timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
 tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
@@ -465,8 +554,8 @@ PANTRY_LINE_PLACEHOLDER</pre>
         <button class="cpbtn" onclick="copyPromptLive('url-prompt')">Copy Prompt</button>
       </div>
     </div>
-
-    <!-- DESCRIBE TAB (#2 — button moved before prompt box) -->
+ 
+    <!-- DESCRIBE TAB -->
     <div class="ipanel" id="tab-describe">
       <h3>Describe a Recipe</h3>
       <div class="hint">Type a loose description of the recipe below — ingredients, rough steps, anything you know. Then copy the prompt and run it in Claude. Paste the JSON output in the JSON tab.</div>
@@ -478,7 +567,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
         <button class="cpbtn" onclick="copyPrompt('describe-prompt')">Copy Prompt</button>
       </div>
     </div>
-
+ 
     <!-- JSON TAB -->
     <div class="ipanel" id="tab-json">
       <h3>Paste Recipe JSON</h3>
@@ -488,8 +577,8 @@ PANTRY_LINE_PLACEHOLDER</pre>
     </div>
   </div>
 </div>
-
-<!-- EDIT RECIPE MODAL (#4 — Claude-assisted editing) -->
+ 
+<!-- EDIT RECIPE MODAL -->
 <div class="overlay" id="editmod">
   <div class="modal wide">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
@@ -510,8 +599,8 @@ PANTRY_LINE_PLACEHOLDER</pre>
     <button class="btn btn-sage" onclick="applyRecipeEdit()">Update Recipe</button>
   </div>
 </div>
-
-<!-- EXISTING ITEMS MODAL (#6 — clear vs merge prompt) -->
+ 
+<!-- EXISTING ITEMS MODAL -->
 <div class="overlay" id="existmod">
   <div class="modal">
     <h2>🛒 Existing Grocery Items</h2>
@@ -523,7 +612,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
     </div>
   </div>
 </div>
-
+ 
 <!-- CUSTOM MEALS INGREDIENT MODAL -->
 <div class="overlay" id="custommod">
   <div class="modal wide">
@@ -536,7 +625,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
     </div>
   </div>
 </div>
-
+ 
 <!-- PANTRY MODAL -->
 <div class="overlay" id="pantrymod">
   <div class="modal">
@@ -549,7 +638,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
     </div>
   </div>
 </div>
-
+ 
 <!-- STAPLES MODAL -->
 <div class="overlay" id="stmod">
   <div class="modal">
@@ -562,7 +651,7 @@ PANTRY_LINE_PLACEHOLDER</pre>
     </div>
   </div>
 </div>
-
+ 
 <!-- REGEN MODAL (manual items) -->
 <div class="overlay" id="rgmod">
   <div class="modal">
@@ -576,20 +665,43 @@ PANTRY_LINE_PLACEHOLDER</pre>
     </div>
   </div>
 </div>
-
+ 
 <!-- CAT MODAL -->
 <div class="overlay" id="catmod">
   <div class="modal">
     <h2>Change Category</h2>
     <p id="catmodname"></p>
     <div class="catgrid" id="catgrid"></div>
+    <div id="catmod-remember" style="margin-top:10px;display:none">
+      <label style="display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--ink2);cursor:pointer">
+        <input type="checkbox" id="catmod-remember-cb" checked style="accent-color:var(--sage);width:14px;height:14px">
+        Remember this for future grocery lists
+      </label>
+    </div>
     <div class="mact">
       <button class="btn btn-ghost" onclick="closeCatMod()">Cancel</button>
       <button class="btn btn-sage" onclick="saveCat()">Save</button>
     </div>
   </div>
 </div>
-
+ 
+<!-- GROCERY CAT MODAL -->
+<div class="overlay" id="gcatmod">
+  <div class="modal">
+    <h2>Move to Category</h2>
+    <p id="gcatmodname"></p>
+    <div class="catgrid" id="gcatgrid"></div>
+    <label style="display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--ink2);cursor:pointer;margin-top:10px">
+      <input type="checkbox" id="gcatmod-remember" checked style="accent-color:var(--sage);width:14px;height:14px">
+      Remember this category for future lists
+    </label>
+    <div class="mact">
+      <button class="btn btn-ghost" onclick="closeGCatMod()">Cancel</button>
+      <button class="btn btn-sage" onclick="saveGCat()">Save</button>
+    </div>
+  </div>
+</div>
+ 
 <script>
 // ═══════════════════════════════════════════════════
 //  FIREBASE CONFIG
@@ -604,7 +716,7 @@ const FB_CFG = {
 };
 const FB_COL = "tableData";
 const FB_DOC = "family";
-
+ 
 // ═══════════════════════════════════════════════════
 //  CONSTANTS
 // ═══════════════════════════════════════════════════
@@ -615,7 +727,7 @@ const CCLS = {Produce:'cp',Bakery:'cb',Deli:'cd',Butcher:'cbt',Dairy:'cy',Frozen
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const ALL_TAGS = ['Quick','Vegetarian','Vegan','Gluten-Free','Weekend','Kids Favourite','Comfort Food','Light','Batch Cook','Fish','Pasta','Soup','Salad'];
 const DEFAULT_PANTRY = ['Olive oil','Vegetable oil','Coconut oil','Butter','Salt','Black pepper','Garlic powder','Onion powder','Paprika','Cumin','Oregano','Chilli flakes','Cinnamon','Turmeric','Soy sauce','Worcestershire sauce','Dijon mustard','Plain flour','Sugar','Brown sugar','Baking powder','Baking soda','Cornstarch','Breadcrumbs','Dried pasta','Rice','Garlic (fresh)'];
-
+ 
 // ═══════════════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════════════
@@ -623,7 +735,9 @@ let S = {
   startDay:6, weekOffset:0,
   recipes:[], plan:{}, groceryList:[],
   staples:['Coffee','Milk','Eggs','Bread'],
-  pantryList:[...DEFAULT_PANTRY]
+  pantryList:[...DEFAULT_PANTRY],
+  categoryOverrides:{},
+  trackerItems:[]
 };
 let db=null, fbReady=false;
 let pendingSM={manual:[],staples:new Set()};
@@ -634,13 +748,14 @@ let activeTag='';
 let curDetailId=null, detailSv=4;
 let editingRecipeId=null;
 let catMS={rid:null,idx:null,cat:null};
+let gcatMS={idx:null,cat:null};
 let timers={};
-
+ 
 // ═══════════════════════════════════════════════════
 //  FIREBASE
 // ═══════════════════════════════════════════════════
 function dot(cls,title){const d=document.getElementById('sdot');d.className='sync-dot '+cls;d.title=title||cls;}
-
+ 
 function initFB(){
   dot('spin','Connecting…');
   if(!FB_CFG.apiKey||FB_CFG.apiKey==='YOUR_API_KEY'){dot('','Local only');loadLocal();return;}
@@ -659,6 +774,8 @@ function initFB(){
           if(snap.exists){
             const data=snap.data();
             if(!data.pantryList)data.pantryList=[...DEFAULT_PANTRY];
+            if(!data.categoryOverrides)data.categoryOverrides={};
+            if(!data.trackerItems)data.trackerItems=[];
             S={...S,...data};
           }
           renderAll();dot('ok','Synced');
@@ -671,7 +788,7 @@ function initFB(){
   s1.onerror=()=>{dot('err','Load error');loadLocal();};
   document.head.appendChild(s1);
 }
-
+ 
 async function save(){
   saveLocal();
   if(!fbReady||!db)return;
@@ -679,22 +796,22 @@ async function save(){
   try{await db.collection(FB_COL).doc(FB_DOC).set(S);dot('ok','Synced');}
   catch(e){dot('err','Save error');}
 }
-
+ 
 function saveLocal(){try{localStorage.setItem('theTable',JSON.stringify(S));}catch(e){}}
 function loadLocal(){
-  try{const r=localStorage.getItem('theTable');if(r){const d=JSON.parse(r);if(!d.pantryList)d.pantryList=[...DEFAULT_PANTRY];S={...S,...d};}}catch(e){}
+  try{const r=localStorage.getItem('theTable');if(r){const d=JSON.parse(r);if(!d.pantryList)d.pantryList=[...DEFAULT_PANTRY];if(!d.categoryOverrides)d.categoryOverrides={};if(!d.trackerItems)d.trackerItems=[];S={...S,...d};}}catch(e){}
   renderAll();
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  RENDER ALL
 // ═══════════════════════════════════════════════════
 function renderAll(){
-  renderPlanner();renderGrocery();renderRecipes();renderStaples();renderPantryList();
+  renderPlanner();renderGrocery();renderRecipes();renderStaples();renderPantryList();renderTracker();
   document.getElementById('sdsel').value=S.startDay;
   updateUrlInPrompt();
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  NAV
 // ═══════════════════════════════════════════════════
@@ -702,12 +819,12 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  ['planner','grocery','recipes','staples'].forEach((p,i)=>{
+  ['planner','grocery','recipes','staples','tracker'].forEach((p,i)=>{
     if(p===id)document.querySelectorAll('.nb')[i].classList.add('active');
   });
   if(id==='recipes'){showRL();renderRecipes();}
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  DATE HELPERS
 // ═══════════════════════════════════════════════════
@@ -720,9 +837,9 @@ function getWeekDates(){
 function dk(d){return d.toISOString().slice(0,10);}
 function fmtRange(ds){const f=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});return`${f(ds[0])} – ${f(ds[6])}`;}
 function isToday(d){const t=new Date();t.setHours(0,0,0,0);return d.getTime()===t.getTime();}
-
+ 
 // ═══════════════════════════════════════════════════
-//  PLANNER — #5 Day Off redesign
+//  PLANNER
 // ═══════════════════════════════════════════════════
 function renderPlanner(){
   const dates=getWeekDates();
@@ -730,8 +847,9 @@ function renderPlanner(){
   const grid=document.getElementById('dgrid');grid.innerHTML='';
   dates.forEach(date=>{
     const key=dk(date);
-    if(!S.plan[key])S.plan[key]={recipeId:null,locked:false,absent:[],servings:null,notes:''};
+    if(!S.plan[key])S.plan[key]={recipeId:null,locked:false,absent:[],servings:null,notes:'',haveGroceries:false};
     if(S.plan[key].notes===undefined)S.plan[key].notes='';
+    if(S.plan[key].haveGroceries===undefined)S.plan[key].haveGroceries=false;
     const day=S.plan[key];
     const isCustom=day.recipeId==='custom';
     const rec=day.recipeId&&day.recipeId!=='random'&&!isCustom?S.recipes.find(r=>r.id===day.recipeId):null;
@@ -740,9 +858,17 @@ function renderPlanner(){
     const isDayOff=!day.recipeId;
     const card=document.createElement('div');
     card.className='dc'+(day.locked?' locked':'')+(isToday(date)?' today':'')+(isDayOff?' dayoff-card':'');
-
+ 
     const escNotes=(day.notes||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-
+ 
+    const haveGrocHtml=(day.recipeId && day.recipeId!=='custom' && day.recipeId!=='random')?`
+      <label class="have-groc ${day.haveGroceries?'active':''}" onclick="event.stopPropagation()">
+        <input type="checkbox" ${day.haveGroceries?'checked':''} onchange="toggleHaveGroc('${key}',this.checked)">
+        Have groceries
+      </label>`:'';
+ 
+    const recipeLinkHtml=(rec)?`<button class="recipe-link" onclick="openPreview('${rec.id}')" title="Preview recipe">👁 Preview</button>`:'';
+ 
     if(isDayOff){
       card.innerHTML=`
         <div class="dh">
@@ -778,30 +904,30 @@ function renderPlanner(){
           <option value="random" ${day.recipeId==='random'?'selected':''}>🎲 Random</option>
           ${S.recipes.map(r=>`<option value="${r.id}" ${day.recipeId===r.id?'selected':''}>${r.name}</option>`).join('')}
         </select>
+        ${recipeLinkHtml}
         <div class="svrow"><span>Serves:</span>
           <input type="number" min="1" max="30" value="${sv}" onchange="setSv('${key}',this.value)">
         </div>
+        ${haveGrocHtml}
         <input type="text" class="extras-input" placeholder="+ sides or extras…" value="${escNotes}" ${day.locked?'disabled':''} onchange="setNotes('${key}',this.value)" onblur="setNotes('${key}',this.value)">
         <div class="whoout">${PEOPLE.map(p=>`<span class="pchip ${day.absent.includes(p)?'out':''}" onclick="toggleAbsent('${key}','${p}')">${p}</span>`).join('')}</div>`;
     }
     grid.appendChild(card);
   });
 }
-
+ 
 function activateDay(k){
   if(S.recipes.length){S.plan[k].recipeId=S.recipes[0].id;}
   else{S.plan[k].recipeId='custom';}
   save();renderPlanner();
 }
-
+ 
 function toggleLock(k){S.plan[k].locked=!S.plan[k].locked;save();renderPlanner();}
+function toggleHaveGroc(k,v){S.plan[k].haveGroceries=v;save();renderPlanner();}
 function selectMeal(k,v){
   S.plan[k].recipeId=v||null;
-  // Clear notes when switching away from custom, keep them when switching to custom
-  if(v!=='custom'&&S.plan[k].recipeId!=='custom'){
-    // Keep notes for extras on recipe days, only clear if going to "none"
-    if(!v)S.plan[k].notes='';
-  }
+  if(!v)S.plan[k].notes='';
+  if(!v||v==='random'||v==='custom')S.plan[k].haveGroceries=false;
   save();renderPlanner();
 }
 function setNotes(k,v){S.plan[k].notes=v;save();}
@@ -811,7 +937,7 @@ function shiftWeek(d){S.weekOffset+=d;save();renderPlanner();}
 function changeStartDay(){S.startDay=parseInt(document.getElementById('sdsel').value);save();renderPlanner();}
 function clearWeek(){
   if(!confirm('Clear all meals for this week?'))return;
-  getWeekDates().forEach(d=>{const k=dk(d);if(S.plan[k]){S.plan[k].recipeId=null;S.plan[k].locked=false;S.plan[k].servings=null;S.plan[k].notes='';}});
+  getWeekDates().forEach(d=>{const k=dk(d);if(S.plan[k]){S.plan[k].recipeId=null;S.plan[k].locked=false;S.plan[k].servings=null;S.plan[k].notes='';S.plan[k].haveGroceries=false;}});
   save();renderPlanner();
 }
 function randomiseUnlocked(){
@@ -819,24 +945,52 @@ function randomiseUnlocked(){
   const dates=getWeekDates();const used=new Set();
   dates.forEach(d=>{const k=dk(d);if(S.plan[k]?.locked&&S.plan[k].recipeId&&S.plan[k].recipeId!=='random'&&S.plan[k].recipeId!=='custom')used.add(S.plan[k].recipeId);});
   dates.forEach(d=>{
-    const k=dk(d);if(!S.plan[k])S.plan[k]={recipeId:null,locked:false,absent:[],servings:null,notes:''};
+    const k=dk(d);if(!S.plan[k])S.plan[k]={recipeId:null,locked:false,absent:[],servings:null,notes:'',haveGroceries:false};
     if(!S.plan[k].locked){
       const pool=S.recipes.filter(r=>!used.has(r.id));
       const p=(pool.length?pool:S.recipes)[Math.floor(Math.random()*(pool.length?pool:S.recipes).length)];
-      S.plan[k].recipeId=p.id;S.plan[k].notes='';used.add(p.id);
+      S.plan[k].recipeId=p.id;S.plan[k].notes='';S.plan[k].haveGroceries=false;used.add(p.id);
     }
   });
   save();renderPlanner();
 }
-
+ 
 // ═══════════════════════════════════════════════════
-//  GROCERY GENERATION FLOW — with existing items & custom meals
-//  Order: Existing check → Regen review → Custom meals → Pantry check → Staples check → Build
+//  RECIPE PREVIEW
+// ═══════════════════════════════════════════════════
+function openPreview(id){
+  const r=S.recipes.find(r=>r.id===id);if(!r)return;
+  const el=document.getElementById('preview-content');
+  el.innerHTML=`
+    ${r.photo?`<div class="preview-hero"><img src="${r.photo}" alt="${r.name}"></div>`:`<div class="preview-hero">🍽</div>`}
+    <div class="preview-title">${r.name}</div>
+    <div class="preview-meta">
+      <span>Serves ${r.serves}</span>
+      ${r.sourceUrl?`<a href="${r.sourceUrl}" target="_blank" style="color:var(--sage);text-decoration:none">Source ↗</a>`:''}
+      ${(r.tags||[]).map(t=>`<span class="rctag">${t}</span>`).join('')}
+    </div>
+    <div class="preview-section">
+      <h4>Ingredients</h4>
+      ${r.ingredients.map(i=>{
+        const q=i.quantity?`${fq(i.quantity)} ${i.unit}`.trim():'';
+        return `<div class="preview-ing">${q?q+' ':''}<strong>${i.name}</strong></div>`;
+      }).join('')}
+    </div>
+    <div class="mact">
+      <button class="btn btn-ghost btn-sm" onclick="closePreview()">Close</button>
+      <button class="btn btn-sage btn-sm" onclick="closePreview();showPage('recipes');openDetail('${r.id}')">Open full recipe →</button>
+    </div>`;
+  document.getElementById('previewmod').classList.add('open');
+}
+function closePreview(){document.getElementById('previewmod').classList.remove('open');}
+ 
+// ═══════════════════════════════════════════════════
+//  GROCERY GENERATION FLOW
 // ═══════════════════════════════════════════════════
 function startGroceryGen(){
   const planItems=S.groceryList.filter(i=>!i.manual&&!i.isStaple);
   const manual=S.groceryList.filter(i=>i.manual);
-
+ 
   if(planItems.length>0){
     const n=planItems.length;
     const manualN=manual.length;
@@ -857,8 +1011,7 @@ function startGroceryGen(){
     checkCustomMeals([]);
   }
 }
-
-// Step 0: Existing plan items check
+ 
 function existAct(action){
   document.getElementById('existmod').classList.remove('open');
   if(action==='clear-all'){
@@ -875,8 +1028,7 @@ function existAct(action){
     else checkCustomMeals([]);
   }
 }
-
-// Step 1: Regen review (if manual items exist)
+ 
 function openRegenMod(manual){
   document.getElementById('rlist').innerHTML=manual.map((item,i)=>`
     <div class="ritem">
@@ -894,8 +1046,7 @@ function regenAct(action){
   else if(action==='keep-sel')manual.forEach((item,i)=>{if(document.getElementById(`ri${i}`)?.checked)keep.push(item);});
   checkCustomMeals(keep);
 }
-
-// Step 1.5: Custom meals ingredients
+ 
 let pendingManualKeep=[];
 function checkCustomMeals(manualKeep){
   pendingManualKeep=manualKeep;
@@ -903,6 +1054,8 @@ function checkCustomMeals(manualKeep){
   const customDays=[];
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day)return;
+    // Skip days marked as "have groceries"
+    if(day.haveGroceries)return;
     const isCustom=day.recipeId==='custom';
     const hasExtras=day.notes&&day.notes.trim()&&day.recipeId&&day.recipeId!=='custom';
     if(isCustom&&day.notes&&day.notes.trim()){
@@ -915,7 +1068,7 @@ function checkCustomMeals(manualKeep){
     }
   });
   if(!customDays.length){openPantryMod(manualKeep);return;}
-
+ 
   const list=document.getElementById('cmlist');
   list.innerHTML=customDays.map((cd,i)=>{
     const dayName=DAYS[cd.date.getDay()];
@@ -944,7 +1097,7 @@ function confirmCustomMeals(){
     const lines=ta.value.split(/[\n,]/).map(l=>l.trim()).filter(Boolean);
     lines.forEach(line=>{
       if(line.toLowerCase()==='water')return;
-      const cat=guessCat(line);
+      const cat=resolveCategory(line,guessCat(line));
       items.push({name:line,qty:null,unit:'',category:cat,checked:false,manual:false,isStaple:false,fromCustom:true,source});
     });
   });
@@ -958,20 +1111,28 @@ function guessCat(name){
   }
   return 'Other';
 }
-
-// Step 2: Pantry check — #1 bug fix applied (no double-fire)
+ 
+// Resolve category using overrides
+function resolveCategory(name,fallbackCat){
+  const key=name.toLowerCase().trim();
+  if(S.categoryOverrides&&S.categoryOverrides[key])return S.categoryOverrides[key];
+  return fallbackCat;
+}
+ 
 function openPantryMod(manualKeep){
   pendingPantry={manualKeep,outOfStock:[]};
   const dates=getWeekDates();
   const pantryItems=new Set();
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId||day.recipeId==='custom')return;
+    if(day.haveGroceries)return;
     const rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
     if(!rec)return;
     rec.ingredients.filter(i=>i.pantry&&i.name.toLowerCase()!=='water').forEach(i=>pantryItems.add(i.name));
   });
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId||day.recipeId==='custom')return;
+    if(day.haveGroceries)return;
     const rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
     if(!rec)return;
     rec.ingredients.forEach(i=>{
@@ -1001,8 +1162,7 @@ function confirmPantry(){
   pendingPantry.outOfStock=unchecked;
   openStaplesMod(pendingPantry.manualKeep);
 }
-
-// Step 3: Staples check — #1 bug fix applied (no double-fire)
+ 
 function openStaplesMod(manualKeep){
   pendingSM={manual:manualKeep,staples:new Set()};
   const list=document.getElementById('smlist');
@@ -1026,15 +1186,16 @@ function confirmStaples(){
   const selected=[...document.querySelectorAll('#smlist input[type=checkbox]')].filter(cb=>cb.checked).map(cb=>cb.nextElementSibling.textContent.trim());
   buildGrocery(pendingSM.manual, selected);
 }
-
-// Step 4: Build the list
+ 
 function buildGrocery(manualKeep,selStaples){
   const outOfStock=pendingPantry.outOfStock||[];
   const dates=getWeekDates();const map={};
-
+ 
   dates.forEach(d=>{
     const k=dk(d);const day=S.plan[k];if(!day||!day.recipeId)return;
     if(day.recipeId==='custom')return;
+    // Skip days marked "have groceries"
+    if(day.haveGroceries)return;
     let rec=day.recipeId==='random'?S.recipes[0]:S.recipes.find(r=>r.id===day.recipeId);
     if(!rec)return;
     const base=rec.serves||4;const scale=(day.servings!=null?day.servings:base)/base;
@@ -1042,9 +1203,10 @@ function buildGrocery(manualKeep,selStaples){
       if(ing.name.toLowerCase()==='water')return;
       const isPantry=ing.pantry||S.pantryList.some(p=>p.toLowerCase()===ing.name.toLowerCase());
       if(isPantry&&!outOfStock.includes(ing.name))return;
-      const mk=`${ing.name.toLowerCase()}|${ing.unit}|${ing.category}`;
+      const cat=resolveCategory(ing.name,ing.category);
+      const mk=`${ing.name.toLowerCase()}|${ing.unit}|${cat}`;
       if(map[mk]){map[mk].qty+=ing.quantity*scale;if(!map[mk].sources.includes(rec.name))map[mk].sources.push(rec.name);}
-      else map[mk]={name:ing.name,qty:ing.quantity*scale,unit:ing.unit,category:ing.category,checked:false,manual:false,isStaple:false,sources:[rec.name]};
+      else map[mk]={name:ing.name,qty:ing.quantity*scale,unit:ing.unit,category:cat,checked:false,manual:false,isStaple:false,sources:[rec.name]};
     });
   });
   let items=Object.values(map);
@@ -1062,7 +1224,7 @@ function buildGrocery(manualKeep,selStaples){
   pendingCustomIngredients=[];
   S.groceryList=items;save();showPage('grocery');
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  GROCERY RENDER
 // ═══════════════════════════════════════════════════
@@ -1082,6 +1244,7 @@ function renderGrocery(){
         <input type="checkbox" ${item.checked?'checked':''} onclick="event.stopPropagation();toggleGI(${item._i})">
         <div class="gilbl">${item.name}${item.isStaple?'<span class="gbadge">staple</span>':''}${item.manual?'<span class="mbadge">manual</span>':''}${src}</div>
         ${q?`<span class="gqty">${q}</span>`:''}
+        <button class="grecat" onclick="event.stopPropagation();openGCatMod(${item._i})" title="Change category">📁</button>
         ${item.isStaple?'':'<button class="gadd" onclick="event.stopPropagation();addToStaples('+item._i+')" title="Add to staples">⭐</button>'}
         <button class="gdel" onclick="event.stopPropagation();delGI(${item._i})">✕</button>
       </div>`;
@@ -1090,7 +1253,7 @@ function renderGrocery(){
   });
   html+='</div>';c.innerHTML=html;
 }
-
+ 
 function fq(q){if(!q&&q!==0)return'';return q%1===0?q:parseFloat(q.toFixed(2));}
 function toggleGI(i){S.groceryList[i].checked=!S.groceryList[i].checked;save();renderGrocery();}
 function delGI(i){S.groceryList.splice(i,1);save();renderGrocery();}
@@ -1121,14 +1284,41 @@ function printGrocery(){
   if(navigator.share)navigator.share({title:'Grocery List',text:txt}).catch(()=>window.print());
   else window.print();
 }
-
+ 
+// ═══════════════════════════════════════════════════
+//  GROCERY CATEGORY CHANGE MODAL
+// ═══════════════════════════════════════════════════
+function openGCatMod(idx){
+  const item=S.groceryList[idx];if(!item)return;
+  gcatMS={idx,cat:item.category};
+  document.getElementById('gcatmodname').textContent=item.name;
+  document.getElementById('gcatgrid').innerHTML=CATS.map(c=>`
+    <div class="catopt ${c===item.category?'sel':''}" onclick="selGCat('${c}')" data-cat="${c}">${CICONS[c]} ${c}</div>`).join('');
+  document.getElementById('gcatmod').classList.add('open');
+}
+function selGCat(cat){gcatMS.cat=cat;document.querySelectorAll('#gcatgrid .catopt').forEach(el=>el.classList.toggle('sel',el.dataset.cat===cat));}
+function closeGCatMod(){document.getElementById('gcatmod').classList.remove('open');}
+function saveGCat(){
+  const item=S.groceryList[gcatMS.idx];
+  if(item){
+    item.category=gcatMS.cat;
+    if(document.getElementById('gcatmod-remember').checked){
+      if(!S.categoryOverrides)S.categoryOverrides={};
+      S.categoryOverrides[item.name.toLowerCase().trim()]=gcatMS.cat;
+    }
+    save();
+  }
+  closeGCatMod();renderGrocery();
+  showToast(`"${item.name}" moved to ${gcatMS.cat}`);
+}
+ 
 // ═══════════════════════════════════════════════════
 //  PROMPTS
 // ═══════════════════════════════════════════════════
 function getPantryLine(){
   return `pantry: true ONLY for these exact items (or close matches): ${(S.pantryList||DEFAULT_PANTRY).join(', ')}. false for everything else.`;
 }
-
+ 
 function copyPromptLive(id){
   const el=document.getElementById(id);
   if(!el)return;
@@ -1139,20 +1329,20 @@ function copyPromptLive(id){
   }
   navigator.clipboard.writeText(text).then(()=>showToast('Prompt copied!')).catch(()=>showToast('Copy failed'));
 }
-
+ 
 function updateUrlInPrompt(){
   const urlVal=(document.getElementById('url-input')?.value||'').trim()||'[PASTE URL HERE]';
   const el=document.getElementById('url-prompt');
   if(!el)return;
   el.textContent=el.textContent.replace(/Please fetch and extract the recipe from this URL: .+/,`Please fetch and extract the recipe from this URL: ${urlVal}`);
 }
-
+ 
 // ═══════════════════════════════════════════════════
-//  RECIPE IMPORT MODAL — #3
+//  RECIPE IMPORT MODAL
 // ═══════════════════════════════════════════════════
 function openImportModal(){document.getElementById('importmod').classList.add('open');}
 function closeImportModal(){document.getElementById('importmod').classList.remove('open');}
-
+ 
 // ═══════════════════════════════════════════════════
 //  RECIPES
 // ═══════════════════════════════════════════════════
@@ -1161,7 +1351,7 @@ function switchTab(tab){
   document.querySelectorAll('.ipanel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
 }
-
+ 
 function addRecipeJSON(){
   const raw=document.getElementById('rjson').value.trim();
   try{
@@ -1176,20 +1366,20 @@ function addRecipeJSON(){
     document.getElementById('rjson').value='';save();renderRecipes();closeImportModal();showToast(`"${d.name}" added!`);
   }catch(e){showToast('⚠ Invalid JSON');}
 }
-
+ 
 function deleteRecipe(id,e){
   e.stopPropagation();if(!confirm('Delete this recipe?'))return;
   S.recipes=S.recipes.filter(r=>r.id!==id);
   Object.keys(S.plan).forEach(k=>{if(S.plan[k].recipeId===id)S.plan[k].recipeId=null;});
   save();renderRecipes();
 }
-
+ 
 function filterTag(tag){
   activeTag=tag;
   document.querySelectorAll('.tpill').forEach(p=>p.classList.toggle('active',p.dataset.tag===tag));
   renderRCards();
 }
-
+ 
 function renderRecipes(){
   const bar=document.getElementById('tfilter');
   const allTags=new Set();S.recipes.forEach(r=>(r.tags||[]).forEach(t=>allTags.add(t)));
@@ -1198,7 +1388,7 @@ function renderRecipes(){
     +[...allTags].map(t=>`<span class="tpill${activeTag===t?' active':''}" onclick="filterTag('${t}')" data-tag="${t}">${t}</span>`).join('');
   renderRCards();
 }
-
+ 
 function renderRCards(){
   const grid=document.getElementById('rgrid');
   const list=activeTag?S.recipes.filter(r=>(r.tags||[]).includes(activeTag)):S.recipes;
@@ -1217,7 +1407,7 @@ function renderRCards(){
       </div>
     </div>`).join('');
 }
-
+ 
 function showRL(){document.getElementById('rlview').style.display='block';document.getElementById('rdview').classList.remove('active');}
 function openDetail(id){
   curDetailId=id;const r=S.recipes.find(r=>r.id===id);if(!r)return;
@@ -1230,7 +1420,7 @@ function closeDetail(){
   curDetailId=null;Object.values(timers).forEach(t=>clearInterval(t));timers={};
   showRL();renderRecipes();
 }
-
+ 
 function renderDetail(r){
   const scale=detailSv/(r.serves||4);
   document.getElementById('rdcontent').innerHTML=`
@@ -1250,7 +1440,7 @@ function renderDetail(r){
     </div>
     ${r.photo?`<div class="rdhero"><img src="${r.photo}" alt="${r.name}"></div>`:`<div class="rdhero" onclick="triggerPhoto('${r.id}')"><span style="display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--ink3)">🍽<span style="font-size:.78rem">Click to add photo</span></span></div>`}
     <input type="file" accept="image/*" id="phupload" style="display:none" onchange="handlePhoto('${r.id}',this)">
-
+ 
     <div class="rdbody">
       <div class="rdsec">
         <h3>Ingredients</h3>
@@ -1272,17 +1462,17 @@ function renderDetail(r){
             </li>`;
           }).join('')}
         </ul>
-
+ 
         <h3 style="margin-top:18px">Notes</h3>
         <textarea class="notesarea" placeholder="Tips, variations, family notes…" onchange="saveNotes('${r.id}',this.value)">${r.notes||''}</textarea>
-
+ 
         <h3 style="margin-top:18px">Tags</h3>
         <div class="tagedit">${ALL_TAGS.map(t=>`<span class="tpill ${(r.tags||[]).includes(t)?'active':''}" onclick="toggleTag('${r.id}','${t}')">${t}</span>`).join('')}</div>
-
+ 
         <h3 style="margin-top:18px">Source URL</h3>
         <input type="text" class="urlinput" value="${r.sourceUrl||''}" placeholder="https://…" onchange="saveSrc('${r.id}',this.value)">
       </div>
-
+ 
       <div class="rdsec">
         <h3>Steps</h3>
         ${r.steps&&r.steps.length?`<div class="stepslist">${r.steps.map((s,i)=>renderStep(s,i,r.id)).join('')}</div>`
@@ -1290,7 +1480,7 @@ function renderDetail(r){
       </div>
     </div>`;
 }
-
+ 
 function renderStep(step,i,rid){
   const tid=`${rid}-${i}`;const has=step.timerSeconds>0;
   return `<div class="stepitem">
@@ -1300,7 +1490,7 @@ function renderStep(step,i,rid){
     <div class="timerdisp" id="tdisp${tid}" style="display:none"></div>`:''}
   </div>`;
 }
-
+ 
 function ftm(s){return`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
 function toggleTimer(id,total){
   if(timers[id]){clearInterval(timers[id]);delete timers[id];
@@ -1313,7 +1503,7 @@ function toggleTimer(id,total){
     if(rem<=0){clearInterval(timers[id]);delete timers[id];
       if(b){b.classList.remove('run');b.textContent='✅ Done!';}if(d)d.textContent='Done!';showToast('⏰ Timer done!');}},1000);
 }
-
+ 
 function adjSv(d,rid){detailSv=Math.max(1,detailSv+d);const r=S.recipes.find(r=>r.id===rid);if(r)renderDetail(r);}
 function saveNotes(rid,v){const r=S.recipes.find(r=>r.id===rid);if(r){r.notes=v;save();}}
 function saveSrc(rid,v){const r=S.recipes.find(r=>r.id===rid);if(r){r.sourceUrl=v;save();}}
@@ -1323,30 +1513,59 @@ function toggleTag(rid,tag){
   save();renderDetail(r);
 }
 function triggerPhoto(rid){curDetailId=rid;document.getElementById('phupload').click();}
+ 
+// Photo handling — compress to max 800px and JPEG quality 0.7 to stay under Firestore limits
 function handlePhoto(rid,inp){
   const f=inp.files[0];if(!f)return;
-  const fr=new FileReader();
-  fr.onload=e=>{const r=S.recipes.find(r=>r.id===rid);if(r){r.photo=e.target.result;save();renderDetail(r);}};
-  fr.readAsDataURL(f);
+  const img=new Image();
+  const url=URL.createObjectURL(f);
+  img.onload=()=>{
+    URL.revokeObjectURL(url);
+    const MAX=800;
+    let w=img.width,h=img.height;
+    if(w>MAX||h>MAX){
+      if(w>h){h=Math.round(h*(MAX/w));w=MAX;}
+      else{w=Math.round(w*(MAX/h));h=MAX;}
+    }
+    const canvas=document.createElement('canvas');
+    canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(img,0,0,w,h);
+    const compressed=canvas.toDataURL('image/jpeg',0.7);
+    const r=S.recipes.find(r=>r.id===rid);
+    if(r){r.photo=compressed;save();renderDetail(r);showToast('Photo saved!');}
+  };
+  img.onerror=()=>{URL.revokeObjectURL(url);showToast('⚠ Could not load image');};
+  img.src=url;
 }
-
+ 
 function openCatMod(rid,idx,cat){
   catMS={rid,idx,cat};
   document.getElementById('catmodname').textContent=S.recipes.find(r=>r.id===rid)?.ingredients[idx]?.name||'';
   document.getElementById('catgrid').innerHTML=CATS.map(c=>`
     <div class="catopt ${c===cat?'sel':''}" onclick="selCat('${c}')" data-cat="${c}">${CICONS[c]} ${c}</div>`).join('');
+  document.getElementById('catmod-remember').style.display='block';
+  document.getElementById('catmod-remember-cb').checked=true;
   document.getElementById('catmod').classList.add('open');
 }
-function selCat(cat){catMS.cat=cat;document.querySelectorAll('.catopt').forEach(el=>el.classList.toggle('sel',el.dataset.cat===cat));}
+function selCat(cat){catMS.cat=cat;document.querySelectorAll('#catgrid .catopt').forEach(el=>el.classList.toggle('sel',el.dataset.cat===cat));}
 function closeCatMod(){document.getElementById('catmod').classList.remove('open');}
 function saveCat(){
   const r=S.recipes.find(r=>r.id===catMS.rid);
-  if(r&&r.ingredients[catMS.idx]){r.ingredients[catMS.idx].category=catMS.cat;save();}
+  if(r&&r.ingredients[catMS.idx]){
+    r.ingredients[catMS.idx].category=catMS.cat;
+    // Save global override if checkbox checked
+    if(document.getElementById('catmod-remember-cb').checked){
+      if(!S.categoryOverrides)S.categoryOverrides={};
+      S.categoryOverrides[r.ingredients[catMS.idx].name.toLowerCase().trim()]=catMS.cat;
+    }
+    save();
+  }
   closeCatMod();renderDetail(r);
 }
-
+ 
 // ═══════════════════════════════════════════════════
-//  RECIPE EDIT — #4 Claude-assisted editing
+//  RECIPE EDIT
 // ═══════════════════════════════════════════════════
 function openEditModal(id,e){
   if(e)e.stopPropagation();
@@ -1363,7 +1582,7 @@ function openEditModal(id,e){
   document.getElementById('editmod').classList.add('open');
 }
 function closeEditModal(){document.getElementById('editmod').classList.remove('open');editingRecipeId=null;}
-
+ 
 function generateEditPrompt(){
   const desc=document.getElementById('edit-describe').value.trim();
   if(!desc){showToast('Please describe the changes you want');return;}
@@ -1372,12 +1591,12 @@ function generateEditPrompt(){
     ingredients:r.ingredients.map(i=>({name:i.name,quantity:i.quantity,unit:i.unit,category:i.category,pantry:i.pantry})),
     steps:r.steps.map(s=>({text:s.text,timerSeconds:s.timerSeconds}))};
   const prompt=`I have an existing recipe in JSON format. Please apply the requested changes and return ONLY the updated JSON object (no markdown, no extra text).
-
+ 
 CURRENT RECIPE:
 ${JSON.stringify(rClean,null,2)}
-
+ 
 REQUESTED CHANGES: ${desc}
-
+ 
 Return the FULL updated recipe in this exact format:
 {
   "name": "Recipe Name",
@@ -1385,13 +1604,17 @@ Return the FULL updated recipe in this exact format:
   "sourceUrl": "",
   "tags": [],
   "ingredients": [
-    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+    { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
     { "text": "Step description.", "timerSeconds": 0 }
   ]
 }
-
+ 
+IMPORTANT — Ingredient prep handling:
+- The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
+- If an ingredient has prep instructions, collect ALL of them and create a FIRST step titled "Prep" listing every ingredient needing prep. The remaining steps follow after.
+ 
 Category MUST be exactly one of: Produce, Bakery, Deli, Butcher, Dairy, Frozen, Other
 Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or ""
 timerSeconds: 0 if no waiting; otherwise total seconds
@@ -1401,7 +1624,7 @@ Return the COMPLETE recipe with ALL ingredients and steps (not just the changed 
   document.getElementById('edit-prompt').textContent=prompt;
   document.getElementById('edit-prompt-box').style.display='block';
 }
-
+ 
 function applyRecipeEdit(){
   const raw=document.getElementById('edit-json').value.trim();
   if(!raw){showToast('Paste the updated JSON first');return;}
@@ -1421,7 +1644,7 @@ function applyRecipeEdit(){
     showToast(`"${r.name}" updated!`);
   }catch(e){showToast('⚠ Invalid JSON');}
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  STAPLES PAGE
 // ═══════════════════════════════════════════════════
@@ -1436,7 +1659,7 @@ function addStaple(){
   S.staples.push(v);inp.value='';save();renderStaples();
 }
 function removeStaple(i){S.staples.splice(i,1);save();renderStaples();}
-
+ 
 // ═══════════════════════════════════════════════════
 //  PANTRY LIST PAGE
 // ═══════════════════════════════════════════════════
@@ -1453,17 +1676,17 @@ function addPantryItem(){
   S.pantryList.push(v);inp.value='';save();renderPantryList();showToast(`"${v}" added to pantry`);
 }
 function removePantryItem(i){S.pantryList.splice(i,1);save();renderPantryList();}
-
+ 
 // ═══════════════════════════════════════════════════
-//  DESCRIBE PROMPT — #2 button position already fixed in HTML
+//  DESCRIBE PROMPT
 // ═══════════════════════════════════════════════════
 function generateDescribePrompt(){
   const desc=document.getElementById('rdescribe').value.trim();
   if(!desc){showToast('Please describe the recipe first');return;}
   const prompt=`Please create a full recipe based on this description and return ONLY a JSON object (no markdown, no extra text):
-
+ 
 Description: "${desc}"
-
+ 
 Return this exact format:
 {
   "name": "Recipe Name",
@@ -1471,13 +1694,18 @@ Return this exact format:
   "sourceUrl": "",
   "tags": [],
   "ingredients": [
-    { "name": "ingredient", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+    { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
     { "text": "Step description.", "timerSeconds": 0 }
   ]
 }
-
+ 
+IMPORTANT — Ingredient prep handling:
+- The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
+- If an ingredient has prep instructions (diced, minced, sliced, chopped, grated, julienned, etc.), collect ALL of them and create a FIRST step in the "steps" array titled "Prep" that lists every ingredient needing prep, e.g.: "Prep: Dice 1 yellow onion. Mince 3 cloves garlic. Slice 2 red peppers." timerSeconds for this step should be 0.
+- The remaining steps follow as normal after the prep step.
+ 
 Category MUST be exactly one of these seven:
 - Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
 - Bakery: bread, wraps, raw pastry/dough — e.g. sourdough, pita, croissants, pizza base
@@ -1486,7 +1714,7 @@ Category MUST be exactly one of these seven:
 - Dairy: milk, cheese, yogurt, cream, butter, eggs — e.g. cheddar, Greek yogurt, butter
 - Frozen: anything purchased frozen — e.g. frozen peas, ice cream
 - Other: pantry, canned goods, condiments, dry goods — e.g. pasta, olive oil, tinned tomatoes
-
+ 
 ${getPantryLine()}
 unit: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or "" for countable items
 timerSeconds: 0 if no waiting; otherwise total seconds (e.g. 20 min = 1200)
@@ -1495,7 +1723,61 @@ Infer reasonable quantities and steps from the description. Fill in anything mis
   document.getElementById('describe-prompt').textContent=prompt;
   document.getElementById('describe-prompt-box').style.display='block';
 }
-
+ 
+// ═══════════════════════════════════════════════════
+//  BUG & FEATURE TRACKER
+// ═══════════════════════════════════════════════════
+function renderTracker(){
+  const list=document.getElementById('tracker-list');
+  if(!list)return;
+  if(!S.trackerItems||!S.trackerItems.length){
+    list.innerHTML='<div class="empty" style="padding:30px 20px"><div class="ico">📋</div><h3>No items yet</h3><p>Add bugs or feature requests above.</p></div>';
+    return;
+  }
+  list.innerHTML=S.trackerItems.map((item,i)=>`
+    <div class="tracker-item ${item.type}">
+      <span class="tracker-type ${item.type}">${item.type==='bug'?'🐛 Bug':'✨ Feature'}</span>
+      <span class="tracker-text">${item.text}</span>
+      <button class="tracker-del" onclick="removeTrackerItem(${i})">✕</button>
+    </div>`).join('');
+}
+ 
+function addTrackerItem(){
+  const type=document.getElementById('tracker-type').value;
+  const inp=document.getElementById('tracker-input');
+  const text=inp.value.trim();
+  if(!text)return;
+  if(!S.trackerItems)S.trackerItems=[];
+  S.trackerItems.push({type,text,added:new Date().toISOString()});
+  inp.value='';save();renderTracker();
+  showToast(`${type==='bug'?'Bug':'Feature'} added`);
+}
+ 
+function removeTrackerItem(i){
+  S.trackerItems.splice(i,1);save();renderTracker();
+}
+ 
+function generateTrackerPrompt(){
+  if(!S.trackerItems||!S.trackerItems.length){showToast('No items to generate a prompt for');return;}
+  const bugs=S.trackerItems.filter(i=>i.type==='bug');
+  const features=S.trackerItems.filter(i=>i.type==='feature');
+  let prompt=`I have a webapp (single index.html file — HTML/CSS/JS with Firebase Firestore backend). Please help me implement the following changes. Work through them one at a time, explaining what you're changing and why.\n\n`;
+  if(bugs.length){
+    prompt+=`BUGS TO FIX:\n`;
+    bugs.forEach((b,i)=>prompt+=`${i+1}. ${b.text}\n`);
+    prompt+='\n';
+  }
+  if(features.length){
+    prompt+=`FEATURES TO ADD:\n`;
+    features.forEach((f,i)=>prompt+=`${i+1}. ${f.text}\n`);
+    prompt+='\n';
+  }
+  prompt+=`Please start by asking any clarifying questions you have about these items before making changes. Then work through them one at a time.`;
+  document.getElementById('tracker-prompt').textContent=prompt;
+  document.getElementById('tracker-prompt-box').style.display='block';
+  showToast('Prompt generated!');
+}
+ 
 // ═══════════════════════════════════════════════════
 //  CATEGORY HINTS
 // ═══════════════════════════════════════════════════
@@ -1503,16 +1785,18 @@ const CAT_HINTS={Produce:['apple','apples','banana','bananas','lemon','lemons','
 function suggestCat(){
   const val=document.getElementById('miinput').value.toLowerCase().trim();if(!val)return;
   const sel=document.getElementById('micat');
+  // Check overrides first
+  if(S.categoryOverrides&&S.categoryOverrides[val]){sel.value=S.categoryOverrides[val];return;}
   for(const[cat,words]of Object.entries(CAT_HINTS)){if(words.some(w=>val.includes(w)||w.includes(val))){sel.value=cat;return;}}
   sel.value='Other';
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  UTILS
 // ═══════════════════════════════════════════════════
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function copyPrompt(id){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>showToast('Prompt copied!')).catch(()=>showToast('Copy failed'));}
-
+ 
 // ═══════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════
@@ -1520,3 +1804,6 @@ initFB();
 </script>
 </body>
 </html>
+ 
+
+
