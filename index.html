@@ -291,6 +291,92 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .tracker-add-row input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,143,113,.15)}
 .tracker-add-row select{font-family:'Jost',sans-serif;font-size:.8rem;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
  
+/* RECIPE INBOX */
+.inbox-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:22px}
+.inbox-box h3{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.inbox-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.inbox-item{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;background:#fff;border:1px solid var(--border);border-radius:8px}
+.inbox-item textarea{flex:1;font-family:'Jost',sans-serif;font-size:.8rem;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--ink);resize:vertical;min-height:34px;field-sizing:content}
+.inbox-item textarea:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 2px rgba(107,143,113,.12)}
+.inbox-item button{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.8rem;padding:5px 7px;border-radius:4px;flex-shrink:0;touch-action:manipulation}
+.inbox-item button:hover{color:var(--terra);background:var(--terra-pale)}
+ 
+/* INLINE EDITING */
+.edit-inline{font-family:'Jost',sans-serif;font-size:inherit;padding:3px 7px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--ink);width:100%;transition:all .15s}
+.edit-inline:hover{border-color:var(--border);background:var(--surface2)}
+.edit-inline:focus{outline:none;border-color:var(--sage);background:#fff;box-shadow:0 0 0 2px rgba(107,143,113,.12)}
+.edit-inline-sm{font-size:.8rem;padding:2px 6px;width:auto}
+.edit-inline-qty{width:55px;text-align:center;font-size:.75rem}
+.edit-inline-unit{width:50px;text-align:center;font-size:.75rem}
+.ingitem-edit{display:flex;align-items:center;padding:5px 8px;background:var(--surface2);border-radius:7px;font-size:.8rem;gap:4px;flex-wrap:wrap}
+.ingitem-edit .ingname{flex:1;min-width:80px}
+.ing-actions{display:flex;gap:2px;flex-shrink:0}
+.ing-actions button{background:none;border:none;cursor:pointer;font-size:.72rem;padding:3px 5px;border-radius:3px;color:var(--ink3);touch-action:manipulation}
+.ing-actions button:hover{color:var(--terra);background:var(--terra-pale)}
+.step-edit-wrap{position:relative}
+.step-edit-text{width:100%;font-family:'Jost',sans-serif;font-size:.84rem;padding:8px 10px;border:1px solid transparent;border-radius:7px;background:transparent;color:var(--ink2);line-height:1.6;resize:vertical;min-height:40px;field-sizing:content}
+.step-edit-text:hover{border-color:var(--border);background:var(--surface)}
+.step-edit-text:focus{outline:none;border-color:var(--sage);background:#fff;box-shadow:0 0 0 2px rgba(107,143,113,.12)}
+.step-actions{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;align-items:center}
+.step-actions button{font-size:.7rem;padding:3px 8px;background:var(--surface);border:1px solid var(--border);border-radius:5px;cursor:pointer;color:var(--ink3);font-family:'Jost',sans-serif;touch-action:manipulation}
+.step-actions button:hover{border-color:var(--sage);color:var(--sage)}
+.add-row-btn{font-size:.76rem;padding:6px 12px;background:var(--surface);border:1px dashed var(--border);border-radius:8px;cursor:pointer;color:var(--ink3);font-family:'Jost',sans-serif;text-align:center;transition:all .15s;touch-action:manipulation;width:100%}
+.add-row-btn:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-pale)}
+ 
+/* COOKING MODE */
+.cook-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto}
+.cook-overlay.open{display:block}
+.cook-header{background:var(--ink);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:310}
+.cook-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#F7F3EE;font-weight:600}
+.cook-body{max-width:1000px;margin:0 auto;padding:20px}
+.cook-grid{display:grid;grid-template-columns:220px 1fr;gap:20px}
+@media(max-width:700px){.cook-grid{grid-template-columns:1fr}}
+.cook-steps-nav{display:flex;flex-direction:column;gap:4px}
+.cook-snav{padding:8px 11px;border-radius:8px;font-size:.78rem;cursor:pointer;border:1px solid var(--border);background:var(--surface);transition:all .15s;touch-action:manipulation;display:flex;align-items:center;gap:6px}
+.cook-snav:hover{border-color:var(--sage)}
+.cook-snav.active{border-color:var(--sage);background:var(--sage-pale);font-weight:600}
+.cook-snav.done{opacity:.5;text-decoration:line-through}
+.cook-snav .cook-snav-num{font-family:'Cormorant Garamond',serif;font-size:.7rem;color:var(--ink3);width:18px}
+.cook-snav .timer-dot{width:7px;height:7px;border-radius:50%;margin-left:auto;flex-shrink:0}
+.timer-dot.has-timer{background:var(--blue)}.timer-dot.running{background:var(--terra);animation:p 1s infinite}
+.cook-main{display:flex;flex-direction:column;gap:16px}
+.cook-active-cards{display:flex;gap:14px;flex-wrap:wrap}
+.cook-card{flex:1;min-width:280px;background:var(--surface);border:2px solid var(--sage);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.cook-card-num{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--ink3);margin-bottom:4px;font-weight:600}
+.cook-card-text{font-size:1.05rem;line-height:1.7;color:var(--ink2);margin-bottom:14px}
+.cook-timer-box{background:var(--surface2);border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cook-timer-display{font-family:monospace;font-size:1.8rem;font-weight:700;color:var(--ink);min-width:90px}
+.cook-timer-display.warn{color:var(--terra)}
+.cook-timer-edit{font-family:monospace;font-size:1.4rem;font-weight:600;width:80px;text-align:center;border:1px solid var(--border);border-radius:7px;padding:4px;background:#fff}
+.cook-timer-edit:focus{outline:none;border-color:var(--sage)}
+.cook-timer-btns{display:flex;gap:6px;flex-wrap:wrap}
+.cook-timer-btns button{padding:7px 14px;border-radius:7px;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:500;border:none;cursor:pointer;touch-action:manipulation}
+.cook-btn-start{background:var(--sage);color:#fff}.cook-btn-start:hover{background:#5a7a60}
+.cook-btn-pause{background:var(--gold);color:#fff}.cook-btn-pause:hover{background:#9a7a20}
+.cook-btn-resume{background:var(--blue);color:#fff}.cook-btn-resume:hover{background:#3a5a8a}
+.cook-btn-reset{background:var(--surface);color:var(--ink3);border:1px solid var(--border)!important}.cook-btn-reset:hover{background:var(--border)}
+.cook-ing-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.cook-ing-panel h4{font-family:'Cormorant Garamond',serif;font-size:.95rem;margin-bottom:8px}
+.cook-ing-item{font-size:.82rem;padding:4px 0;color:var(--ink2)}
+.cook-nav-btns{display:flex;gap:8px;margin-top:8px}
+ 
+/* EXPANDABLE TRACKER TEXTAREA */
+.tracker-item{position:relative}
+.tracker-edit-area{width:100%;font-family:'Jost',sans-serif;font-size:.8rem;padding:5px 8px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--ink2);resize:vertical;min-height:28px;field-sizing:content;cursor:text}
+.tracker-edit-area:hover{border-color:var(--border);background:var(--surface)}
+.tracker-edit-area:focus{outline:none;border-color:var(--sage);background:#fff;box-shadow:0 0 0 2px rgba(107,143,113,.12);cursor:text}
+ 
+/* ADD TO GROCERY FROM RECIPE */
+.atg-list{display:flex;flex-direction:column;gap:4px;max-height:350px;overflow-y:auto;margin-bottom:8px}
+.atg-item{display:flex;align-items:center;gap:8px;padding:7px 11px;background:#fff;border:1px solid var(--border);border-radius:7px;cursor:pointer;transition:all .12s;touch-action:manipulation}
+.atg-item:hover{border-color:var(--sage)}
+.atg-item.sel{background:var(--sage-pale);border-color:var(--sage)}
+.atg-item.pantry{opacity:.55}
+.atg-item input{accent-color:var(--sage);width:14px;height:14px;flex-shrink:0}
+.atg-item label{font-size:.8rem;flex:1;cursor:pointer}
+.atg-item .atg-qty{font-size:.72rem;color:var(--ink3)}
+.atg-item .atg-cat{font-size:.65rem;color:var(--ink3);padding:1px 6px;border-radius:10px;background:var(--surface2);border:1px solid var(--border)}
+ 
 @media print{
   nav,.gbar,.marow,.gdel,.gitem input[type=checkbox]{display:none!important}
   body{background:#fff}
@@ -363,6 +449,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
   </div>
   <div class="gbar">
     <button class="btn btn-sage btn-sm" onclick="startGroceryGen()">↻ Regenerate from plan</button>
+    <button class="btn btn-ghost btn-sm" onclick="openRecipePicker()">📖 Add from Recipe</button>
   </div>
   <div id="gcontent">
     <div class="empty"><div class="ico">🛒</div><h3>No list yet</h3><p>Go to Planner → Generate Grocery List.</p></div>
@@ -375,7 +462,28 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     <div class="ph">
       <div><div class="pt">Recipe Library</div><div class="ps">Your family's cookbook.</div></div>
       <div class="ph-actions">
+        <button class="btn btn-ghost btn-sm" onclick="cleanupPrepInstructions()" title="Strip prep verbs from ingredient names and create Prep steps">🧹 Clean Up Prep</button>
         <button class="btn btn-primary" onclick="openImportModal()">+ Add Recipe</button>
+      </div>
+    </div>
+ 
+    <!-- RECIPE INBOX -->
+    <div class="inbox-box" id="inbox-box">
+      <h3>📥 Recipe Inbox <span style="font-size:.72rem;color:var(--ink3);font-weight:400" id="inbox-count"></span></h3>
+      <div class="hint">Jot down recipe links, descriptions, or notes throughout the week. When ready, generate a single prompt to import them all.</div>
+      <div class="inbox-list" id="inbox-list"></div>
+      <div class="addrow">
+        <input type="text" id="inbox-input" placeholder="Paste a link or describe a recipe…" onkeydown="if(event.key==='Enter')addInboxItem()">
+        <button class="btn btn-sage btn-sm" onclick="addInboxItem()">Add</button>
+      </div>
+      <div style="display:flex;gap:7px;margin-top:10px">
+        <button class="btn btn-primary btn-sm" onclick="generateInboxPrompt()" id="inbox-gen-btn" disabled>📋 Generate Bulk Prompt</button>
+        <button class="btn btn-ghost btn-xs" onclick="clearInbox()" id="inbox-clear-btn" style="display:none">Clear all</button>
+      </div>
+      <div class="pbox" id="inbox-prompt-box" style="display:none;margin-top:12px">
+        <h4>📋 Bulk Import Prompt — copy and paste into Claude</h4>
+        <pre id="inbox-prompt"></pre>
+        <button class="cpbtn" onclick="copyPrompt('inbox-prompt')">Copy Prompt</button>
       </div>
     </div>
  
@@ -482,7 +590,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
     { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
-    { "text": "Step description.", "timerSeconds": 0 }
+    { "text": "Step description. Any measurements in step text must use [[qty|unit]] markers e.g. 'Add [[200|g]] flour'.", "timerSeconds": 0 }
   ]
 }
  
@@ -490,6 +598,11 @@ IMPORTANT — Ingredient prep handling:
 - The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
 - If an ingredient has prep instructions (diced, minced, sliced, chopped, grated, julienned, etc.), collect ALL of them and create a FIRST step in the "steps" array titled "Prep" that lists every ingredient needing prep, e.g.: "Prep: Dice 1 yellow onion. Mince 3 cloves garlic. Slice 2 red peppers." timerSeconds for this step should be 0.
 - The remaining steps follow as normal after the prep step.
+ 
+IMPORTANT — Step text measurements:
+- Wrap any ingredient quantities mentioned in steps with [[qty|unit]] markers so they can be auto-scaled when servings change. E.g. "Add [[200|g]] flour and [[100|ml]] milk".
+- Only wrap ingredient amounts, NOT cooking times or temperatures.
+- The qty must be the amount for the base serving size given above.
  
 Category MUST be exactly one of these seven — use the definitions to decide:
 - Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
@@ -528,7 +641,7 @@ Return ONLY a JSON object (no markdown, no extra text):
     { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
-    { "text": "Step description.", "timerSeconds": 0 }
+    { "text": "Step description. Any measurements in step text must use [[qty|unit]] markers e.g. 'Add [[200|g]] flour'.", "timerSeconds": 0 }
   ]
 }
  
@@ -536,6 +649,11 @@ IMPORTANT — Ingredient prep handling:
 - The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
 - If an ingredient has prep instructions (diced, minced, sliced, chopped, grated, julienned, etc.), collect ALL of them and create a FIRST step in the "steps" array titled "Prep" that lists every ingredient needing prep, e.g.: "Prep: Dice 1 yellow onion. Mince 3 cloves garlic. Slice 2 red peppers." timerSeconds for this step should be 0.
 - The remaining steps follow as normal after the prep step.
+ 
+IMPORTANT — Step text measurements:
+- Wrap any ingredient quantities mentioned in steps with [[qty|unit]] markers so they can be auto-scaled when servings change. E.g. "Add [[200|g]] flour and [[100|ml]] milk".
+- Only wrap ingredient amounts, NOT cooking times or temperatures.
+- The qty must be the amount for the base serving size given above.
  
 Category MUST be exactly one of these seven:
 - Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
@@ -702,6 +820,52 @@ PANTRY_LINE_PLACEHOLDER</pre>
   </div>
 </div>
  
+<!-- COOKING MODE OVERLAY -->
+<div class="cook-overlay" id="cookmod">
+  <div class="cook-header">
+    <div class="cook-title" id="cook-title"></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:.78rem;color:var(--ink3)" id="cook-serves"></span>
+      <button class="btn btn-ghost btn-xs" style="color:#F7F3EE;border-color:rgba(255,255,255,.2)" onclick="closeCookMode()">✕ Exit</button>
+    </div>
+  </div>
+  <div class="cook-body">
+    <div class="cook-grid">
+      <div>
+        <div class="cook-steps-nav" id="cook-steps-nav"></div>
+        <div class="cook-ing-panel" id="cook-ing-panel" style="margin-top:14px"></div>
+      </div>
+      <div class="cook-main" id="cook-main"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- RECIPE PICKER FOR GROCERY -->
+<div class="overlay" id="recipepickmod">
+  <div class="modal">
+    <h2>📖 Add from Recipe</h2>
+    <p>Choose a recipe to add its ingredients to your grocery list.</p>
+    <select id="recipe-pick-sel" style="width:100%;font-family:'Jost',sans-serif;font-size:.85rem;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);margin-bottom:6px"></select>
+    <div class="mact">
+      <button class="btn btn-ghost btn-sm" onclick="closeRecipePicker()">Cancel</button>
+      <button class="btn btn-sage" onclick="confirmRecipePick()">Select →</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ADD TO GROCERY MODAL -->
+<div class="overlay" id="atgmod">
+  <div class="modal">
+    <h2>🛒 Add to Grocery List</h2>
+    <p>Select ingredients to add. Pantry items are unchecked by default.</p>
+    <div class="atg-list" id="atg-list"></div>
+    <div class="mact">
+      <button class="btn btn-ghost btn-sm" onclick="closeATG()">Cancel</button>
+      <button class="btn btn-sage" onclick="confirmATG()">Add selected →</button>
+    </div>
+  </div>
+</div>
+ 
 <script>
 // ═══════════════════════════════════════════════════
 //  FIREBASE CONFIG
@@ -737,7 +901,8 @@ let S = {
   staples:['Coffee','Milk','Eggs','Bread'],
   pantryList:[...DEFAULT_PANTRY],
   categoryOverrides:{},
-  trackerItems:[]
+  trackerItems:[],
+  recipeInbox:[]
 };
 let db=null, fbReady=false;
 let pendingSM={manual:[],staples:new Set()};
@@ -749,7 +914,7 @@ let curDetailId=null, detailSv=4;
 let editingRecipeId=null;
 let catMS={rid:null,idx:null,cat:null};
 let gcatMS={idx:null,cat:null};
-let timers={};
+let timers={}; // {id: {interval, remaining, total, paused}}
  
 // ═══════════════════════════════════════════════════
 //  FIREBASE
@@ -776,6 +941,7 @@ function initFB(){
             if(!data.pantryList)data.pantryList=[...DEFAULT_PANTRY];
             if(!data.categoryOverrides)data.categoryOverrides={};
             if(!data.trackerItems)data.trackerItems=[];
+            if(!data.recipeInbox)data.recipeInbox=[];
             S={...S,...data};
           }
           renderAll();dot('ok','Synced');
@@ -799,7 +965,7 @@ async function save(){
  
 function saveLocal(){try{localStorage.setItem('theTable',JSON.stringify(S));}catch(e){}}
 function loadLocal(){
-  try{const r=localStorage.getItem('theTable');if(r){const d=JSON.parse(r);if(!d.pantryList)d.pantryList=[...DEFAULT_PANTRY];if(!d.categoryOverrides)d.categoryOverrides={};if(!d.trackerItems)d.trackerItems=[];S={...S,...d};}}catch(e){}
+  try{const r=localStorage.getItem('theTable');if(r){const d=JSON.parse(r);if(!d.pantryList)d.pantryList=[...DEFAULT_PANTRY];if(!d.categoryOverrides)d.categoryOverrides={};if(!d.trackerItems)d.trackerItems=[];if(!d.recipeInbox)d.recipeInbox=[];S={...S,...d};}}catch(e){}
   renderAll();
 }
  
@@ -807,7 +973,7 @@ function loadLocal(){
 //  RENDER ALL
 // ═══════════════════════════════════════════════════
 function renderAll(){
-  renderPlanner();renderGrocery();renderRecipes();renderStaples();renderPantryList();renderTracker();
+  renderPlanner();renderGrocery();renderRecipes();renderStaples();renderPantryList();renderTracker();renderInbox();
   document.getElementById('sdsel').value=S.startDay;
   updateUrlInPrompt();
 }
@@ -1426,15 +1592,17 @@ function renderDetail(r){
   document.getElementById('rdcontent').innerHTML=`
     <div class="rdhdr">
       <div>
-        <div class="rdtitle">${r.name}</div>
+        <input class="edit-inline" style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600" value="${(r.name||'').replace(/"/g,'&quot;')}" onchange="saveField('${r.id}','name',this.value)">
         <div class="rdmeta">
-          <span>Serves ${r.serves}</span>
+          <span>Serves <input class="edit-inline edit-inline-sm" type="number" min="1" max="99" value="${r.serves}" style="width:45px" onchange="saveField('${r.id}','serves',parseInt(this.value)||4)"></span>
           ${r.sourceUrl?`<a href="${r.sourceUrl}" target="_blank">View original ↗</a>`:''}
         </div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:7px">${(r.tags||[]).map(t=>`<span class="rctag">${t}</span>`).join('')}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:7px">${ALL_TAGS.map(t=>`<span class="tpill ${(r.tags||[]).includes(t)?'active':''}" onclick="toggleTag('${r.id}','${t}')">${t}</span>`).join('')}</div>
       </div>
       <div style="display:flex;gap:7px;flex-shrink:0;flex-wrap:wrap">
-        <button class="btn btn-ghost btn-sm" onclick="openEditModal('${r.id}')">✏️ Edit</button>
+        <button class="btn btn-sage btn-sm" onclick="startCookMode('${r.id}')">👨‍🍳 Cook</button>
+        <button class="btn btn-ghost btn-sm" onclick="openATG('${r.id}')">🛒 Add to Grocery</button>
+        <button class="btn btn-ghost btn-sm" onclick="openEditModal('${r.id}')">✏️ Edit via Prompt</button>
         <button class="btn btn-ghost btn-sm" onclick="triggerPhoto('${r.id}')">📷 ${r.photo?'Change':'Add'} Photo</button>
       </div>
     </div>
@@ -1452,22 +1620,26 @@ function renderDetail(r){
         </div>
         <ul class="inglist">
           ${r.ingredients.map((ing,i)=>{
-            const sq=ing.quantity*scale;const qs=sq?`${fq(sq)} ${ing.unit}`.trim():'';
+            const sq=ing.quantity*scale;const qs=sq?fq(sq):'';
             const isPantry=ing.pantry||(S.pantryList||[]).some(p=>p.toLowerCase()===ing.name.toLowerCase());
-            return `<li class="ingitem">
-              <span class="ingname">${ing.name}</span>
-              ${qs?`<span class="ingqty">${qs}</span>`:''}
-              ${isPantry?`<span class="pantrybadge" title="Pantry item">🧂 pantry</span>`:''}
+            return `<li class="ingitem-edit">
+              <input class="edit-inline edit-inline-sm ingname" value="${ing.name.replace(/"/g,'&quot;')}" onchange="saveIng('${r.id}',${i},'name',this.value)">
+              <input class="edit-inline edit-inline-qty" value="${qs}" placeholder="qty" onchange="saveIngQty('${r.id}',${i},this.value,${scale})">
+              <input class="edit-inline edit-inline-unit" value="${ing.unit}" placeholder="unit" onchange="saveIng('${r.id}',${i},'unit',this.value)">
+              ${isPantry?`<span class="pantrybadge" title="Pantry item">🧂</span>`:''}
               <button class="catbadge" onclick="openCatMod('${r.id}',${i},'${ing.category}')">${CICONS[ing.category]||'?'} ${ing.category}</button>
+              <div class="ing-actions">
+                <button onclick="moveIng('${r.id}',${i},-1)" title="Move up">↑</button>
+                <button onclick="moveIng('${r.id}',${i},1)" title="Move down">↓</button>
+                <button onclick="delIng('${r.id}',${i})" title="Delete">✕</button>
+              </div>
             </li>`;
           }).join('')}
         </ul>
+        <button class="add-row-btn" onclick="addIng('${r.id}')">+ Add ingredient</button>
  
         <h3 style="margin-top:18px">Notes</h3>
         <textarea class="notesarea" placeholder="Tips, variations, family notes…" onchange="saveNotes('${r.id}',this.value)">${r.notes||''}</textarea>
- 
-        <h3 style="margin-top:18px">Tags</h3>
-        <div class="tagedit">${ALL_TAGS.map(t=>`<span class="tpill ${(r.tags||[]).includes(t)?'active':''}" onclick="toggleTag('${r.id}','${t}')">${t}</span>`).join('')}</div>
  
         <h3 style="margin-top:18px">Source URL</h3>
         <input type="text" class="urlinput" value="${r.sourceUrl||''}" placeholder="https://…" onchange="saveSrc('${r.id}',this.value)">
@@ -1475,34 +1647,94 @@ function renderDetail(r){
  
       <div class="rdsec">
         <h3>Steps</h3>
-        ${r.steps&&r.steps.length?`<div class="stepslist">${r.steps.map((s,i)=>renderStep(s,i,r.id)).join('')}</div>`
-        :'<p style="font-size:.8rem;color:var(--ink3)">No steps. Re-import with the updated prompt to add steps.</p>'}
+        ${r.steps&&r.steps.length?`<div class="stepslist">${r.steps.map((s,i)=>renderStep(s,i,r.id,scale)).join('')}</div>`
+        :'<p style="font-size:.8rem;color:var(--ink3)">No steps yet.</p>'}
+        <button class="add-row-btn" style="margin-top:10px" onclick="addStep('${r.id}')">+ Add step</button>
       </div>
     </div>`;
 }
  
-function renderStep(step,i,rid){
+function renderStep(step,i,rid,scale){
   const tid=`${rid}-${i}`;const has=step.timerSeconds>0;
+  const scaledText=renderScaledText(step.text,scale||1);
+  const t=timers[tid];
+  const isRunning=t&&t.interval;
+  const isPaused=t&&t.paused;
   return `<div class="stepitem">
     <div class="stepnum">Step ${i+1}</div>
-    <div class="steptxt">${step.text}</div>
-    ${has?`<button class="timerbtn" id="tbtn${tid}" onclick="toggleTimer('${tid}',${step.timerSeconds})">⏱ ${ftm(step.timerSeconds)}</button>
-    <div class="timerdisp" id="tdisp${tid}" style="display:none"></div>`:''}
+    <textarea class="step-edit-text" onchange="saveStep('${rid}',${i},'text',this.value)">${step.text}</textarea>
+    <div class="steptxt" style="margin-top:4px;padding:4px 8px;background:rgba(107,143,113,.06);border-radius:6px;font-size:.78rem;color:var(--ink3)">${scaledText!==step.text?'Scaled: '+scaledText:''}</div>
+    <div class="step-actions">
+      <span style="font-size:.7rem;color:var(--ink3)">Timer:</span>
+      <input class="edit-inline edit-inline-sm" type="number" min="0" value="${step.timerSeconds}" style="width:60px" placeholder="sec" onchange="saveStep('${rid}',${i},'timerSeconds',parseInt(this.value)||0)" id="tinp${tid}">
+      <span style="font-size:.68rem;color:var(--ink3)">${has?ftm(step.timerSeconds):''}</span>
+      ${has?`
+        ${isRunning?`<button class="cook-btn-pause" style="font-size:.7rem;padding:3px 8px" onclick="pauseTimer('${tid}')">⏸ Pause</button>`
+        :isPaused?`<button class="cook-btn-resume" style="font-size:.7rem;padding:3px 8px" onclick="resumeTimer('${tid}')">▶ Resume (${ftm(t.remaining)})</button>`
+        :`<button class="cook-btn-start" style="font-size:.7rem;padding:3px 8px" onclick="startTimer('${tid}',${step.timerSeconds})">⏱ Start</button>`}
+        ${(isRunning||isPaused)?`<button class="cook-btn-reset" style="font-size:.7rem;padding:3px 8px" onclick="resetTimer('${tid}',${step.timerSeconds})">↩ Reset</button>`:''}
+      `:''}
+      <div style="margin-left:auto;display:flex;gap:2px">
+        <button onclick="moveStep('${rid}',${i},-1)" title="Move up">↑</button>
+        <button onclick="moveStep('${rid}',${i},1)" title="Move down">↓</button>
+        <button onclick="delStep('${rid}',${i})" title="Delete" style="color:var(--terra)">✕</button>
+      </div>
+    </div>
+    ${isRunning?`<div class="timerdisp" style="display:block">${ftm(t.remaining)}</div>`:''}
   </div>`;
 }
  
-function ftm(s){return`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
-function toggleTimer(id,total){
-  if(timers[id]){clearInterval(timers[id]);delete timers[id];
-    const b=document.getElementById(`tbtn${id}`),d=document.getElementById(`tdisp${id}`);
-    if(b){b.classList.remove('run');b.textContent=`⏱ ${ftm(total)}`;}if(d)d.style.display='none';return;}
-  let rem=total;
-  const b=document.getElementById(`tbtn${id}`),d=document.getElementById(`tdisp${id}`);
-  if(b){b.classList.add('run');b.textContent='⏹ Stop';}if(d){d.style.display='block';d.textContent=ftm(rem);}
-  timers[id]=setInterval(()=>{rem--;if(d)d.textContent=ftm(rem);
-    if(rem<=0){clearInterval(timers[id]);delete timers[id];
-      if(b){b.classList.remove('run');b.textContent='✅ Done!';}if(d)d.textContent='Done!';showToast('⏰ Timer done!');}},1000);
+// Scaled text: parse [[qty|unit]] markers and scale them
+function renderScaledText(text,scale){
+  if(!text||scale===1)return text;
+  return text.replace(/\[\[(\d+(?:\.\d+)?)\|([^\]]+)\]\]/g,(m,qty,unit)=>{
+    const scaled=parseFloat(qty)*scale;
+    return `${fq(scaled)}${unit}`;
+  });
 }
+ 
+function ftm(s){if(s<0)s=0;return`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
+ 
+function startTimer(id,total){
+  if(timers[id]&&timers[id].interval)return;
+  timers[id]={interval:null,remaining:total,total,paused:false};
+  _runTimer(id);
+}
+function _runTimer(id){
+  const t=timers[id];if(!t)return;
+  t.paused=false;
+  t.interval=setInterval(()=>{
+    t.remaining--;
+    const d=document.getElementById(`tdisp${id}`);if(d)d.textContent=ftm(t.remaining);
+    // Also update cooking mode if open
+    const cd=document.getElementById(`cook-tdisp-${id}`);if(cd)cd.textContent=ftm(t.remaining);
+    if(t.remaining<=0){
+      clearInterval(t.interval);t.interval=null;
+      showToast('⏰ Timer done!');
+      if(curDetailId){const r=S.recipes.find(r=>r.id===curDetailId);if(r)renderDetail(r);}
+      renderCookTimers();
+    }
+  },1000);
+  if(curDetailId){const r=S.recipes.find(r=>r.id===curDetailId);if(r)renderDetail(r);}
+}
+function pauseTimer(id){
+  const t=timers[id];if(!t||!t.interval)return;
+  clearInterval(t.interval);t.interval=null;t.paused=true;
+  if(curDetailId){const r=S.recipes.find(r=>r.id===curDetailId);if(r)renderDetail(r);}
+  renderCookTimers();
+}
+function resumeTimer(id){
+  const t=timers[id];if(!t||!t.paused)return;
+  _runTimer(id);
+}
+function resetTimer(id,total){
+  const t=timers[id];
+  if(t&&t.interval)clearInterval(t.interval);
+  delete timers[id];
+  if(curDetailId){const r=S.recipes.find(r=>r.id===curDetailId);if(r)renderDetail(r);}
+  renderCookTimers();
+}
+function renderCookTimers(){/* called from cooking mode if open */}
  
 function adjSv(d,rid){detailSv=Math.max(1,detailSv+d);const r=S.recipes.find(r=>r.id===rid);if(r)renderDetail(r);}
 function saveNotes(rid,v){const r=S.recipes.find(r=>r.id===rid);if(r){r.notes=v;save();}}
@@ -1607,13 +1839,18 @@ Return the FULL updated recipe in this exact format:
     { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
-    { "text": "Step description.", "timerSeconds": 0 }
+    { "text": "Step description. Any measurements in step text must use [[qty|unit]] markers e.g. 'Add [[200|g]] flour'.", "timerSeconds": 0 }
   ]
 }
  
 IMPORTANT — Ingredient prep handling:
 - The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
 - If an ingredient has prep instructions, collect ALL of them and create a FIRST step titled "Prep" listing every ingredient needing prep. The remaining steps follow after.
+ 
+IMPORTANT — Step text measurements:
+- Wrap any ingredient quantities mentioned in steps with [[qty|unit]] markers so they can be auto-scaled when servings change. E.g. "Add [[200|g]] flour and [[100|ml]] milk".
+- Only wrap ingredient amounts, NOT cooking times or temperatures.
+- The qty must be the amount for the base serving size given above.
  
 Category MUST be exactly one of: Produce, Bakery, Deli, Butcher, Dairy, Frozen, Other
 Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or ""
@@ -1643,6 +1880,345 @@ function applyRecipeEdit(){
     renderRecipes();
     showToast(`"${r.name}" updated!`);
   }catch(e){showToast('⚠ Invalid JSON');}
+}
+ 
+// ═══════════════════════════════════════════════════
+//  INLINE EDITING HELPERS
+// ═══════════════════════════════════════════════════
+function saveField(rid,field,val){const r=S.recipes.find(r=>r.id===rid);if(!r)return;r[field]=val;save();renderRecipes();}
+function saveIng(rid,idx,field,val){const r=S.recipes.find(r=>r.id===rid);if(!r||!r.ingredients[idx])return;r.ingredients[idx][field]=val;save();}
+function saveIngQty(rid,idx,val,scale){const r=S.recipes.find(r=>r.id===rid);if(!r||!r.ingredients[idx])return;r.ingredients[idx].quantity=scale?(parseFloat(val)||0)/scale:(parseFloat(val)||0);save();}
+function moveIng(rid,idx,dir){
+  const r=S.recipes.find(r=>r.id===rid);if(!r)return;
+  const to=idx+dir;if(to<0||to>=r.ingredients.length)return;
+  [r.ingredients[idx],r.ingredients[to]]=[r.ingredients[to],r.ingredients[idx]];
+  save();renderDetail(r);
+}
+function delIng(rid,idx){const r=S.recipes.find(r=>r.id===rid);if(!r)return;r.ingredients.splice(idx,1);save();renderDetail(r);}
+function addIng(rid){const r=S.recipes.find(r=>r.id===rid);if(!r)return;r.ingredients.push({name:'New ingredient',quantity:1,unit:'',category:'Other',pantry:false});save();renderDetail(r);}
+function saveStep(rid,idx,field,val){const r=S.recipes.find(r=>r.id===rid);if(!r||!r.steps[idx])return;r.steps[idx][field]=val;save();}
+function moveStep(rid,idx,dir){
+  const r=S.recipes.find(r=>r.id===rid);if(!r)return;
+  const to=idx+dir;if(to<0||to>=r.steps.length)return;
+  [r.steps[idx],r.steps[to]]=[r.steps[to],r.steps[idx]];
+  save();renderDetail(r);
+}
+function delStep(rid,idx){const r=S.recipes.find(r=>r.id===rid);if(!r)return;r.steps.splice(idx,1);save();renderDetail(r);}
+function addStep(rid){const r=S.recipes.find(r=>r.id===rid);if(!r)return;r.steps.push({text:'New step.',timerSeconds:0});save();renderDetail(r);}
+ 
+// ═══════════════════════════════════════════════════
+//  COOKING MODE
+// ═══════════════════════════════════════════════════
+let cookState={rid:null,activeSteps:new Set(),doneSteps:new Set()};
+ 
+function startCookMode(rid){
+  const r=S.recipes.find(r=>r.id===rid);if(!r||!r.steps.length){showToast('No steps to cook!');return;}
+  cookState={rid,activeSteps:new Set([0]),doneSteps:new Set()};
+  document.getElementById('cook-title').textContent=r.name;
+  document.getElementById('cook-serves').textContent=`Serves ${detailSv}`;
+  document.getElementById('cookmod').classList.add('open');
+  renderCookMode();
+}
+function closeCookMode(){
+  document.getElementById('cookmod').classList.remove('open');
+  cookState.rid=null;
+}
+ 
+function renderCookMode(){
+  const r=S.recipes.find(r=>r.id===cookState.rid);if(!r)return;
+  const scale=detailSv/(r.serves||4);
+ 
+  // Step nav
+  const nav=document.getElementById('cook-steps-nav');
+  nav.innerHTML=r.steps.map((s,i)=>{
+    const tid=`${cookState.rid}-${i}`;const t=timers[tid];
+    const isActive=cookState.activeSteps.has(i);
+    const isDone=cookState.doneSteps.has(i);
+    const timerClass=t&&t.interval?'running':s.timerSeconds>0?'has-timer':'';
+    return `<div class="cook-snav ${isActive?'active':''} ${isDone?'done':''}" onclick="toggleCookStep(${i})">
+      <span class="cook-snav-num">${i+1}</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.text.substring(0,40)}${s.text.length>40?'…':''}</span>
+      ${timerClass?`<span class="timer-dot ${timerClass}"></span>`:''}
+    </div>`;
+  }).join('');
+ 
+  // Active step cards
+  const main=document.getElementById('cook-main');
+  const activeArr=[...cookState.activeSteps].sort();
+  let cardsHtml='<div class="cook-active-cards">';
+  activeArr.forEach(i=>{
+    const s=r.steps[i];const tid=`${cookState.rid}-${i}`;
+    const t=timers[tid];
+    const scaledText=renderScaledText(s.text,scale);
+    cardsHtml+=`<div class="cook-card">
+      <div class="cook-card-num">Step ${i+1}</div>
+      <div class="cook-card-text">${scaledText}</div>
+      ${s.timerSeconds>0?renderCookTimer(tid,s.timerSeconds,t):''}
+      <div class="cook-nav-btns">
+        <button class="btn btn-ghost btn-xs" onclick="markCookDone(${i})">✅ Done</button>
+        ${i<r.steps.length-1?`<button class="btn btn-sage btn-xs" onclick="advanceCook(${i})">Next step →</button>`:''}
+      </div>
+    </div>`;
+  });
+  cardsHtml+='</div>';
+  main.innerHTML=cardsHtml;
+ 
+  // Ingredient panel for active steps
+  const panel=document.getElementById('cook-ing-panel');
+  const activeIngs=new Set();
+  activeArr.forEach(i=>{
+    const stepText=(r.steps[i].text||'').toLowerCase();
+    r.ingredients.forEach(ing=>{
+      if(stepText.includes(ing.name.toLowerCase()))activeIngs.add(ing);
+    });
+  });
+  if(activeIngs.size){
+    panel.innerHTML=`<h4>🧂 Ingredients in use</h4>${[...activeIngs].map(ing=>{
+      const sq=ing.quantity*scale;const qs=sq?`${fq(sq)} ${ing.unit}`.trim():'';
+      return `<div class="cook-ing-item">${qs?`<strong>${qs}</strong> `:''}${ing.name}</div>`;
+    }).join('')}`;
+  } else {
+    panel.innerHTML=`<h4>🧂 Ingredients</h4>${r.ingredients.map(ing=>{
+      const sq=ing.quantity*scale;const qs=sq?`${fq(sq)} ${ing.unit}`.trim():'';
+      return `<div class="cook-ing-item">${qs?`<strong>${qs}</strong> `:''}${ing.name}</div>`;
+    }).join('')}`;
+  }
+}
+ 
+function renderCookTimer(tid,totalSec,t){
+  const isRunning=t&&t.interval;
+  const isPaused=t&&t.paused;
+  const remaining=t?t.remaining:totalSec;
+  return `<div class="cook-timer-box">
+    ${isRunning||isPaused?`<div class="cook-timer-display ${remaining<60?'warn':''}" id="cook-tdisp-${tid}">${ftm(remaining)}</div>`
+    :`<input class="cook-timer-edit" type="text" value="${ftm(totalSec)}" id="cook-tedit-${tid}">`}
+    <div class="cook-timer-btns">
+      ${isRunning?`<button class="cook-btn-pause" onclick="pauseTimer('${tid}');renderCookMode()">⏸ Pause</button>`
+      :isPaused?`<button class="cook-btn-resume" onclick="resumeTimer('${tid}');renderCookMode()">▶ Resume</button>`
+      :`<button class="cook-btn-start" onclick="startCookTimer('${tid}',${totalSec})">▶ Start</button>`}
+      ${(isRunning||isPaused)?`<button class="cook-btn-reset" onclick="resetTimer('${tid}',${totalSec});renderCookMode()">↩</button>`:''}
+    </div>
+  </div>`;
+}
+ 
+function startCookTimer(tid,defaultSec){
+  // Check if user edited the time
+  const editEl=document.getElementById(`cook-tedit-${tid}`);
+  let sec=defaultSec;
+  if(editEl){
+    const parts=editEl.value.split(':');
+    if(parts.length===2)sec=parseInt(parts[0])*60+parseInt(parts[1]);
+    else sec=parseInt(editEl.value)||defaultSec;
+  }
+  startTimer(tid,sec);
+  renderCookMode();
+}
+ 
+function toggleCookStep(i){
+  if(cookState.activeSteps.has(i)){cookState.activeSteps.delete(i);}
+  else{cookState.activeSteps.add(i);cookState.doneSteps.delete(i);}
+  renderCookMode();
+}
+function markCookDone(i){
+  cookState.activeSteps.delete(i);cookState.doneSteps.add(i);
+  renderCookMode();
+}
+function advanceCook(i){
+  const r=S.recipes.find(r=>r.id===cookState.rid);if(!r)return;
+  // Keep current if timer running, add next
+  const tid=`${cookState.rid}-${i}`;const t=timers[tid];
+  if(!t||!t.interval)cookState.activeSteps.delete(i);
+  if(!t||!t.interval)cookState.doneSteps.add(i);
+  if(i+1<r.steps.length)cookState.activeSteps.add(i+1);
+  renderCookMode();
+}
+ 
+// ═══════════════════════════════════════════════════
+//  RECIPE INBOX
+// ═══════════════════════════════════════════════════
+function renderInbox(){
+  if(!S.recipeInbox)S.recipeInbox=[];
+  const list=document.getElementById('inbox-list');
+  const count=document.getElementById('inbox-count');
+  const genBtn=document.getElementById('inbox-gen-btn');
+  const clearBtn=document.getElementById('inbox-clear-btn');
+  if(!list)return;
+  count.textContent=S.recipeInbox.length?`(${S.recipeInbox.length})`:''
+  genBtn.disabled=!S.recipeInbox.length;
+  clearBtn.style.display=S.recipeInbox.length?'inline-flex':'none';
+  if(!S.recipeInbox.length){list.innerHTML='<p style="font-size:.78rem;color:var(--ink3);padding:4px 0">No items yet. Add recipe links or descriptions above.</p>';return;}
+  list.innerHTML=S.recipeInbox.map((item,i)=>`
+    <div class="inbox-item">
+      <textarea onchange="updateInboxItem(${i},this.value)" onblur="updateInboxItem(${i},this.value)">${item.text}</textarea>
+      <button onclick="removeInboxItem(${i})">✕</button>
+    </div>`).join('');
+}
+function addInboxItem(){
+  const inp=document.getElementById('inbox-input');const v=inp.value.trim();if(!v)return;
+  if(!S.recipeInbox)S.recipeInbox=[];
+  S.recipeInbox.push({text:v,added:new Date().toISOString()});
+  inp.value='';save();renderInbox();
+}
+function removeInboxItem(i){S.recipeInbox.splice(i,1);save();renderInbox();}
+function updateInboxItem(i,v){S.recipeInbox[i].text=v;save();}
+function clearInbox(){if(!confirm('Clear all inbox items?'))return;S.recipeInbox=[];save();renderInbox();}
+ 
+function generateInboxPrompt(){
+  if(!S.recipeInbox||!S.recipeInbox.length){showToast('Inbox is empty');return;}
+  const entries=S.recipeInbox.map((item,i)=>`${i+1}. ${item.text}`).join('\n');
+  const prompt=`I have ${S.recipeInbox.length} recipes to add to my meal planner app. For each one, please create a recipe and return ALL of them as a JSON ARRAY (no markdown, no extra text).
+ 
+RECIPES TO IMPORT:
+${entries}
+ 
+For each recipe, fetch/infer all details and return this exact format as an array:
+[
+  {
+    "name": "Recipe Name",
+    "serves": 4,
+    "sourceUrl": "",
+    "tags": [],
+    "ingredients": [
+      { "name": "ingredient (no prep instructions)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
+    ],
+    "steps": [
+      { "text": "Step description. Any measurements in step text must use [[qty|unit]] markers e.g. 'Add [[200|g]] flour'.", "timerSeconds": 0 }
+    ]
+  }
+]
+ 
+IMPORTANT RULES:
+- Ingredient "name": raw ingredient only, NO prep verbs (e.g. "yellow onion" not "yellow onion, diced")
+- If ingredients have prep, create a first "Prep:" step listing all prep work
+- Step text measurements: wrap any ingredient quantities mentioned in steps with [[qty|unit]] markers so they can be auto-scaled. E.g. "Add [[200|g]] flour and [[100|ml]] milk". Only wrap ingredient amounts, NOT cooking times.
+- Category must be one of: Produce, Bakery, Deli, Butcher, Dairy, Frozen, Other
+- Unit options: g, kg, ml, l, tsp, tbsp, cup, oz, lb, piece, or ""
+- timerSeconds: 0 if no waiting; otherwise total seconds
+- tags: pick 1–4 from — Quick, Vegetarian, Vegan, Gluten-Free, Weekend, Kids Favourite, Comfort Food, Light, Batch Cook, Fish, Pasta, Soup, Salad
+${getPantryLine()}
+ 
+Return the complete JSON array with ALL recipes.`;
+  document.getElementById('inbox-prompt').textContent=prompt;
+  document.getElementById('inbox-prompt-box').style.display='block';
+  showToast('Prompt generated!');
+}
+ 
+// ═══════════════════════════════════════════════════
+//  ADD TO GROCERY FROM RECIPE
+// ═══════════════════════════════════════════════════
+let atgRecipeId=null;
+function openRecipePicker(){
+  if(!S.recipes.length){showToast('No recipes yet!');return;}
+  const sel=document.getElementById('recipe-pick-sel');
+  sel.innerHTML=S.recipes.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
+  document.getElementById('recipepickmod').classList.add('open');
+}
+function closeRecipePicker(){document.getElementById('recipepickmod').classList.remove('open');}
+function confirmRecipePick(){
+  const rid=document.getElementById('recipe-pick-sel').value;
+  closeRecipePicker();
+  if(!rid)return;
+  const r=S.recipes.find(r=>r.id===rid);if(!r)return;
+  // Use base servings when coming from grocery page
+  detailSv=r.serves||4;
+  openATG(rid);
+}
+ 
+function openATG(rid){
+  const r=S.recipes.find(r=>r.id===rid);if(!r)return;
+  atgRecipeId=rid;
+  const scale=detailSv/(r.serves||4);
+  const list=document.getElementById('atg-list');
+  list.innerHTML=r.ingredients.map((ing,i)=>{
+    const sq=ing.quantity*scale;const qs=sq?`${fq(sq)} ${ing.unit}`.trim():'';
+    const isPantry=ing.pantry||(S.pantryList||[]).some(p=>p.toLowerCase()===ing.name.toLowerCase());
+    const cat=resolveCategory(ing.name,ing.category);
+    return `<div class="atg-item ${isPantry?'pantry':''} ${isPantry?'':'sel'}" onclick="toggleATGItem(this,${i})">
+      <input type="checkbox" id="atg${i}" ${isPantry?'':'checked'} onclick="event.stopPropagation()">
+      <label for="atg${i}">${ing.name}</label>
+      ${qs?`<span class="atg-qty">${qs}</span>`:''}
+      <span class="atg-cat">${CICONS[cat]||''} ${cat}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('atgmod').classList.add('open');
+}
+function toggleATGItem(el,i){
+  const cb=document.getElementById(`atg${i}`);
+  cb.checked=!cb.checked;
+  el.classList.toggle('sel',cb.checked);
+}
+function closeATG(){document.getElementById('atgmod').classList.remove('open');}
+function confirmATG(){
+  const r=S.recipes.find(r=>r.id===atgRecipeId);if(!r)return;
+  const scale=detailSv/(r.serves||4);
+  let added=0;
+  r.ingredients.forEach((ing,i)=>{
+    if(!document.getElementById(`atg${i}`)?.checked)return;
+    const sq=ing.quantity*scale;
+    const cat=resolveCategory(ing.name,ing.category);
+    const existing=S.groceryList.find(g=>g.name.toLowerCase()===ing.name.toLowerCase());
+    if(existing){existing.qty=(existing.qty||0)+sq;if(!existing.sources)existing.sources=[];if(!existing.sources.includes(r.name))existing.sources.push(r.name);}
+    else S.groceryList.push({name:ing.name,qty:sq,unit:ing.unit,category:cat,checked:false,manual:false,isStaple:false,sources:[r.name]});
+    added++;
+  });
+  save();closeATG();renderGrocery();
+  showToast(`${added} item${added!==1?'s':''} added to grocery list`);
+}
+ 
+// ═══════════════════════════════════════════════════
+//  BATCH PREP CLEANUP — one-click fix for existing recipes
+// ═══════════════════════════════════════════════════
+function cleanupPrepInstructions(){
+  const PREP_VERBS=/,\s*(diced|minced|chopped|sliced|grated|julienned|peeled|crushed|cubed|shredded|torn|halved|quartered|trimmed|deseeded|de-seeded|seeded|cored|zested|thinly sliced|finely chopped|finely diced|finely minced|roughly chopped|coarsely chopped|cut into [\w\s]+|divided|to taste|at room temperature|softened|melted)\s*$/i;
+  const PREP_VERBS_MID=/,\s*(diced|minced|chopped|sliced|grated|julienned|peeled|crushed|cubed|shredded|torn|halved|quartered|trimmed|deseeded|de-seeded|seeded|cored|zested|thinly sliced|finely chopped|finely diced|finely minced|roughly chopped|coarsely chopped|cut into [\w\s]+)/i;
+  let totalCleaned=0, recipesChanged=0;
+ 
+  S.recipes.forEach(r=>{
+    const prepLines=[];
+    let changed=false;
+ 
+    r.ingredients.forEach(ing=>{
+      const match=ing.name.match(PREP_VERBS) || ing.name.match(PREP_VERBS_MID);
+      if(match){
+        const prepVerb=match[1].trim();
+        const cleanName=ing.name.replace(match[0],'').trim();
+        // Build a readable prep instruction
+        const qty=ing.quantity?`${fq(ing.quantity)} `:'';
+        const unit=ing.unit?`${ing.unit} `:'';
+        // Capitalize first letter of prep verb
+        const prepCap=prepVerb.charAt(0).toUpperCase()+prepVerb.slice(1);
+        prepLines.push(`${prepCap} ${qty}${unit}${cleanName}.`);
+        ing.name=cleanName;
+        changed=true;
+        totalCleaned++;
+      }
+    });
+ 
+    if(changed){
+      recipesChanged++;
+      // Check if a Prep step already exists
+      const hasPrep=r.steps.length>0&&r.steps[0].text.toLowerCase().startsWith('prep:');
+      if(prepLines.length){
+        const prepText='Prep: '+prepLines.join(' ');
+        if(hasPrep){
+          // Append to existing prep step
+          r.steps[0].text+=(' '+prepLines.join(' '));
+        }else{
+          // Insert new prep step at position 0
+          r.steps.unshift({text:prepText,timerSeconds:0});
+        }
+      }
+    }
+  });
+ 
+  if(totalCleaned===0){
+    showToast('All recipes look clean — nothing to change!');
+    return;
+  }
+ 
+  save();renderRecipes();
+  if(curDetailId){const r=S.recipes.find(r=>r.id===curDetailId);if(r)renderDetail(r);}
+  showToast(`Cleaned ${totalCleaned} ingredient${totalCleaned!==1?'s':''} across ${recipesChanged} recipe${recipesChanged!==1?'s':''}!`);
 }
  
 // ═══════════════════════════════════════════════════
@@ -1697,7 +2273,7 @@ Return this exact format:
     { "name": "ingredient (no prep instructions — just the item)", "quantity": 1, "unit": "g", "category": "Produce", "pantry": false }
   ],
   "steps": [
-    { "text": "Step description.", "timerSeconds": 0 }
+    { "text": "Step description. Any measurements in step text must use [[qty|unit]] markers e.g. 'Add [[200|g]] flour'.", "timerSeconds": 0 }
   ]
 }
  
@@ -1705,6 +2281,11 @@ IMPORTANT — Ingredient prep handling:
 - The "name" field must contain ONLY the raw ingredient with no prep verbs (e.g. "yellow onion" not "yellow onion, diced").
 - If an ingredient has prep instructions (diced, minced, sliced, chopped, grated, julienned, etc.), collect ALL of them and create a FIRST step in the "steps" array titled "Prep" that lists every ingredient needing prep, e.g.: "Prep: Dice 1 yellow onion. Mince 3 cloves garlic. Slice 2 red peppers." timerSeconds for this step should be 0.
 - The remaining steps follow as normal after the prep step.
+ 
+IMPORTANT — Step text measurements:
+- Wrap any ingredient quantities mentioned in steps with [[qty|unit]] markers so they can be auto-scaled when servings change. E.g. "Add [[200|g]] flour and [[100|ml]] milk".
+- Only wrap ingredient amounts, NOT cooking times or temperatures.
+- The qty must be the amount for the base serving size given above.
  
 Category MUST be exactly one of these seven:
 - Produce: fresh fruit, vegetables, fresh herbs — e.g. onion, spinach, lemon, basil, garlic
@@ -1737,7 +2318,7 @@ function renderTracker(){
   list.innerHTML=S.trackerItems.map((item,i)=>`
     <div class="tracker-item ${item.type}">
       <span class="tracker-type ${item.type}">${item.type==='bug'?'🐛 Bug':'✨ Feature'}</span>
-      <span class="tracker-text">${item.text}</span>
+      <textarea class="tracker-edit-area" onchange="updateTrackerItem(${i},this.value)" onblur="updateTrackerItem(${i},this.value)">${item.text}</textarea>
       <button class="tracker-del" onclick="removeTrackerItem(${i})">✕</button>
     </div>`).join('');
 }
@@ -1755,6 +2336,10 @@ function addTrackerItem(){
  
 function removeTrackerItem(i){
   S.trackerItems.splice(i,1);save();renderTracker();
+}
+function updateTrackerItem(i,val){
+  if(!S.trackerItems[i])return;
+  S.trackerItems[i].text=val;save();
 }
  
 function generateTrackerPrompt(){
@@ -1805,5 +2390,7 @@ initFB();
 </body>
 </html>
  
+
+
 
 
