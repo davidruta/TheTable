@@ -171,9 +171,10 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .rdtitle{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;line-height:1.1}
 .rdmeta{font-size:.8rem;color:var(--ink3);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
 .rdmeta a{color:var(--sage);text-decoration:none}.rdmeta a:hover{text-decoration:underline}
-.rdbody{display:grid;grid-template-columns:270px 1fr;gap:28px}
+.rdbody{display:grid;grid-template-columns:320px 1fr;gap:28px}
 @media(max-width:680px){.rdbody{grid-template-columns:1fr}}
 .rdsec h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.rdsec{min-width:0;overflow:hidden}
 .inglist{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .ingitem{display:flex;align-items:center;padding:6px 10px;background:var(--surface2);border-radius:7px;font-size:.8rem;gap:6px}
 .ingname{flex:1}
@@ -309,7 +310,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
 .edit-inline-qty{width:55px;text-align:center;font-size:.75rem}
 .edit-inline-unit{width:50px;text-align:center;font-size:.75rem}
 .ingitem-edit{display:flex;align-items:center;padding:5px 8px;background:var(--surface2);border-radius:7px;font-size:.8rem;gap:4px;flex-wrap:wrap}
-.ingitem-edit .ingname{flex:1;min-width:80px}
+.ingitem-edit .ingname{flex:1;min-width:120px}
 .ing-actions{display:flex;gap:2px;flex-shrink:0}
 .ing-actions button{background:none;border:none;cursor:pointer;font-size:.72rem;padding:3px 5px;border-radius:3px;color:var(--ink3);touch-action:manipulation}
 .ing-actions button:hover{color:var(--terra);background:var(--terra-pale)}
@@ -450,6 +451,7 @@ nav{background:var(--ink);height:58px;display:flex;align-items:center;padding:0 
   <div class="gbar">
     <button class="btn btn-sage btn-sm" onclick="startGroceryGen()">↻ Regenerate from plan</button>
     <button class="btn btn-ghost btn-sm" onclick="openRecipePicker()">📖 Add from Recipe</button>
+    <button class="btn btn-ghost btn-sm" onclick="openAddStaplesModal()">🥫 Add from Staples</button>
   </div>
   <div id="gcontent">
     <div class="empty"><div class="ico">🛒</div><h3>No list yet</h3><p>Go to Planner → Generate Grocery List.</p></div>
@@ -766,6 +768,19 @@ PANTRY_LINE_PLACEHOLDER</pre>
     <div class="mact">
       <button class="btn btn-ghost btn-sm" onclick="skipStaples()">Skip</button>
       <button class="btn btn-sage" onclick="confirmStaples()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD STAPLES TO GROCERY MODAL -->
+<div class="overlay" id="addstmod">
+  <div class="modal">
+    <h2>🥫 Add Staples to Grocery List</h2>
+    <p>Tick the staples you want to add.</p>
+    <div class="smlist" id="addst-list"></div>
+    <div class="mact">
+      <button class="btn btn-ghost btn-sm" onclick="closeAddStaplesModal()">Cancel</button>
+      <button class="btn btn-sage" onclick="confirmAddStaples()">Add selected →</button>
     </div>
   </div>
 </div>
@@ -1437,6 +1452,42 @@ function addToStaples(i){
   if(S.staples.includes(name)){showToast('Already a staple!');return;}
   S.staples.push(name);save();renderStaples();showToast(`"${name}" added to staples`);
 }
+
+// ── Add Staples to Grocery (from grocery page) ──
+function openAddStaplesModal(){
+  if(!S.staples.length){showToast('No staples yet — add some in the Staples tab.');return;}
+  const list=document.getElementById('addst-list');
+  // Grey out staples already on the list
+  list.innerHTML=S.staples.map((s,i)=>{
+    const already=S.groceryList.some(g=>g.name.toLowerCase()===s.toLowerCase());
+    return `<div class="smitem ${already?'':'sel'}" id="asti${i}" onclick="${already?'':'toggleASTI('+i+')'}">
+      <input type="checkbox" id="astc${i}" ${already?'disabled':'checked'} onclick="event.stopPropagation()">
+      <label for="astc${i}" style="${already?'text-decoration:line-through;color:var(--ink3)':''}">${s}${already?' <span style=\"font-size:.65rem;color:var(--ink3);font-style:italic\">(already on list)</span>':''}</label>
+    </div>`;
+  }).join('');
+  document.getElementById('addstmod').classList.add('open');
+}
+function toggleASTI(i){
+  const el=document.getElementById(`asti${i}`),cb=document.getElementById(`astc${i}`);
+  if(cb.disabled)return;
+  cb.checked=!cb.checked;
+  if(cb.checked)el.classList.add('sel'); else el.classList.remove('sel');
+}
+function closeAddStaplesModal(){document.getElementById('addstmod').classList.remove('open');}
+function confirmAddStaples(){
+  const selected=[];
+  S.staples.forEach((s,i)=>{
+    const cb=document.getElementById(`astc${i}`);
+    if(cb&&cb.checked&&!cb.disabled)selected.push(s);
+  });
+  if(!selected.length){showToast('No staples selected');return;}
+  selected.forEach(s=>{
+    const cat=resolveCategory(s,guessCat(s));
+    S.groceryList.push({name:s,qty:null,unit:'',category:cat,checked:false,manual:false,isStaple:true,sources:[]});
+  });
+  save();closeAddStaplesModal();renderGrocery();
+  showToast(`${selected.length} staple${selected.length!==1?'s':''} added`);
+}
 function printGrocery(){
   let txt='GROCERY LIST\n'+new Date().toLocaleDateString('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'\n\n';
   const grp={};CATS.forEach(c=>grp[c]=[]);
@@ -1680,7 +1731,7 @@ function renderStep(step,i,rid,scale){
         <button onclick="delStep('${rid}',${i})" title="Delete" style="color:var(--terra)">✕</button>
       </div>
     </div>
-    ${isRunning?`<div class="timerdisp" style="display:block">${ftm(t.remaining)}</div>`:''}
+    ${isRunning?`<div class="timerdisp" id="tdisp${tid}" style="display:block">${ftm(t.remaining)}</div>`:''}
   </div>`;
 }
  
@@ -2389,8 +2440,3 @@ initFB();
 </script>
 </body>
 </html>
- 
-
-
-
-
